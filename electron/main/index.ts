@@ -28,8 +28,14 @@ const indexHtml = join(process.env.DIST, 'index.html')
 
 async function createWindow() {
   win = new BrowserWindow({
-    title: 'Main window',
+    title: 'Penta Quest',
     icon: join(process.env.PUBLIC, 'favicon.ico'),
+    minWidth: 500,
+    minHeight: 480,
+    width: 500,
+    height: 480,
+    resizable: false,
+    useContentSize: true,
     webPreferences: {
       preload,
       // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
@@ -40,11 +46,13 @@ async function createWindow() {
     },
   })
 
+  win.removeMenu()
+
   if (app.isPackaged) {
     win.loadFile(indexHtml)
   } else {
     win.loadURL(url)
-    //win.webContents.openDevTools()
+    //win.webContents.openDevTools({ mode: "undocked" })
   }
 
   // Test actively push message to the Electron-Renderer
@@ -98,4 +106,8 @@ ipcMain.handle('open-win', (event, arg) => {
     childWindow.loadURL(`${url}#${arg}`)
     // childWindow.webContents.openDevTools({ mode: "undocked", activate: true })
   }
+})
+
+ipcMain.handle('close-window',()=>{
+  win.close();
 })

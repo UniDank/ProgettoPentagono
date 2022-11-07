@@ -14,7 +14,15 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true
   },
-  "include": ["src"],
+  "paths": {
+    "@components*": [ "src/components/*" ],
+    "@game*": [ "src/game/*" ]
+  },
+  "include": [
+    "src",
+    "**/*",
+    "node_modules/phaser3-rex-plugins-types"
+  ],
   "references": [
     { "path": "./tsconfig.node.json" }
   ]
