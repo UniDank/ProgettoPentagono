@@ -36,7 +36,10 @@ export default defineConfig({
   })() : undefined,
   clearScreen: false,
   build: {
-    assetsDir: '', // #287
+    assetsDir: '',
+    commonjsOptions: {
+      esmExternals: true 
+    },
   },
 })
 

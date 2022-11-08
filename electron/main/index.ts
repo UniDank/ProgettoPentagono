@@ -34,7 +34,7 @@ async function createWindow() {
     minHeight: 480,
     width: 500,
     height: 480,
-    resizable: false,
+    //resizable: false,
     useContentSize: true,
     webPreferences: {
       preload,
@@ -52,7 +52,7 @@ async function createWindow() {
     win.loadFile(indexHtml)
   } else {
     win.loadURL(url)
-    //win.webContents.openDevTools({ mode: "undocked" })
+    win.webContents.openDevTools({ mode: "undocked", activate: false })
   }
 
   // Test actively push message to the Electron-Renderer

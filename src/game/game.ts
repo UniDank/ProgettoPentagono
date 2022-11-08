@@ -1,6 +1,5 @@
 import Phaser from 'phaser'
 import ButtonContainer from './ButtonContainer'
-import ClickableText from './ClickableText'
 import DebugScene from './scenes/DebugScene'
 import BootScene from './scenes/BootScene'
 import MainScene from './scenes/MainScene'
@@ -15,34 +14,24 @@ Phaser.GameObjects.GameObjectFactory.register('buttonContainer', function (x: nu
   return this.displayList.add(new ButtonContainer(this.scene, x, y, text, textStyle, texture, tint))
 })
 
-Phaser.GameObjects.GameObjectFactory.register('clickableText', function (x: number, y: number, text: string, textStyle?: Phaser.Types.GameObjects.Text.TextStyle) {
-	// @ts-ignore
-  return this.displayList.add(new ClickableText(this.scene, x, y, text, textStyle))
-})
-
 function launch(containerId: string) {
   return new Phaser.Game({
     type: Phaser.AUTO,
-    backgroundColor: '#282c34',
+    backgroundColor: '#353535',
     pixelArt: true,
     scale: {
       mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH,
       parent: containerId,
-      width: 600,
-      height: 580,
-      min: {
-        width: 600,
-        height: 580,
-      },
-      max: {
-        width: 1000,
-        height: 980
-      }
+      width: window.innerWidth,
+      height: window.innerHeight,
     },
     zoom: 1,
     dom: {
       createContainer: true
+    },
+    audio: {
+      disableWebAudio: true
     },
     scene: [HandlerScene, DebugScene, BootScene, MainScene]
   })

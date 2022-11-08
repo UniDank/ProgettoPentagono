@@ -11,31 +11,36 @@ export default class HandlerScene extends Scene {
     }
 
     preload() {
-        this.load.addFile(new WebFont(this.load, 'Alagard', 'custom', '../style.css')) // carica il font
+        this.load.addFile(new WebFont(this.load, 'Alagard', 'custom', '../style.css'))
     }
 
     create() {
-        this.input.setDefaultCursor("url(" + cursorPng + "), pointer") // imposta il cursore
+        this.input.setDefaultCursor("url(" + cursorPng + "), pointer")
 
-        const width = this.scale.gameSize.width;
+        /*const width = this.scale.gameSize.width;
         const height = this.scale.gameSize.height;
 
         this.parent = new Phaser.Structs.Size(width, height);
         this.sizer = new Phaser.Structs.Size(640, 960, Phaser.Structs.Size.HEIGHT_CONTROLS_WIDTH, this.parent);
 
         this.parent.setSize(width, height);
-        this.sizer.setSize(width, height);
+        this.sizer.setSize(width, height);*/
 
-        this.updateCamera();
+        this.updateCamera(this.scale.gameSize.width, this.scale.gameSize.height);
 
         this.scale.on('resize', this.resize, this);
-        window.addEventListener('resize', this.resize);
+        //window.addEventListener('resize', this.resize);
 
-        this.scene.launch('BootScene').launch('DebugScene') // avvia scena di boot e di debug
+        this.scene.launch('BootScene')
     }
     
-    updateCamera () {
-        const camera = this.cameras.main;
+    updateCamera(width: number, height: number) {
+        this.cameras.resize(width, height)
+        this.cameras.main.setViewport(0, 0, width, height)
+        this.cameras.main.setZoom(width / 500, height / 500)
+        this.cameras.main.centerOn(width / 2, height / 2)
+
+        /*const camera = this.cameras.main;
 
         const x = Math.ceil((this.parent.width - this.sizer.width) * 0.5);
         const y = 0;
@@ -44,16 +49,24 @@ export default class HandlerScene extends Scene {
 
         camera.setViewport(x, y, this.sizer.width, this.sizer.height);
         camera.setZoom(Math.max(scaleX, scaleY));
-        camera.centerOn(400, 300);
+        camera.centerOn(400, 300);*/
     }
 
     resize() {
-        const width = this.scale.gameSize.width;
+        let { innerWidth, innerHeight } = window
+        let canvas = this.game.canvas
+        console.log({ innerWidth, innerHeight })
+        // canvas.width = innerWidth
+        // canvas.height = innerHeight
+        canvas.style.width = `${innerWidth}px`
+        canvas.style.height = `${innerHeight}px`
+
+        /*const width = this.scale.gameSize.width;
         const height = this.scale.gameSize.height;
 
         this.parent.setSize(width, height);
-        this.sizer.setSize(width, height);
+        this.sizer.setSize(width, height);*/
 
-        this.updateCamera();
+        this.updateCamera(innerWidth, innerHeight);
     }
 }

@@ -14,9 +14,19 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true
   },
+  "typeRoots": [
+    "./node_modules/phaser/types"
+  ],
+  "types": [
+    "Phaser"
+  ],
   "paths": {
-    "@components*": [ "src/components/*" ],
-    "@game*": [ "src/game/*" ]
+    "@components*": [
+      "src/components/*"
+    ],
+    "@game*": [
+      "src/game/*"
+    ]
   },
   "include": [
     "src",
@@ -24,6 +34,8 @@
     "node_modules/phaser3-rex-plugins-types"
   ],
   "references": [
-    { "path": "./tsconfig.node.json" }
+    {
+      "path": "./tsconfig.node.json"
+    }
   ]
 }

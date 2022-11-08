@@ -1,17 +1,21 @@
 import { Scene } from 'phaser'
 import eventsCenter from '../EventsCenter'
-import ClickableText from '../ClickableText'
 import selectPng from '../assets/ButtonPointer.png'
 import titlePng from '../assets/Animated_Title.png'
 import titleJson from '../assets/Animated_Title.json'
 import backgroundPng from '../assets/Wall.png'
 import backgroundJson from '../assets/Wall.json'
+import bgSong from '../assets/background_song.mp3'
+import btnSelect from '../assets/select_button.mp3'
+import btnSwitch from '../assets/switch_button.mp3'
 
 export default class BootScene extends Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
   private buttons: Phaser.GameObjects.Text[] = []
   private buttonSelector!: Phaser.GameObjects.Image
   private selectedButtonIndex = 0
+  private selectAudio!: Phaser.Sound.BaseSound
+  private switchAudio!: Phaser.Sound.BaseSound
 
   constructor() {
     super({ key: 'BootScene' })
@@ -22,56 +26,83 @@ export default class BootScene extends Scene {
   }
 
   preload() {
+    this.load.audio('bgSong', bgSong);
+    this.load.audio('btnSelect', btnSelect);
+    this.load.audio('btnSwitch', btnSwitch);
     this.load.image('selector', selectPng)
     this.load.aseprite('animatedTitle', titlePng, titleJson)
     this.load.aseprite('mainBg', backgroundPng, backgroundJson)
   }
 
   create() {
-    const { width, height } = this.scale
-    const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
-    const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
+    this.selectAudio = this.sound.add('btnSelect')
+    this.switchAudio = this.sound.add('btnSwitch')
 
     this.anims.createFromAseprite('mainBg');
-    const bgSprite = this.add.sprite(230, 230, 'animatedTitle').setScale(1.125)
+    const bgSprite = this.add.sprite(230, 230, 'animatedTitle').setScale(1.1)
     bgSprite.play({ key: 'Animated', repeat: -1, frameRate: 15 })
+
+    const bgAudio = this.sound.add('bgSong')
+    bgAudio.play({ loop: true })
 
     this.anims.createFromAseprite('animatedTitle');
     const titleSprite = this.add.sprite(185, 65, 'animatedTitle').setScale(1.5)
     titleSprite.play({ key: 'Flash', repeat: -1, frameRate: 15, repeatDelay: 3000 })
 
-    let gameNew = this.add.text(25, 200, 'Nuova Partita', { fontFamily: 'Alagard', fontSize: '2rem' }).setInteractive().setResolution(10)
-    let gameContinue = this.add.text(25, 250, 'Continua', { fontFamily: 'Alagard', fontSize: '2rem' }).setInteractive().setResolution(10)
-    let gameCredits = this.add.text(25, 300, 'Crediti', { fontFamily: 'Alagard', fontSize: '2rem' }).setInteractive().setResolution(10)
-    let gameExit = this.add.text(25, 350, 'Esci', { fontFamily: 'Alagard', fontSize: '2rem' }).setInteractive().setResolution(10)
+    let gameNew = this.add.text(25, 200, 'Nuova Partita', { 
+      fontFamily: 'Alagard', fontSize: '2rem', stroke: '#353535', strokeThickness: 5, resolution: 10
+    }).setInteractive()
+    let gameContinue = this.add.text(25, 250, 'Continua', { 
+      fontFamily: 'Alagard', fontSize: '2rem', stroke: '#353535', strokeThickness: 5, resolution: 10
+    }).setInteractive()
+    let gameOptions = this.add.text(25, 300, 'Opzioni', { 
+      fontFamily: 'Alagard', fontSize: '2rem', stroke: '#353535', strokeThickness: 5, resolution: 10
+    }).setInteractive()
+    let gameCredits = this.add.text(25, 350, 'Crediti', { 
+      fontFamily: 'Alagard', fontSize: '2rem', stroke: '#353535', strokeThickness: 5, resolution: 10
+    }).setInteractive()
+    let gameExit = this.add.text(25, 400, 'Esci', { 
+      fontFamily: 'Alagard', fontSize: '2rem', stroke: '#353535', strokeThickness: 5, resolution: 10
+    }).setInteractive()
 
     this.buttonSelector = this.add.image(50, 50, 'selector').setScale(0.5)
 
-    this.buttons.push(...[gameNew, gameContinue, gameCredits, gameExit])
+    const startGroup = this.add.group().addMultiple([titleSprite, bgSprite, gameNew, gameContinue, gameOptions, gameCredits, gameExit])
 
-    if (true) { // se non c'è alcun salvataggio, disabilitarlo
+    this.buttons.push(...[gameNew, gameContinue, gameOptions, gameCredits, gameExit])
+
+    if (true) { // se è abilitato il debug, startare la scena
+      this.scene.launch('DebugScene')
+    }
+
+    if (true) { // se non c'è alcun salvataggio, disabilitare il bottone 'Continue'
       this.disableButton(1)
       this.buttons.splice(1, 1)
     }
 
-    this.buttons.forEach((btn, i) => {
-      btn.on('pointerover', () => this.selectButton(i))
-    });
+    this.buttons.forEach((btn, i) => btn.on('pointerover', () => this.selectButton(i)))
 
     gameNew.on('pointerup', () => {
-      console.log('new')
-      //this.scene.start('MainScene')
+      this.selectAudio.play()
+      this.scene.start('MainScene')
     })
   
     gameContinue.on('pointerup', () => {
-      console.log('continue')
+      this.selectAudio.play()
+    })
+
+    gameOptions.on('pointerup', () => {
+      this.selectAudio.play()
+      startGroup.setAlpha(0.5)
+      this.buttons.forEach(btn => btn.disableInteractive())
     })
   
     gameCredits.on('pointerup', () => {
-      console.log('credits')
+      this.selectAudio.play()
     })
 
     gameExit.on('pointerup', () => {
+      this.selectAudio.play()
       this.game.destroy(true, true)
       window.require('electron').ipcRenderer.invoke('close-window')
     })
@@ -81,6 +112,7 @@ export default class BootScene extends Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       gameNew.removeAllListeners()
       gameContinue.removeAllListeners()
+      gameOptions.removeAllListeners()
       gameCredits.removeAllListeners()
       gameExit.removeAllListeners()
     })
@@ -89,17 +121,19 @@ export default class BootScene extends Scene {
   disableButton(index: number) {
     const button = this.buttons[index]
     button.disableInteractive()
-    button.setTint(0xAAAAAA)
+    button.setColor('#AAAAAA')
+    //button.setStroke('', 0)
   }
 
   selectButton(index: number) {
     const currentButton = this.buttons[this.selectedButtonIndex]
-    currentButton.setTint(0xFFFFFF)
+    currentButton.setColor('#FFFFFF')
     const button = this.buttons[index]
-    button.setTint(0xE01D35)
+    button.setColor('#E01D35')
     this.buttonSelector.x = button.x - 15
     this.buttonSelector.y = button.y + button.displayHeight * 0.5
     this.selectedButtonIndex = index
+    this.switchAudio.play()
   }
 
   selectNextButton(change = 1) {
