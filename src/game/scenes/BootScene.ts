@@ -39,12 +39,12 @@ export default class BootScene extends Scene {
     this.switchAudio = this.sound.add('btnSwitch')
 
     this.anims.createFromAseprite('mainBg');
-    const bgSprite = this.add.sprite(230, 230, 'animatedTitle').setScale(1.1)
+    const bgSprite = this.add.sprite(230, 230, 'mainBg').setScale(1.1)
     bgSprite.play({ key: 'Animated', repeat: -1, frameRate: 15 })
 
     const bgAudio = this.sound.add('bgSong')
     bgAudio.play({ loop: true })
-
+1.5
     this.anims.createFromAseprite('animatedTitle');
     const titleSprite = this.add.sprite(185, 65, 'animatedTitle').setScale(1.5)
     titleSprite.play({ key: 'Flash', repeat: -1, frameRate: 15, repeatDelay: 3000 })

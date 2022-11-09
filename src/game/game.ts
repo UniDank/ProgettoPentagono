@@ -20,7 +20,8 @@ function launch(containerId: string) {
     backgroundColor: '#353535',
     pixelArt: true,
     scale: {
-      mode: Phaser.Scale.FIT,
+      fullscreenTarget: 'body',
+      mode: Phaser.Scale.ENVELOP,
       autoCenter: Phaser.Scale.CENTER_BOTH,
       parent: containerId,
       width: window.innerWidth,

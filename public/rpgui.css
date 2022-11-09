@@ -7,12 +7,6 @@ inside your html file.
 /*
 @import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
 */
-@font-face {
-  font-family: 'Alagard';
-  src: url('./alagard.ttf');
-  font-style: normal;
-  font-weight: normal;
-}
 /**
 * Customized scrollbars
 */
@@ -74,13 +68,18 @@ inside your html file.
   /* font size */
   font-size: 1.0em;
   /* default size and display */
-  max-width: 100%;
+  /*max-width: 100%;
   min-width: 140px;
-  height: 60px;
+  height: 60px;*/
   display: inline-block;
   /* padding */
-  padding-left: 35px;
-  padding-right: 35px; }
+  padding: 10px 35px;
+  /*padding-left: 35px;
+  padding-right: 35px;*/ }
+
+.rpgui-button * {
+  margin: 0px !important;
+}
 
 /* button hover */
 .rpgui-button.hover,
