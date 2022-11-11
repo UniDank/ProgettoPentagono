@@ -1,6 +1,8 @@
 import { Scene } from 'phaser'
 import WebFont from '../WebFont'
 import cursorPng from '../assets/cursor.png'
+import backgroundPng from '../assets/Main_Background.png'
+import backgroundJson from '../assets/Main_Background.json'
 
 export default class HandlerScene extends Scene {
     parent: Phaser.Structs.Size = new Phaser.Structs.Size();
@@ -11,6 +13,7 @@ export default class HandlerScene extends Scene {
     }
 
     preload() {
+        this.load.aseprite('mainBg', backgroundPng, backgroundJson)
         this.load.crossOrigin = 'anonymous'
         this.load.addFile(new WebFont(this.load, 'Alagard', 'custom', '../style.css'))
     }
@@ -31,7 +34,7 @@ export default class HandlerScene extends Scene {
         let maxWidth = 1000
         let maxHeight = 1000
 
-        let scale = Math.min(width / width, height / height)
+        let scale = Math.min(defWidth / width, defHeight / height)
         let newWidth = Math.min(width / scale, maxWidth)
         let newHeight = Math.min(height / scale, maxHeight)
 
@@ -49,7 +52,7 @@ export default class HandlerScene extends Scene {
             smooth = -normalize(newWidth / newHeight, defaultRatio, maxRatioHeight) / (1 / (maxSmoothScale - 1)) + maxSmoothScale
         }
 
-        //this.game.scale.resize(newWidth * smooth, newHeight * smooth)
+        this.game.scale.resize(newWidth * smooth, newHeight * smooth)
         this.game.canvas.style.width = newWidth * scale + 'px'
         this.game.canvas.style.height = newHeight * scale + 'px'
         this.game.canvas.style.marginTop = `${(defHeight - newHeight * scale) / 2}px`

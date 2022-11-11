@@ -8,11 +8,17 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "sourceMap": true,
-    "baseUrl": "./",
+    "baseUrl": ".",
     "strict": true,
-    "paths": {},
     "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@stores/*": ["src/stores/*"],
+      "@assets/*": ["src/game/assets/*"],
+      "@scenes/*": ["src/game/scenes/*"],
+      "@components/*": ["src/components/*"],
+      "@game/*": ["src/game/*"]
+    },
   },
   "typeRoots": [
     "./node_modules/phaser/types"
@@ -20,14 +26,6 @@
   "types": [
     "Phaser"
   ],
-  "paths": {
-    "@components*": [
-      "src/components/*"
-    ],
-    "@game*": [
-      "src/game/*"
-    ]
-  },
   "include": [
     "src",
     "**/*",

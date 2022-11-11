@@ -7,12 +7,16 @@ export default class MainScene extends Scene {
     super({ key: 'MainScene' })
   }
 
+  init() {
+    this.cursors = this.input.keyboard.createCursorKeys()
+  }
+
   preload() {
     
   }
 
   create() {
-    this.cursors = this.input.keyboard.createCursorKeys();
+    
   }
 
   update() {

@@ -22,8 +22,29 @@ html, body {
     overflow: hidden;
 }
 
+@layer base {
+    html {
+        font-family: 'Alagard';
+    }
+}
+
 @layer components {
     .fixed-center {
         @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
     }
+
+    .text-stroke-3, .text-stroke-5 {
+        position: relative;
+        background: transparent;
+        z-index: 0;
+    }
+        
+    .text-stroke-3:before, .text-stroke-5:before {
+        content: attr(data-text);
+        position: absolute;
+        z-index: -1;
+    }
+
+    .text-stroke-3:before { -webkit-text-stroke: 3px #353535; }
+    .text-stroke-5:before { -webkit-text-stroke: 8px #353535; }
 }

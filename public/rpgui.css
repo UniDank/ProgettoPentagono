@@ -643,24 +643,16 @@ ul.rpgui-list-imp {
   /* color and border */
   color: white;
   text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
-  font-size: 2em;
-  /* center text */
-  text-align: center;
-  /* padding */
-  padding: 0 0 0 0;
-  margin: 7px 7px 17px 7px; }
+  font-size: 2.5em;
+  padding: 0 0 0 0;}
 
 /* default gui header2 */
 .rpgui-content h2 {
   /* color and border */
   color: white;
   text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
-  font-size: 1.5em;
-  /* center text */
-  text-align: center;
-  /* padding */
-  padding: 0 0 0 0;
-  margin: 7px 7px 17px 7px; }
+  font-size: 2em;
+  padding: 0 0 0 0;}
 
 /* default gui header3 */
 .rpgui-content h3 {
@@ -668,13 +660,9 @@ ul.rpgui-list-imp {
   color: white;
   font-weight: 1;
   text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
-  font-size: 1.25em;
+  font-size: 1.5em;
   text-decoration: underline;
-  /* center text */
-  text-align: center;
-  /* padding */
-  padding: 0 0 0 0;
-  margin: 7px 7px 17px 7px; }
+  padding: 0 0 0 0;}
 
 /* default gui header4 */
 .rpgui-content h4 {
@@ -682,13 +670,9 @@ ul.rpgui-list-imp {
   color: white;
   font-weight: 1;
   text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
-  font-size: 1.0em;
+  font-size: 1.25em;
   text-decoration: underline;
-  /* center text */
-  text-align: center;
-  /* padding */
-  padding: 0 0 0 0;
-  margin: 7px 7px 17px 7px; }
+  padding: 0 0 0 0;}
 
 /* default p */
 .rpgui-content p {

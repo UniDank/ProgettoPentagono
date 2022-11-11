@@ -30,10 +30,10 @@ async function createWindow() {
   win = new BrowserWindow({
     title: 'Penta Quest',
     icon: join(process.env.PUBLIC, 'favicon.ico'),
-    minWidth: 500,
-    minHeight: 480,
-    width: 500,
-    height: 480,
+    minWidth: 720,
+    minHeight: 576,
+    width: 720,
+    height: 576,
     //resizable: false,
     useContentSize: true,
     webPreferences: {
