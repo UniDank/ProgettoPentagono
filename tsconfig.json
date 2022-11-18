@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "jsx": "preserve",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@stores/*": ["src/stores/*"],
+      "@assets/*": ["src/assets/*"],
+      "@gameassets/*": ["src/game/assets/*"],
+      "@scenes/*": ["src/game/scenes/*"],
+      "@components/*": ["src/components/*"],
+      "@game/*": ["src/game/*"]
+    },
+  },
+  "typeRoots": [
+    "./node_modules/phaser/types"
+  ],
+  "types": [
+    "Phaser"
+  ],
+  "include": [
+    "src",
+    "**/*",
+    "node_modules/phaser3-rex-plugins-types"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}
