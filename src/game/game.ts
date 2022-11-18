@@ -5,6 +5,7 @@ import BootScene from './scenes/BootScene'
 import MainScene from './scenes/MainScene'
 import HandlerScene from './scenes/HandlerScene'
 import SelectScene from './scenes/SelectScene'
+import CombatScene from './scenes/CombatScene'
 
 // https://blog.ourcade.co/posts/2020/phaser3-how-to-communicate-between-scenes/
 // https://github.com/photonstorm/phaser/issues/5064#issuecomment-646183833
@@ -37,7 +38,7 @@ function launch(containerId: string) {
     audio: {
       disableWebAudio: true
     },
-    scene: [HandlerScene, DebugScene, BootScene, MainScene, SelectScene]
+    scene: [HandlerScene, DebugScene, BootScene, SelectScene, MainScene, CombatScene]
   })
 }
 

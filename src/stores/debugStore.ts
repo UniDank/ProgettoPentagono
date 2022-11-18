@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 
 export const useDebugStore = defineStore('debug', () => {
     const currentFps = ref(0)

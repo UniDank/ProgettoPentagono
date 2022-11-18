@@ -99,8 +99,7 @@ export default class SelectScene extends Scene {
   }
 
   confirmSelection() {
-    const button = this.buttons[this.selectedButtonIndex]
-    this.selectedButtonIndex = this.buttons.indexOf(button)
+    console.log("Personaggio %d selezionato!", this.selectedButtonIndex)
     this.selectAudio.play()
   }
 

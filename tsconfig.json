@@ -14,7 +14,8 @@
     "skipLibCheck": true,
     "paths": {
       "@stores/*": ["src/stores/*"],
-      "@assets/*": ["src/game/assets/*"],
+      "@assets/*": ["src/assets/*"],
+      "@gameassets/*": ["src/game/assets/*"],
       "@scenes/*": ["src/game/scenes/*"],
       "@components/*": ["src/components/*"],
       "@game/*": ["src/game/*"]

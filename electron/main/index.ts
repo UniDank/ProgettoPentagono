@@ -34,7 +34,7 @@ async function createWindow() {
     minHeight: 576,
     width: 720,
     height: 576,
-    //resizable: false,
+    resizable: false,
     useContentSize: true,
     webPreferences: {
       preload,

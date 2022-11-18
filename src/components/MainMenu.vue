@@ -4,19 +4,19 @@
             <h1 v-for="(text, i) in textButtons"
                 @pointerover="overText(i)" @pointerup="clickText(i)" :key="text"
                 :class="[selectedBtn == i ? '!text-red-600' : (disabledBtn == i ? '!text-neutral-400' : '!text-white')]"
-                class="mb-2 select-none lg:mb-4 w-fit" :data-text="text">
+                class="mb-2 select-none lg:mb-4 w-fit text-stroke-5" :data-text="text">
                 {{ text }}
             </h1>
         </div>
         <div v-if="currentMenu == 1" class="bottom-0 left-0 flex flex-col gap-2 p-8 rpgui-container">
-            <button class="self-start rpgui-button" type="button" @click="goBack"><h2>Indietro</h2></button>
+            <button class="self-start rpgui-button" type="button" @click="goBack"><h3>Indietro</h3></button>
         </div>
         <div v-if="currentMenu == 3" class="rpgui-container !top-1/3 left-0 pl-8 flex flex-col gap-4">
-            <h1>Opzioni di gioco</h1>
+            <h1 data-text="Opzioni di gioco" class="text-stroke-5">Opzioni di gioco</h1>
             <div class="flex gap-4">
-                <h2>Risoluzione:</h2>
+                <h2 data-text="Risoluzione:" class="text-stroke-3">Risoluzione:</h2>
                 <div class="flex flex-col">
-                    <input class="rpgui-checkbox" type="checkbox"><label>Schermo intero</label>
+                    <input class="rpgui-checkbox" type="checkbox"><label class="text-stroke-3" data-text="Schermo intero">Schermo intero</label>
                     <select class="text-lg rpgui-dropdown lg:text-2xl rpgui-cursor-point">
                         <option value="1920x1080" class="text-lg !rpgui-cursor-point lg:text-2xl">1920 x 1080</option>
                         <option value="1280x720" class="text-lg !rpgui-cursor-point lg:text-2xl">1280 x 720</option>
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="flex gap-4">
-                <h2>Volume:</h2>
+                <h2 data-text="Volume:" class="text-stroke-3">Volume:</h2>
                 <input class="rpgui-slider" type="range" min="0" max="100" value="50">
             </div>
             <button class="self-start rpgui-button" type="button" @click="goBack"><h2>Indietro</h2></button>

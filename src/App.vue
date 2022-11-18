@@ -28,6 +28,6 @@
 </template>
 
 <style>
-  @import url('/main.css');
-  @import url('/rpgui.css');
+  @import url('./assets/main.css');
+  @import url('./assets/rpgui.css');
 </style>
