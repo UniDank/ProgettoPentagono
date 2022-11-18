@@ -1,7 +1,7 @@
 package com.pentaproject.demobackend;
 
-import com.pentaproject.demobackend.Entity.Enemy;
-import com.pentaproject.demobackend.Repositories.EnemyRepository;
+import com.pentaproject.demobackend.Model.Enemy;
+import com.pentaproject.demobackend.Repositories.IEnemyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 @SpringBootApplication(exclude={DataSourceAutoConfiguration.class, XADataSourceAutoConfiguration.class})
 public class DemoBackendApplication {
     @Autowired
-    private EnemyRepository rep;
+    private IEnemyRepository rep;
 
 
     public static void main(String[] args) {

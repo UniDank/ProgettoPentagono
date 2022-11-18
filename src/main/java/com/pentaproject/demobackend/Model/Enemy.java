@@ -1,4 +1,4 @@
-package com.pentaproject.demobackend.Entity;
+package com.pentaproject.demobackend.Model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
