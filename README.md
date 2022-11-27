@@ -3,7 +3,7 @@
 ## Informazioni
 Sezione del progetto ISS 2021/2022
 
----
+
 
 ## Task list
 - [x] Suddivisone del progetto
@@ -12,7 +12,7 @@ Sezione del progetto ISS 2021/2022
 - [ ] Creazione del sistema di gestione errori
 - [ ] Refactoring del codice
 
----
+
 
 ## Crediti
 - Me
