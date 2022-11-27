@@ -1,8 +1,8 @@
 package com.pentaproject.demobackend;
 
 import com.pentaproject.demobackend.Model.Enemy;
-import com.pentaproject.demobackend.Repositories.IEnemyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.pentaproject.demobackend.Repositories.EnemyRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,9 +14,10 @@ import java.util.stream.Stream;
 
 
 @SpringBootApplication(exclude={DataSourceAutoConfiguration.class, XADataSourceAutoConfiguration.class})
+@AllArgsConstructor
 public class DemoBackendApplication {
-    @Autowired
-    private IEnemyRepository rep;
+    //https://stackoverflow.com/questions/62845494/autowired-says-field-injection-not-recommended
+    private EnemyRepository rep;
 
 
     public static void main(String[] args) {
