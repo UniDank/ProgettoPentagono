@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-    import { Icon } from '@iconify/vue/dist/offline';
+    import { Icon } from '@iconify/vue/dist/offline'
     import fsEnter from '@iconify-icons/ic/round-fullscreen'
     import fsExit from '@iconify-icons/ic/round-fullscreen-exit'
     import { useDebugStore } from '../stores/debugStore'

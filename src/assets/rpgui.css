@@ -276,6 +276,25 @@ inside your html file.
   background-origin: padding-box;
   background-position: center; }
 
+  .rpgui-container.transparent {
+    /* border */
+    border-style: solid;
+    border-image-source: url("img/border-image-transparent.png");
+    border-image-repeat: repeat;
+    border-image-slice: 6 6 6 6;
+    border-image-width: 18px;
+    border-width: 15px;
+    padding: 12px;
+    /* internal border */
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    /* background */
+    background: url("img/background-image-transparent.png") repeat repeat;
+    background-clip: padding-box;
+    background-origin: padding-box;
+    background-position: center; }
+
 /* game div with golden background image*/
 .rpgui-container.framed-golden {
   /* border */
@@ -643,7 +662,7 @@ ul.rpgui-list-imp {
   /* color and border */
   color: white;
   text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
-  font-size: 2.5em;
+  font-size: 2.75em;
   padding: 0 0 0 0;}
 
 /* default gui header2 */
@@ -651,7 +670,7 @@ ul.rpgui-list-imp {
   /* color and border */
   color: white;
   text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
-  font-size: 2em;
+  font-size: 2.25em;
   padding: 0 0 0 0;}
 
 /* default gui header3 */
@@ -660,7 +679,7 @@ ul.rpgui-list-imp {
   color: white;
   font-weight: 1;
   text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
-  font-size: 1.5em;
+  font-size: 1.75em;
   /* text-decoration: underline; */
   padding: 0 0 0 0;}
 
@@ -670,7 +689,7 @@ ul.rpgui-list-imp {
   color: white;
   font-weight: 1;
   text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
-  font-size: 1.25em;
+  font-size: 1.5em;
   /* text-decoration: underline; */
   padding: 0 0 0 0;}
 

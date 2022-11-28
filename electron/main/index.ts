@@ -29,15 +29,16 @@ const indexHtml = join(process.env.DIST, 'index.html')
 async function createWindow() {
   win = new BrowserWindow({
     title: 'Penta Quest',
-    icon: join(process.env.PUBLIC, 'favicon.ico'),
+    icon: join(process.env.PUBLIC, 'Logo.png'),
     minWidth: 720,
     minHeight: 576,
     width: 720,
     height: 576,
     resizable: false,
+    center: true,
     useContentSize: true,
     webPreferences: {
-      preload,
+      //preload,
       // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
       // Consider using contextBridge.exposeInMainWorld
       // Read more on https://www.electronjs.org/docs/latest/tutorial/context-isolation
@@ -47,12 +48,13 @@ async function createWindow() {
   })
 
   win.removeMenu()
+  win.setBackgroundColor("#353535")
 
   if (app.isPackaged) {
     win.loadFile(indexHtml)
   } else {
     win.loadURL(url)
-    win.webContents.openDevTools({ mode: "undocked", activate: false })
+    //win.webContents.openDevTools({ mode: "undocked", activate: false })
   }
 
   // Test actively push message to the Electron-Renderer
@@ -108,6 +110,6 @@ ipcMain.handle('open-win', (event, arg) => {
   }
 })
 
-ipcMain.handle('close-window',()=>{
-  win.close();
-})
+ipcMain.handle('close-window',() => win.close())
+
+ipcMain.handle('toggle-fullscreen', (event, arg) => win.setFullScreen(arg))

@@ -3,29 +3,45 @@ import WebFont from '../WebFont'
 import cursorPng from '../assets/cursor.png'
 import backgroundPng from '../assets/Main_Background.png'
 import backgroundJson from '../assets/Main_Background.json'
+import logoPng from '../assets/AnimatedLogo.png'
+import logoJson from '../assets/AnimatedLogo.json'
+import titlePng from '../assets/Animated_Title.png'
+import titleJson from '../assets/Animated_Title.json'
+import bgSong from '../assets/background_song.mp3'
 
 export default class HandlerScene extends Scene {
-    parent: Phaser.Structs.Size = new Phaser.Structs.Size();
-    sizer: Phaser.Structs.Size = new Phaser.Structs.Size();
+    parent: Phaser.Structs.Size = new Phaser.Structs.Size()
+    sizer: Phaser.Structs.Size = new Phaser.Structs.Size()
 
     constructor() {
         super({ key: 'HandlerScene', active: true })
     }
 
     preload() {
+        this.load.aseprite('animatedLogo', logoPng, logoJson)
+
+        this.load.on('complete', () => this.time.delayedCall(4000, () => this.cameras.main.fadeOut(750, 0, 0, 0)))
+
+        this.cameras.main.once('camerafadeoutcomplete', () => this.scene.launch('BootScene'))
+
         this.load.aseprite('mainBg', backgroundPng, backgroundJson)
+        this.load.audio('bgSong', bgSong)
+        this.load.aseprite('animatedTitle', titlePng, titleJson)
         this.load.crossOrigin = 'anonymous'
         this.load.addFile(new WebFont(this.load, 'Alagard', 'custom', '../style.css'))
     }
 
     create() {
-        this.input.setDefaultCursor("url(" + cursorPng + "), pointer")
+        this.anims.createFromAseprite('animatedLogo')
+        const logoSprite = this.add.sprite(this.scale.gameSize.width / 2, this.scale.gameSize.height / 2, 'animatedLogo')
+        logoSprite.play({ key: 'Morph', frameRate: 10 })
+            .on('animationcomplete', () => logoSprite.play({ key: 'Flash', repeat: -1, frameRate: 12, repeatDelay: 2000 }))
+        
+        this.input.setDefaultCursor(`url(${cursorPng}), pointer`)
 
         this.updateCamera(this.scale.gameSize.width, this.scale.gameSize.height)
 
         this.scale.on('resize', this.resize, this)
-
-        this.scene.launch('BootScene')
     }
 
     updateCamera(width: number, height: number) { // https://codepen.io/yandeu/pen/oVBybd?editors=0010

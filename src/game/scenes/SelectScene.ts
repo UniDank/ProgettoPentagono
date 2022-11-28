@@ -48,7 +48,7 @@ export default class SelectScene extends Scene {
     this.selectAudio = this.sound.add('btnSelect')
     this.switchAudio = this.sound.add('btnSwitch')
 
-    this.add.image(this.scale.gameSize.width / 3, this.scale.gameSize.height / 2, 'selectBg').setScale(0.85)
+    this.add.image(-this.scale.gameSize.width / 2.5, 0, 'selectBg').setScale(0.8).setOrigin(0)
     
     this.anims.createFromAseprite('player1')
     const player1 = this.add.sprite(this.scale.gameSize.width * 0.1, this.scale.gameSize.height / 2, 'player1').setInteractive()
@@ -71,7 +71,7 @@ export default class SelectScene extends Scene {
     player5.play({ key: 'Idle5', repeat: -1, frameRate: 5 })
 
     this.buttonSelector = this.add.image(this.scale.gameSize.width * 0.1, this.scale.gameSize.height * 0.675, 'selector')
-      .setScale(0.75).setRotation(4.71)
+      .setScale(0.65).setRotation(4.71)
 
     this.buttons.push(...[player1, player2, player3, player4, player5])
 
@@ -100,6 +100,7 @@ export default class SelectScene extends Scene {
 
   confirmSelection() {
     console.log("Personaggio %d selezionato!", this.selectedButtonIndex)
+    this.scene.start('CombatScene')
     this.selectAudio.play()
   }
 
