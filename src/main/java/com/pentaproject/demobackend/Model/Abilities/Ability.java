@@ -2,6 +2,7 @@ package com.pentaproject.demobackend.Model.Abilities;
 
 
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,5 +18,5 @@ public class Ability {
     private int id;
     private String name;
     private Integer manacost;
-    private String Description;
+    private String description;
 }
