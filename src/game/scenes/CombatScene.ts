@@ -3,11 +3,11 @@ import mapJson from '../assets/maps/Village.json'
 import mapOutside from '../assets/maps/outside.png'
 import mapBuilding from '../assets/maps/building.png'
 import backgroundPng from '../assets/Battle.png'
-import { useBootStore } from '../../stores/bootStore'
+import { useMainStore } from '../../stores/mainStore'
 
 export default class CombatScene extends Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
-  private sceneStore = useBootStore()
+  private sceneStore = useMainStore()
 
   constructor() {
     super({ key: 'CombatScene' })

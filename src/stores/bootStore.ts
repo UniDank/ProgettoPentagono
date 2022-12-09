@@ -2,10 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useBootStore = defineStore('boot', () => {
-    const afterScene = ref('')
     const selectedBtn = ref(-1)
-
-    const changeScene = (scene: string) => afterScene.value = scene
 
     const selectButton = (index: number) => {
         let curIndex = selectedBtn.value + index
@@ -16,5 +13,5 @@ export const useBootStore = defineStore('boot', () => {
 
     const confirmButton = () => {}
 
-    return { afterScene, selectedBtn, selectButton, confirmButton, changeScene }
+    return { selectedBtn, selectButton, confirmButton }
 })

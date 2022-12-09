@@ -13,7 +13,7 @@ import playerPng5 from '../assets/players/P5.png'
 import selectPng from '../assets/ButtonPointer.png'
 import btnSelect from '../assets/select_button.mp3'
 import btnSwitch from '../assets/switch_button.mp3'
-import { useBootStore } from '../../stores/bootStore'
+import { useMainStore } from '../../stores/mainStore'
 
 export default class SelectScene extends Scene {
   private buttons: Phaser.GameObjects.Image[] = []
@@ -22,7 +22,7 @@ export default class SelectScene extends Scene {
   private selectAudio!: Phaser.Sound.BaseSound
   private switchAudio!: Phaser.Sound.BaseSound
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
-  private sceneStore = useBootStore()
+  private sceneStore = useMainStore()
 
   constructor() {
     super({ key: 'SelectScene' })

@@ -17,7 +17,7 @@
                 <h2 data-text="Risoluzione:" class="text-stroke-3">Risoluzione:</h2>
                 <div class="flex flex-col">
                     <input class="rpgui-checkbox" @click="toggleFullscreen" v-model="isFullScreen" type="checkbox" name="fullscreen">
-                    <label for="fullscreen" class="text-stroke-3" data-text="Schermo intero">Schermo intero {{ isFullScreen }}</label>
+                    <label for="fullscreen" class="text-stroke-3" data-text="Schermo intero">Schermo intero</label>
                     <select class="text-lg rpgui-dropdown lg:text-2xl rpgui-cursor-point">
                         <option value="1920x1080" class="text-lg !rpgui-cursor-point lg:text-2xl">1920 x 1080</option>
                         <option value="1280x720" class="text-lg !rpgui-cursor-point lg:text-2xl">1280 x 720</option>
@@ -41,8 +41,10 @@
 <script setup lang="ts">
     import { ref, onMounted } from 'vue'
     import { useBootStore } from '../stores/bootStore'
+    import { useMainStore } from '../stores/mainStore'
 
     const boot = useBootStore()
+    const main = useMainStore()
 
     const isFullScreen = ref(false)
 
@@ -68,9 +70,9 @@
     }
 
     function goBack() {
-        if (boot.afterScene != 'BootScene') {
+        if (main.afterScene != 'BootScene') {
             window.addEventListener('keydown', menuSelect)
-            boot.changeScene('BootScene')
+            main.changeScene('BootScene')
         }
         currentMenu.value = 0
         selectedBtn.value = -1
@@ -84,18 +86,18 @@
             case 0:
                 currentMenu.value = 1
                 window.removeEventListener('keydown', menuSelect)
-                boot.changeScene('SelectScene')
+                main.changeScene('SelectScene')
                 break;
             case 1:
                 currentMenu.value = 2
-                boot.changeScene('MainScene')
+                main.changeScene('MainScene')
                 break;
             case 2:
                 currentMenu.value = 3
                 break;
             case 3:
                 currentMenu.value = 4
-                console.log('credits')
+                main.showDialogue('ID_DIALOGO')
                 break;
             case 4:
                 boot.$reset()

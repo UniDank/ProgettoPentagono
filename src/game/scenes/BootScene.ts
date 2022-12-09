@@ -1,10 +1,10 @@
 import { Scene } from 'phaser'
 
-import { useBootStore } from '../../stores/bootStore'
+import { useMainStore } from '../../stores/mainStore'
 
 export default class BootScene extends Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
-  private sceneStore = useBootStore()
+  private sceneStore = useMainStore()
 
   constructor() {
     super({ key: 'BootScene' })
@@ -35,7 +35,7 @@ export default class BootScene extends Scene {
     this.sceneStore.changeScene('BootScene')
 
     this.sceneStore.$onAction(({ name, args }) => {
-      if (name === 'changeScene') this.scene.start(args[0])
+      if (name === 'changeScene') this.scene.launch(args[0])
     })
   }
 

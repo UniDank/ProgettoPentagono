@@ -6,9 +6,9 @@
   import { onMounted, onUnmounted, ref, computed } from 'vue'
   import { launch } from './game/game'
 
-  import { useBootStore } from './stores/bootStore'
+  import { useMainStore } from './stores/mainStore'
 
-  const sceneStore = useBootStore()
+  const sceneStore = useMainStore()
   const isBootStarted = ref(false)
 
   sceneStore.$onAction(({ name, args }) => {
@@ -34,6 +34,7 @@
 <template>
   <div :id="containerId" />
   <MainMenu v-if="isBootStarted" />
+  <DialogueInterface />
 </template>
 
 <style>
