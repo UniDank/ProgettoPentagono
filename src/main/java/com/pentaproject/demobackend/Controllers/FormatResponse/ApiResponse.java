@@ -33,9 +33,16 @@ public class ApiResponse<T> {
         if(status.isError()){
             this.errormessage = errormessage;
             this.errorhttp = status.name();
-            return;
         }
         this.data = data;
+    }
+
+    public ApiResponse(@NonNull HttpStatus status, @Nullable String errormessage){
+        this.status = Integer.toString(status.value());
+        if(status.isError()){
+            this.errormessage = errormessage;
+            this.errorhttp = status.name();
+        }
     }
 
     public ApiResponse(@NonNull HttpStatus status, @NonNull T data){
@@ -43,7 +50,6 @@ public class ApiResponse<T> {
         if(status.isError()){
             this.errormessage = status.getReasonPhrase();
             this.errorhttp = status.name();
-            return;
         }
         this.data = data;
     }
