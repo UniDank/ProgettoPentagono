@@ -1,5 +1,6 @@
 package com.pentaproject.demobackend.Services;
 
+<<<<<<< HEAD
 import com.pentaproject.demobackend.Model.Heroes.Hero;
 import com.pentaproject.demobackend.Model.Items.Item;
 import com.pentaproject.demobackend.Model.Party.Party;
@@ -28,4 +29,7 @@ public class PartyService {
     }
 
 
+=======
+public class PartyService {
+>>>>>>> cf87675 (Create le relative classi per i servizi e repositori per ogni tipo di modello.)
 }
