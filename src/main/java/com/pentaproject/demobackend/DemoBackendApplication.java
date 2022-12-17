@@ -5,10 +5,14 @@ package com.pentaproject.demobackend;
 import com.pentaproject.demobackend.Model.Abilities.Ability;
 import com.pentaproject.demobackend.Model.Enemies.Enemy;
 import com.pentaproject.demobackend.Model.Enemies.EnemyType;
+import com.pentaproject.demobackend.Model.Heroes.Hero;
+import com.pentaproject.demobackend.Model.Items.Item;
+import com.pentaproject.demobackend.Model.Party.Party;
 import com.pentaproject.demobackend.Repositories.AbilityRepository;
 
 
 import com.pentaproject.demobackend.Repositories.EnemyRepository;
+import com.pentaproject.demobackend.Repositories.PartyRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -18,6 +22,7 @@ import org.springframework.boot.autoconfigure.jdbc.XADataSourceAutoConfiguration
 import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 
@@ -26,6 +31,7 @@ import java.util.stream.Stream;
 public class DemoBackendApplication {
     private EnemyRepository meleeEnemyRepository;
     private AbilityRepository abilityRepository;
+    private PartyRepository partyRepository;
 
 
 
@@ -47,6 +53,11 @@ public class DemoBackendApplication {
                             .toList()
 
             );
+            partyRepository.deleteAll();
+            partyRepository.save(
+                    new Party(0, List.of(new Hero("0","marco",20,20)), List.of(new Item("0","potion","cure",20,5)))
+            );
+
 
         };
 

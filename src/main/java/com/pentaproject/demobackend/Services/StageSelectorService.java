@@ -14,7 +14,7 @@ public class StageSelectorService {
     }
 
     private List<Enemy> getEnemyFromId(int id){
-
+        return null;
     }
 
 }
