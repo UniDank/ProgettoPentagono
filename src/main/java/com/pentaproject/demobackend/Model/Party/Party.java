@@ -3,6 +3,7 @@ package com.pentaproject.demobackend.Model.Party;
 import com.pentaproject.demobackend.Model.Heroes.Hero;
 import com.pentaproject.demobackend.Model.Items.Item;
 
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,8 @@ import java.util.List;
 @NoArgsConstructor
 @Document("Party")
 public class Party {
+    @Id
+    private int id; //cosi da poter sapere fare il fetch del primo elemento
     private List<Hero> Members;
     private List<Item> Bag;
 }

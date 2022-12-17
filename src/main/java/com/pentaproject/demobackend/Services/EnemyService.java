@@ -1,7 +1,9 @@
 package com.pentaproject.demobackend.Services;
 
+import com.pentaproject.demobackend.Model.Abilities.Ability;
 import com.pentaproject.demobackend.Model.Enemies.Enemy;
 import com.pentaproject.demobackend.Model.Enemies.EnemyType;
+import com.pentaproject.demobackend.Model.Enemies.Enemy;
 import com.pentaproject.demobackend.Repositories.EnemyRepository;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
@@ -14,13 +16,24 @@ import java.util.List;
 @AllArgsConstructor
 public class EnemyService {
     private EnemyRepository rep;
-    public List<Enemy> getEnemies(){
-        return rep.findAll();
+    private static int value;
+
+    public void insertEnemy(Enemy enemy){
+        rep.insert(enemy);
     }
 
-    public List<Enemy> getEnemiesByType(String type) throws IllegalArgumentException, NullPointerException {
-        EnemyType enemyType = EnemyType.valueOf(EnemyType.class,type);
-        System.out.println(enemyType);
-        return rep.findAllByCategory(enemyType);
+    public Enemy getEnemy(int id){
+        return rep.findById(id).orElse(null);
     }
+
+    public Enemy generateEnemy(String name,
+    Integer life,
+    Integer mana,
+    Integer attack,
+    Integer defence,
+    List<Ability> abilitiesList,
+    EnemyType category){
+        return new Enemy(EnemyService.value++,name,life,mana,attack,defence,abilitiesList,category);
+    }
+
 }

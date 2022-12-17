@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@RequestMapping("/api/v1")
-@RestController
+
 @AllArgsConstructor
 public class EnemyController {
     //https://stackoverflow.com/questions/62845494/autowired-says-field-injection-not-recommended
