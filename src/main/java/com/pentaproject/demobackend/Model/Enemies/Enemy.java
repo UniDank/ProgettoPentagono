@@ -2,18 +2,13 @@ package com.pentaproject.demobackend.Model.Enemies;
 
 import com.pentaproject.demobackend.Model.Abilities.Ability;
 
-import com.pentaproject.demobackend.Utils.AutoGenEnemy.EnemyPrototype;
-import jakarta.persistence.Entity;
+import com.pentaproject.demobackend.Utils.EnemyCloning.EnemyPrototype;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.stereotype.Component;
 
 
-import java.lang.annotation.Annotation;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 //todo: creare una classe astratta entità per favorire la creazione dei nemici tramiti abstract factory method + prototype.

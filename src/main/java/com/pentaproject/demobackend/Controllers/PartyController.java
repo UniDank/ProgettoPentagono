@@ -3,7 +3,6 @@ package com.pentaproject.demobackend.Controllers;
 import com.pentaproject.demobackend.Controllers.FormatResponse.ApiResponse;
 import com.pentaproject.demobackend.Model.Party.Party;
 import com.pentaproject.demobackend.Services.PartyService;
-import jakarta.servlet.http.Part;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -20,6 +19,12 @@ import org.springframework.stereotype.Controller;
             }]
      }
  */
+
+/**
+ * Classe controller per gestire le richieste dell'oggetto party
+ * @version 1.0
+ * @author Marco
+ * */
 
 @Controller
 @AllArgsConstructor

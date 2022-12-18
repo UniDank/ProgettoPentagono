@@ -48,8 +48,11 @@ public class DemoBackendApplication {
                     .toList());
             meleeEnemyRepository.deleteAll();
             meleeEnemyRepository.saveAll(
-                    Stream.of(new Enemy(1,"pippo",40,20,5,5,new ArrayList<>(), EnemyType.Thief),
-                                    new Enemy(2,"claudio",40,20,5,5,abilityRepository.findAll(), EnemyType.Tank))
+                    Stream.of(new Enemy(1,"pippo",40,20,5,15,new ArrayList<>(), EnemyType.Thief),
+                                    new Enemy(2,"claudio",25,5,10,5,abilityRepository.findAll(), EnemyType.Tank),
+                            new Enemy(3,"wa",20,25,5,10,new ArrayList<>(),EnemyType.Archer),
+                                    new Enemy(4,"wa1",23,25,15,15,new ArrayList<>(),EnemyType.Archer)
+                                    )
                             .toList()
 
             );

@@ -1,12 +1,17 @@
 package com.pentaproject.demobackend.Services;
 
-import com.pentaproject.demobackend.Model.Heroes.Hero;
 import com.pentaproject.demobackend.Model.Items.Item;
 import com.pentaproject.demobackend.Repositories.ItemRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+
+
+/**
+ * Classe Service per la gestione della logica relativa agli oggetti di tipo item
+ * @version 1.0
+ * @author Marco
+ * */
 
 @Service
 @AllArgsConstructor
@@ -28,5 +33,8 @@ public class ItemService {
      Integer value,
      Integer quantity){
         return new Item(Integer.toString(ItemService.value++),name,type,value,quantity);
+    }
+
+    public void insertAbility(Item item) {
     }
 }

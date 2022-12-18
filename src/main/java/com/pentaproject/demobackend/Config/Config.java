@@ -5,6 +5,12 @@ import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilde
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+
+/**
+ * Classe Config per l'impostazione di particolari valori;
+ * @version 1.0
+ * @author Marco
+ * */
 @Configuration
 public class Config {
     //Metodo per eliminare i valori nulli dal json response

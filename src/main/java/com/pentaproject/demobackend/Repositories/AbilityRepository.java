@@ -12,7 +12,7 @@ public interface AbilityRepository extends MongoRepository<Ability,Integer> {
     @NonNull
     List<Ability> findAll();
     default List<Ability> getDistinctAbilityRandom(){
-        //todo:
+        //TODO:
         //  >Avendo N abilità nel DB randomizzo un numbero da 0 ad N-1 in maniera distinct
         //  >Lo salvo in locale
         //  >Ripeto finché non ho fullato gli slot abilità
