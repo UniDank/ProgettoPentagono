@@ -16,9 +16,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Document("Hero")
 public class Hero {
+    @Id
+    private String id;
     private String name;
-    private Integer attack;
-    private Integer defence;
     private Integer life;
     private Integer Mana;
 }

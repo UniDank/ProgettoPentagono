@@ -3,8 +3,6 @@ package com.pentaproject.demobackend.Model.Enemies;
 import com.pentaproject.demobackend.Model.Abilities.Ability;
 
 import com.pentaproject.demobackend.Utils.EnemyCloning.EnemyPrototype;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,6 +19,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Enemy  implements EnemyPrototype {
+    @Id
+    private int id;
     private String name;
     private Integer life;
     private Integer mana;
@@ -30,6 +30,7 @@ public class Enemy  implements EnemyPrototype {
     private EnemyType category;
 
     private Enemy(Enemy clone){
+        this.id = -1;
         this.name = clone.name;
         this.life = clone.life;
         this.mana = clone.mana;
@@ -43,6 +44,4 @@ public class Enemy  implements EnemyPrototype {
     public EnemyPrototype clone() {
         return new Enemy(this);
     }
-
-
 }

@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
-//todo: usare i nomi come id univoci!
 @Controller
 @AllArgsConstructor
 public class EnemyController {
