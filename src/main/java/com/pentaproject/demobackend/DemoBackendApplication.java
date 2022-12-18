@@ -48,17 +48,17 @@ public class DemoBackendApplication {
                     .toList());
             meleeEnemyRepository.deleteAll();
             meleeEnemyRepository.saveAll(
-                    Stream.of(new Enemy(1,"pippo",40,20,5,15,new ArrayList<>(), EnemyType.Thief),
-                                    new Enemy(2,"claudio",25,5,10,5,abilityRepository.findAll(), EnemyType.Tank),
-                            new Enemy(3,"wa",20,25,5,10,new ArrayList<>(),EnemyType.Archer),
-                                    new Enemy(4,"wa1",23,25,15,15,new ArrayList<>(),EnemyType.Archer)
+                    Stream.of(new Enemy("pippo",40,20,5,15,new ArrayList<>(), EnemyType.Thief),
+                                    new Enemy("claudio",25,5,10,5,abilityRepository.findAll(), EnemyType.Tank),
+                            new Enemy("wa",20,25,5,10,new ArrayList<>(),EnemyType.Archer),
+                                    new Enemy("wa1",23,25,15,15,new ArrayList<>(),EnemyType.Archer)
                                     )
                             .toList()
 
             );
             partyRepository.deleteAll();
             partyRepository.save(
-                    new Party(0, List.of(new Hero("0","marco",20,20)), List.of(new Item("0","potion","cure",20,5)))
+                    new Party(0, List.of(new Hero("0","marco",20,20,20,20)), List.of(new Item("0","potion","cure",20,5)))
             );
 
 

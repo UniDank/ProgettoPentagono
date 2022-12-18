@@ -28,7 +28,6 @@ import java.util.Random;
 @AllArgsConstructor
 public class EnemyService {
     private EnemyRepository rep;
-    private static int value;
 
     private ObjectMapper json;
 
@@ -40,9 +39,10 @@ public class EnemyService {
         return rep.findById(id).orElse(null);
     }
 
-    public void generateEnemy(String name, Integer life, Integer mana, Integer attack, Integer defence, List<Ability> abilitiesList, EnemyType category) throws IllegalArgumentException{
-        Enemy pippo = new Enemy(EnemyService.value++,name,life,mana,attack,defence,abilitiesList,category);
+    public Enemy generateEnemy(String name, Integer life, Integer mana, Integer attack, Integer defence, List<Ability> abilitiesList, EnemyType category) throws IllegalArgumentException{
+        Enemy pippo = new Enemy(name,life,mana,attack,defence,abilitiesList,category);
         insertEnemy(pippo);
+        return pippo;
     }
 
     public List<Enemy> getEnemies() {

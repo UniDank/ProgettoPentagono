@@ -24,8 +24,8 @@ public class HeroService {
         return rep.findById(id).orElse(null);
     }
 
-    public Hero generateHero(String name, Integer life, Integer mana){
-        return new Hero(Integer.toString(HeroService.value++),name,life,mana);
+    public Hero generateHero(String name, Integer att, Integer def, Integer life, Integer mana){
+        return new Hero(Integer.toString(HeroService.value++),name,att, def, life,mana);
     }
 
     public void insertAbility(Hero hero) {

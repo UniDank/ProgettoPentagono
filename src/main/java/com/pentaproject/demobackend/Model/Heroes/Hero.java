@@ -19,6 +19,10 @@ public class Hero {
     @Id
     private String id;
     private String name;
+
+    private Integer att;
+
+    private Integer def;
     private Integer life;
     private Integer Mana;
 }
