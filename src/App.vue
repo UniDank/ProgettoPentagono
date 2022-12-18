@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import MainMenu from './components/MainMenu.vue'
   import DebugInterface from './components/DebugInterface.vue'
+  import CombatInterface from './components/CombatInterface.vue'
   import DialogueInterface from './components/DialogueInterface.vue'
 
   import { onMounted, onUnmounted, ref, computed } from 'vue'
@@ -9,10 +10,11 @@
   import { useMainStore } from './stores/mainStore'
 
   const sceneStore = useMainStore()
-  const isBootStarted = ref(false)
+  const selectedInterface = ref(0)
 
   sceneStore.$onAction(({ name, args }) => {
-    if (name === 'changeScene') isBootStarted.value = true
+    if (name === 'changeScene' && args[0] == 'BootScene') selectedInterface.value = 1
+    if (name === 'changeScene' && args[0] == 'CombatScene') selectedInterface.value = 2
   })
 
   const gameInstance = ref<Phaser.Game>()
@@ -33,8 +35,9 @@
 
 <template>
   <div :id="containerId" />
-  <MainMenu v-if="isBootStarted" />
+  <MainMenu v-if="selectedInterface == 1" />
   <DialogueInterface />
+  <CombatInterface v-if="selectedInterface == 2" />
 </template>
 
 <style>

@@ -48,7 +48,7 @@ export default class SelectScene extends Scene {
     this.selectAudio = this.sound.add('btnSelect')
     this.switchAudio = this.sound.add('btnSwitch')
 
-    this.add.image(-this.scale.gameSize.width / 2.5, 0, 'selectBg').setScale(0.8).setOrigin(0)
+    this.add.image(- this.scale.gameSize.width * 0.35, 0, 'selectBg').setScale(0.85).setOrigin(0)
     
     this.anims.createFromAseprite('player1')
     const player1 = this.add.sprite(this.scale.gameSize.width * 0.1, this.scale.gameSize.height / 2, 'player1').setInteractive()
@@ -99,8 +99,7 @@ export default class SelectScene extends Scene {
   }
 
   confirmSelection() {
-    console.log("Personaggio %d selezionato!", this.selectedButtonIndex)
-    this.scene.start('CombatScene')
+    this.sceneStore.changeScene('CombatScene')
     this.selectAudio.play()
   }
 

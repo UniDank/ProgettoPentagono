@@ -73,7 +73,7 @@ inside your html file.
   height: 60px;*/
   display: inline-block;
   /* padding */
-  padding: 10px 35px;
+  padding: 0.5rem 1.5rem;
   /*padding-left: 35px;
   padding-right: 35px;*/ }
 
@@ -275,6 +275,20 @@ inside your html file.
   background-clip: padding-box;
   background-origin: padding-box;
   background-position: center; }
+
+  .rpgui-container.cool {
+  /* border */
+  border-style: solid;
+  border-image-source: url("img/border-image-cool.png");
+  border-image-repeat: repeat;
+  border-image-slice: 28 28 28 28;
+  border-image-width: 30px;
+  border-width: 7px;
+  padding: 0.5rem;
+  /* internal border */
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box; }
 
   .rpgui-container.transparent {
     /* border */
@@ -690,6 +704,15 @@ ul.rpgui-list-imp {
   font-weight: 1;
   text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
   font-size: 1.5em;
+  /* text-decoration: underline; */
+  padding: 0 0 0 0;}
+
+  .rpgui-content h5 {
+  /* color and border */
+  color: white;
+  font-weight: 1;
+  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+  font-size: 1.25em;
   /* text-decoration: underline; */
   padding: 0 0 0 0;}
 

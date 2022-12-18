@@ -18,7 +18,7 @@ if (!app.requestSingleInstanceLock()) {
 }
 
 // Read more on https://www.electronjs.org/docs/latest/tutorial/security
-process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
+//.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 
 let win: BrowserWindow | null = null
 // Here, you can also use other preload
@@ -30,10 +30,10 @@ async function createWindow() {
   win = new BrowserWindow({
     title: 'Penta Quest',
     icon: join(process.env.PUBLIC, 'Logo.png'),
-    minWidth: 720,
-    minHeight: 576,
-    width: 720,
-    height: 576,
+    minWidth: 800,
+    minHeight: 600,
+    width: 800,
+    height: 600,
     resizable: false,
     center: true,
     useContentSize: true,
