@@ -34,12 +34,4 @@ public class Party {
     private int id; //cosi da poter sapere fare il fetch del primo elemento
     private List<Hero> Members;
     private List<Item> Bag;
-
-    @Override
-    public String toString() {
-        return "id=" + id +
-                ", Members=" + Members +
-                ", Bag=" + Bag
-                ;
-    }
 }
