@@ -32,7 +32,7 @@ public class ItemService {
      String type,
      Integer value,
      Integer quantity){
-        return new Item(Integer.toString(ItemService.value++),name,type,value,quantity);
+        return new Item(name,type,value,quantity);
     }
 
     public void insertAbility(Item item) {

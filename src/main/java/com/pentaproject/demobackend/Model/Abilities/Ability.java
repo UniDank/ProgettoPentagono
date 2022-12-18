@@ -14,8 +14,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document("abilities")
 @AllArgsConstructor
 public class Ability {
-    @Id
-    private int id;
     private String name;
     private Integer manacost;
     private String description;

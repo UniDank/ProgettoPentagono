@@ -19,8 +19,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Document("Item")
 public class Item {
-    @Id
-    private String id;
     private String name;
     private String type;
     private Integer value;
