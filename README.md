@@ -1,25 +1,21 @@
-# Penta Quest
+﻿# Project Pentagono: Backend
 
-🥳 RPG Game in TypeScript, Phaser and Vue with Java Spring Boot as back-end.
+## Informazioni
+Sezione del progetto ISS 2021/2022
 
-## Features
 
-📦 Out of the box  
-🌱 Extensible, really simple directory structure  
-💪 Support using Node.js API in Electron-Renderer  
-🖥 It's easy to implement multiple windows  
 
-## Directory
+## Task list
+- [x] Suddivisone del progetto
+- [x] Personalizazione del Json response
+- [ ] Creazione dei modelli utili
+- [ ] Creazione del sistema di gestione errori
+- [ ] Refactoring del codice
 
-```diff
-  ├─┬ electron
-  │ ├─┬ main
-  │ │ └── index.ts    entry of Electron-Main
-  │ └─┬ preload
-  │   └── index.ts    entry of Preload-Scripts
-  ├─┬ src
-  │ └── main.ts       entry of Electron-Renderer
-  ├── index.html
-  ├── package.json
-  └── vite.config.ts
-```
+
+
+## Crediti
+- Me
+- **Me**
+- >Me
+- *Me*
