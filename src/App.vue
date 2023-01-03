@@ -2,6 +2,7 @@
   import MainMenu from './components/MainMenu.vue'
   import DebugInterface from './components/DebugInterface.vue'
   import CombatInterface from './components/CombatInterface.vue'
+  import StageInterface from './components/StageInterface.vue'
   import DialogueInterface from './components/DialogueInterface.vue'
 
   import { onMounted, onUnmounted, ref, computed } from 'vue'
@@ -14,7 +15,8 @@
 
   sceneStore.$onAction(({ name, args }) => {
     if (name === 'changeScene' && args[0] == 'BootScene') selectedInterface.value = 1
-    if (name === 'changeScene' && args[0] == 'CombatScene') selectedInterface.value = 2
+    if (name === 'changeScene' && args[0] == 'StageScene') selectedInterface.value = 2
+    if (name === 'changeScene' && args[0] == 'CombatScene') selectedInterface.value = 3
   })
 
   const gameInstance = ref<Phaser.Game>()
@@ -37,7 +39,8 @@
   <div :id="containerId" />
   <MainMenu v-if="selectedInterface == 1" />
   <DialogueInterface />
-  <CombatInterface v-if="selectedInterface == 2" />
+  <StageInterface v-if="selectedInterface == 2" />
+  <CombatInterface v-if="selectedInterface == 3" />
 </template>
 
 <style>

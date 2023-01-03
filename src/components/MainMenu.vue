@@ -133,7 +133,7 @@
         }
     }
 
-    onMounted(() => {
+    onMounted(async () => {
         if (true) { //TODO: Se non c'è alcun salvataggio, disabilitare il bottone 'Continue'
             disabledBtn.value = 1
         }

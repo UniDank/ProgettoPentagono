@@ -22,7 +22,7 @@ export default class BootScene extends Scene {
     this.cameras.main.fadeIn(750, 0, 0, 0)
 
     this.anims.createFromAseprite('mainBg')
-    const bgSprite = this.add.sprite(- this.scale.gameSize.width * 0.25, 0, 'mainBg').setScale(0.8).setOrigin(0)
+    const bgSprite = this.add.sprite(0, 0, 'mainBg').setOrigin(0)
     bgSprite.play({ key: 'Animation', repeat: -1, frameRate: 15 })
 
     const bgAudio = this.sound.add('bgSong')

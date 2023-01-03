@@ -1,18 +1,4 @@
 import { Scene } from 'phaser'
-import backgroundPng from '../assets/Select_Background.png'
-import playerJson1 from '../assets/players/P1.json'
-import playerPng1 from '../assets/players/P1.png'
-import playerJson2 from '../assets/players/P2.json'
-import playerPng2 from '../assets/players/P2.png'
-import playerJson3 from '../assets/players/P3.json'
-import playerPng3 from '../assets/players/P3.png'
-import playerJson4 from '../assets/players/P4.json'
-import playerPng4 from '../assets/players/P4.png'
-import playerJson5 from '../assets/players/P5.json'
-import playerPng5 from '../assets/players/P5.png'
-import selectPng from '../assets/ButtonPointer.png'
-import btnSelect from '../assets/select_button.mp3'
-import btnSwitch from '../assets/switch_button.mp3'
 import { useMainStore } from '../../stores/mainStore'
 
 export default class SelectScene extends Scene {
@@ -33,22 +19,14 @@ export default class SelectScene extends Scene {
   }
 
   preload() {
-    this.load.image('selectBg', backgroundPng)
-    this.load.image('selector', selectPng)
-    this.load.audio('btnSelect', btnSelect)
-    this.load.audio('btnSwitch', btnSwitch)
-    this.load.aseprite('player1', playerPng1, playerJson1)
-    this.load.aseprite('player2', playerPng2, playerJson2)
-    this.load.aseprite('player3', playerPng3, playerJson3)
-    this.load.aseprite('player4', playerPng4, playerJson4)
-    this.load.aseprite('player5', playerPng5, playerJson5)
+    
   }
 
   create() {
     this.selectAudio = this.sound.add('btnSelect')
     this.switchAudio = this.sound.add('btnSwitch')
 
-    this.add.image(- this.scale.gameSize.width * 0.35, 0, 'selectBg').setScale(0.85).setOrigin(0)
+    this.add.image(0, 0, 'selectBg').setOrigin(0)
     
     this.anims.createFromAseprite('player1')
     const player1 = this.add.sprite(this.scale.gameSize.width * 0.1, this.scale.gameSize.height / 2, 'player1').setInteractive()
@@ -99,7 +77,7 @@ export default class SelectScene extends Scene {
   }
 
   confirmSelection() {
-    this.sceneStore.changeScene('CombatScene')
+    this.sceneStore.changeScene('StageScene')
     this.selectAudio.play()
   }
 

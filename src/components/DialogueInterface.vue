@@ -3,7 +3,7 @@
         <div class="bottom-28 left-[10%] rpgui-container framed w-1/4 h-[5.5rem] !text-white">
             <h4>{{ currentName }}</h4>
         </div>
-        <div class="bottom-4 left-1/2 -translate-x-1/2 relative rpgui-container transparent w-4/5 h-32 !text-white" @click="goOnScript">
+        <div class="bottom-4 left-1/2 -translate-x-1/2 relative rpgui-container framed w-4/5 h-32 !text-white" @click="goOnScript">
             <h4>{{ currentText }}</h4>
         </div>
     </div>

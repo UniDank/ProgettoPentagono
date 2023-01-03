@@ -77,10 +77,6 @@ inside your html file.
   /*padding-left: 35px;
   padding-right: 35px;*/ }
 
-.rpgui-button * {
-  margin: 0px !important;
-}
-
 /* button hover */
 .rpgui-button.hover,
 .rpgui-button:hover {
@@ -265,7 +261,7 @@ inside your html file.
   border-image-slice: 6 6 6 6;
   border-image-width: 18px;
   border-width: 15px;
-  padding: 0.5rem 0.75rem;
+  padding: 0.25rem 0.5rem;
   /* internal border */
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -284,7 +280,7 @@ inside your html file.
   border-image-slice: 28 28 28 28;
   border-image-width: 30px;
   border-width: 7px;
-  padding: 0.5rem;
+  padding: 0.25rem 0.5rem;
   /* internal border */
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -298,7 +294,7 @@ inside your html file.
     border-image-slice: 6 6 6 6;
     border-image-width: 18px;
     border-width: 15px;
-    padding: 0.5rem 0.75rem;
+    padding: 0.25rem 0.5rem;
     /* internal border */
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -318,7 +314,7 @@ inside your html file.
   border-image-slice: 4 4 4 4;
   border-image-width: 18px;
   border-width: 15px;
-  padding: 0.5rem 0.75rem;
+  padding: 0.25rem 0.5rem;
   /* internal border */
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -338,7 +334,7 @@ inside your html file.
   border-image-slice: 8 8 8 8;
   border-image-width: 18px;
   border-width: 15px;
-  padding: 0.5rem 0.75rem;
+  padding: 0.25rem 0.5rem;
   /* internal border */
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -359,7 +355,7 @@ inside your html file.
   border-image-slice: 3 3 3 3;
   border-image-width: 7px;
   border-width: 7px;
-  padding: 0.5rem 0.75rem;
+  padding: 0.25rem 0.5rem;
   /* internal border */
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -770,9 +766,23 @@ ul.rpgui-list-imp {
 .rpgui-progress {
   height: 42px;
   width: 100%;
-  margin-top: 5px;
-  margin-bottom: 5px;
   position: relative; }
+
+.rpgui-progress-left1-edge {
+  position: absolute;
+  height: 42px;
+  width: 40px;
+  left: 0px;
+  background-image: url("img/progress-bar-left1.png");
+  background-size: 100% 100%; }
+
+.rpgui-progress-left2-edge {
+  position: absolute;
+  height: 42px;
+  width: 40px;
+  left: 0px;
+  background-image: url("img/progress-bar-left2.png");
+  background-size: 100% 100%; }
 
 /* progress bar left edge */
 .rpgui-progress-left-edge {
