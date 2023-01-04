@@ -24,18 +24,29 @@
         </div>
         <div class="flex w-[99%] gap-2 bottom-1 left-1 rpgui-container">
             <div class="flex flex-col">
-                <button class="rpgui-button" type="button" @click="actionAttack"><p>Attacca</p></button>
-                <button class="rpgui-button" type="button" @click="actionMove"><p>Muoviti</p></button>
+                <button class="rpgui-button" type="button" @click="actionAttack"><h3>Attacca</h3></button>
+                <button class="rpgui-button" type="button" @click="actionMove"><h3>Muoviti</h3></button>
                 <button class="relative !overflow-visible rpgui-button" type="button" @click="invComp?.toggleInv()">
-                    <p>Inventario</p>
+                    <h3>Inventario</h3>
                     <Inventory ref="invComp" />
                 </button>
-                <button class="rpgui-button" type="button" @click="actionSkip"><p>Passa</p></button>
+                <button class="rpgui-button" type="button" @click="actionSkip"><h3>Passa</h3></button>
             </div>
             <div class="flex flex-col rpgui-container !static framed w-full">
                 <h5 class="whitespace-pre">
                     {{ combatLog }}
                 </h5>
+            </div>
+            <div class="flex flex-col">
+                <div class="rpgui-container !static framed grow flex flex-col items-center">
+                    <h4 class="whitespace-nowrap">Prossimo turno:</h4>
+                    <div class="flex items-center self-center justify-between">
+                        <img :src="`/players/pg_box_1.png`" />
+                        <Icon :icon="arrowRight" width="64" height="64" />
+                        <img :src="`/players/pg_box_2.png`" />
+                    </div>
+                </div>
+                <button class="rpgui-button" type="button" @click="actionRun"><h3>Fuggi</h3></button>
             </div>
         </div>
         <div v-for="(enemy, index) in enemies" class="!flex rpgui-container gap-1 right-1" :style="`top: ${index == 0 ? 0.25 : (index * 4.25) + 0.25}rem;`">
@@ -64,6 +75,8 @@
 </template>
 
 <script setup lang="ts">
+    import { Icon } from '@iconify/vue/dist/offline'
+    import arrowRight from '@iconify-icons/ic/round-arrow-right-alt'
     import Inventory from './Inventory.vue'
     import { ref, reactive } from 'vue'
     import { Enemy } from '../classes/Enemy'
@@ -86,4 +99,6 @@
     const actionMove = () => console.log("move")
 
     const actionSkip = () => console.log("skip turn")
+
+    const actionRun = () => main.changeScene('StageScene')
 </script>

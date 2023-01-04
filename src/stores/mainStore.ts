@@ -7,7 +7,7 @@ export const useMainStore = defineStore('main', () => {
     const pausedScene = ref('')
     const afterScene = ref('')
     const showedDialogue = ref('')
-    const shownSteps = ref<boolean[]>([])
+    const shownSteps = ref<boolean[]>(new Array(45).fill(false))
     const party = ref<Player[]>([])
     const inventory = ref<Inventory>(new Inventory([]))
 

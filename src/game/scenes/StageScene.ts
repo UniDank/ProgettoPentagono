@@ -1,47 +1,123 @@
 import { Scene } from 'phaser'
+import cursorPng from '../assets/point.png'
 import { useMainStore } from '../../stores/mainStore'
 
 enum StepType {
-  DotMark, NodeBlue, NodeRed, NodeYellow, NodeGreen, PointAdmin, PointRegitare, PointBattle, PointHome, PointTutorial
+  dotMark, nodeBlue, nodeRed, nodeYellow, nodeGreen, pointAdmin, pointRegitare, pointBattle, pointHome, pointTutorial
 }
 
 type Step = {
   type: StepType,
-  shown: boolean,
   coords: {
     x: number,
     y: number
-  }
+  },
+  action?: Function
 }
 
 export default class StageScene extends Scene {
   private sceneStore = useMainStore()
+  private stepKeys = Object.values(StepType)
   private steps: Step[] = [
-    { type: StepType.NodeYellow, shown: true, coords: { x: 780, y: 606 } },
-    { type: StepType.DotMark, shown: false, coords: { x: 754, y: 626 } },
-    { type: StepType.DotMark, shown: false, coords: { x: 720, y: 630 } },
-    { type: StepType.DotMark, shown: false, coords: { x: 684, y: 614 } },
-    { type: StepType.NodeBlue, shown: false, coords: { x: 626, y: 570 } },
+    // Dal node giallo in basso all'albero
+    { type: StepType.nodeYellow, coords: { x: 780 , y: 606 }, action: () => {} },
+
+    { type: StepType.dotMark, coords: { x: 754, y: 626 } },
+    { type: StepType.dotMark, coords: { x: 720, y: 630 } },
+    { type: StepType.dotMark, coords: { x: 684, y: 614 } },
+
+    { type: StepType.nodeBlue, coords: { x: 626 , y: 570 }, action: () => {} },
+
+    { type: StepType.dotMark, coords: { x: 618 , y: 558 } },
+    { type: StepType.dotMark, coords: { x: 602 , y:532 } },
+    { type: StepType.dotMark, coords: { x: 572 , y: 522 } },
+
+    { type: StepType.pointHome, coords: { x: 414, y: 374 }, action: () => {} },
+
+    { type: StepType.dotMark, coords: { x: 570 , y: 458 } },
+    { type: StepType.dotMark, coords: { x: 598 , y: 434 } },
+    { type: StepType.dotMark, coords: { x: 636 , y: 430 } },
+
+    { type: StepType.nodeBlue, coords: { x: 662 , y: 390 }, action: () => {} },
+
+    { type: StepType.dotMark, coords: { x: 718 , y: 380 } },
+    { type: StepType.dotMark, coords: { x: 758 , y: 364 } },
+    { type: StepType.dotMark, coords: { x: 798 , y: 360 } },
+
+    { type: StepType.pointBattle, coords: { x: 826 , y: 276 }, action: () => {} },
+
+    // Dall'albero a destra, fino al node verde
+    { type: StepType.dotMark, coords: { x: 942, y: 374 } },
+    { type: StepType.dotMark, coords: { x: 974, y: 382 } },
+    { type: StepType.dotMark, coords: { x: 996, y: 402 } },
+
+    { type: StepType.nodeBlue, coords: { x: 1002 , y: 414 }, action: () => {} },
+
+    { type: StepType.dotMark, coords: { x: 1014 , y: 474 } },
+    { type: StepType.dotMark, coords: { x: 1016 , y: 500 } },
+    { type: StepType.dotMark, coords: { x: 1028 , y: 526 } },
+
+    { type: StepType.pointRegitare, coords: { x: 1048, y: 478 }, action: () => {} },
+
+    { type: StepType.dotMark, coords: { x: 1152 , y: 524 } },
+    { type: StepType.dotMark, coords: { x: 1170 , y: 502 } },
+    { type: StepType.dotMark, coords: { x: 1174 , y: 474 } },
+
+    { type: StepType.nodeGreen, coords: { x: 1154 , y: 412 }, action: () => {} },
+
+    // Dall'albero a sinistra, fino al node giallo
+    { type: StepType.dotMark, coords: { x: 814 , y: 326 } },
+    { type: StepType.dotMark, coords: { x: 792 , y: 308 } },
+    { type: StepType.dotMark, coords: { x: 786 , y: 280 } },
+
+    { type: StepType.nodeBlue, coords: { x: 732 , y: 238 }, action: () => {} },
+
+    { type: StepType.dotMark, coords: { x: 710 , y: 272 } },
+    { type: StepType.dotMark, coords: { x: 680 , y: 272 } },
+    { type: StepType.dotMark, coords: { x: 652 , y: 256 } },
+
+    { type: StepType.nodeRed, coords: { x: 596 , y: 208 }, action: () => {} },
+
+    { type: StepType.dotMark, coords: { x: 598 , y: 190 } },
+    { type: StepType.dotMark, coords: { x: 578 , y: 172 } },
+    { type: StepType.dotMark, coords: { x: 548 , y: 162 } },
+
+    { type: StepType.pointAdmin, coords: { x: 382 , y: 60 }, action: () => {} },
+
+    { type: StepType.dotMark, coords: { x: 370 , y: 102 } },
+    { type: StepType.dotMark, coords: { x: 346 , y: 90 } },
+    { type: StepType.dotMark, coords: { x: 326 , y: 70 } },
+
+    { type: StepType.nodeYellow, coords: { x: 278 , y: 18 }, action: () => {} },
   ]
+  private stepsImages: Phaser.GameObjects.Image[] = []
 
   constructor() {
     super({ key: 'StageScene' })
   }
 
   preload() {
-    
+
   }
 
   create() { //https://phaser.io/examples/v3/view/input/zones/basic-input-zone
     this.add.image(0, 0, 'worldMap').setOrigin(0)
 
-    /*for (const step of this.steps) {
-      console.log("Type:", StepType[step.type])
-      //this.add.image(step.coords.x, step.coords.y, StepType[step.type]).setOrigin(0).setVisible(step.shown)
-    }*/
+    this.sceneStore.shownSteps[0] = true
+
+    this.steps.forEach((step, index) => {
+      const image = this.add.image(step.coords.x, step.coords.y, `${this.stepKeys[step.type]}`)
+        .setScale(2).setOrigin(0).setVisible(this.sceneStore.shownSteps[index])
+      this.stepsImages.push(image)
+      if (step.action) image.setInteractive({ cursor: `url(${cursorPng}), pointer` }).on('pointerup', step.action)
+    })
     
     this.sceneStore.$onAction(({ name, args }) => {
       if (name === 'changeScene') this.scene.start(args[0])
     })
+  }
+
+  update() {
+    
   }
 }

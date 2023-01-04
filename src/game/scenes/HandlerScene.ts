@@ -19,6 +19,8 @@ import pointRegitare from '../assets/stages/point_regitare.png'
 import pointBattle from '../assets/stages/point_battle.png'
 import pointHome from '../assets/stages/point_home.png'
 import pointTutorial from '../assets/stages/point_tutorial.png'
+import bossRegitare from '../assets/stages/boss_battle_regitare.png'
+import bossAdmin from '../assets/stages/boss_battle_admin.png'
 import combatJson from '../assets/maps/Village.json'
 import mapOutside from '../assets/maps/outside.png'
 import mapBuilding from '../assets/maps/building.png'
@@ -37,8 +39,10 @@ import playerPng5 from '../assets/players/P5.png'
 import selectorPng from '../assets/ButtonPointer.png'
 import btnSelect from '../assets/select_button.mp3'
 import btnSwitch from '../assets/switch_button.mp3'
+import { useMainStore } from '../../stores/mainStore'
 
 export default class HandlerScene extends Scene {
+    private sceneStore = useMainStore()
     parent: Phaser.Structs.Size = new Phaser.Structs.Size()
     sizer: Phaser.Structs.Size = new Phaser.Structs.Size()
 
@@ -47,6 +51,15 @@ export default class HandlerScene extends Scene {
     }
 
     preload() {
+        this.load.aseprite('animatedLogo', logoPng, logoJson)
+
+        this.load.on('complete', () => this.time.delayedCall(3000, () => this.cameras.main.fadeOut(500, 0, 0, 0)))
+
+        this.cameras.main.once('camerafadeoutcomplete', () => {
+            this.sceneStore.changeScene("BootScene")
+            this.scene.launch('BootScene')
+        })
+
         // select scene assets
         this.load.image('selectBg', selectPng)
         this.load.image('selector', selectorPng)
@@ -70,6 +83,8 @@ export default class HandlerScene extends Scene {
         this.load.image('pointBattle', pointBattle)
         this.load.image('pointHome', pointHome)
         this.load.image('pointTutorial', pointTutorial)
+        this.load.image('bossRegitare', bossRegitare)
+        this.load.image('bossAdmin', bossAdmin)
 
         // combat scene assets
         this.load.image('combatBg', combatPng)
@@ -77,12 +92,7 @@ export default class HandlerScene extends Scene {
         this.load.image('tiles_Outside', mapOutside)
         this.load.tilemapTiledJSON('tiles_Map', combatJson)
 
-        this.load.aseprite('animatedLogo', logoPng, logoJson)
-
-        this.load.on('complete', () => this.time.delayedCall(3000, () => this.cameras.main.fadeOut(750, 0, 0, 0)))
-
-        this.cameras.main.once('camerafadeoutcomplete', () => this.scene.launch('BootScene'))
-
+        // boot scene assets
         this.load.aseprite('mainBg', mainPng, mainJson)
         this.load.audio('bgSong', bgSong)
         this.load.aseprite('animatedTitle', titlePng, titleJson)
