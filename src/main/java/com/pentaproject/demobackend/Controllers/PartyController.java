@@ -16,7 +16,8 @@ import org.springframework.stereotype.Controller;
             "Bag": [
             {
                //Item
-            }]
+            }],
+         "currentProgression": 0,
      }
  */
 
