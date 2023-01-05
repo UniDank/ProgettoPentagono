@@ -65,7 +65,8 @@ class DemoBackendApplicationTests {
             assertFalse(false);
         }
     }
-    //Test degli EndPoint
+    //Test degli EndPoint 
+    //TODO: cambiare il test getParty
     @Test
     @DisplayName("Test Party Controller method: getParty")
     public void TestGetParty() throws IOException, InterruptedException {
