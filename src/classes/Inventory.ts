@@ -1,5 +1,10 @@
+enum ItemType {
+    Health,
+    Mana
+}
+
 class Item {
-    constructor() {}
+    constructor(public name: string, public type: ItemType, public quantity: number) {}
 }
 
 class Inventory {

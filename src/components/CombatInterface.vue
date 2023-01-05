@@ -33,7 +33,7 @@
                 <button class="rpgui-button" type="button" @click="actionSkip"><h3>Passa</h3></button>
             </div>
             <div class="flex flex-col rpgui-container !static framed w-full">
-                <h5 class="whitespace-pre">
+                <h5 class="whitespace-pre-wrap">
                     {{ combatLog }}
                 </h5>
             </div>
@@ -61,7 +61,7 @@
                 </div>
                 <div class="rpgui-progress !h-[1rem] -scale-x-100">
                     <div class="rpgui-progress-track !h-[1rem] !left-4 !right-4">
-                        <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] green" :style="`width: ${enemy.mana / enemy.maxMana * 100}%;`"></div>
+                        <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] blue" :style="`width: ${enemy.mana / enemy.maxMana * 100}%;`"></div>
                     </div>
                     <div class="!h-[1rem] !w-4 rpgui-progress-left2-edge"></div>
                     <div class="!h-[1rem] !w-4 rpgui-progress-right-edge"></div>

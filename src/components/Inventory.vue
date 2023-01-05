@@ -3,9 +3,9 @@
         class="rpgui-container framed !left-[calc(100%+0.5rem)] !absolute !bottom-0 !z-30 flex flex-col !h-56 w-52 !p-0">
         <div v-for="(item, index) in main.inventory.items.slice(currentPage * 5, (currentPage + 1) * 5)"
             class="flex items-center justify-between gap-1 px-1 py-1 hover:bg-black/75" @click="showPlayers(index)">
-            <img :src="`${index}`" />
-            <h5>{{ "Item" }}</h5>
-            <h5>x{{ index+1 }}</h5>
+            <div class="rpgui-icon !w-6 !h-6" :class="{ 'potion-red': item.type == 0, 'potion-blue': item.type == 1 }"></div>
+            <h5>{{ item.name }}</h5>
+            <h5>x{{ item.quantity }}</h5>
         </div>
         <div class="flex items-center justify-between gap-1 mt-auto">
             <button class="rpgui-button !py-0 !px-3" type="button" @click="currentPage = Math.max(currentPage -= 1, 0)">

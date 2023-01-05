@@ -31,8 +31,7 @@
   ],
   "include": [
     "src",
-    "**/*",
-    "node_modules/phaser3-rex-plugins-types"
+    "**/*"
   ],
   "references": [
     {

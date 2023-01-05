@@ -19,15 +19,17 @@ export default class CombatScene extends Scene {
 
   create() {
     this.add.image(0, 0, 'combatBg').setOrigin(0)
+
+    const cameraWidth = this.cameras.main.width
     
     const map = this.make.tilemap({ key: 'tiles_Map' })
     const tileSetBuilding = map.addTilesetImage('building', 'tiles_Building')
     const tileSetOutside = map.addTilesetImage('outside', 'tiles_Outside')
-    map.createLayer('Bottom', [tileSetBuilding, tileSetOutside], 0, 0)
-    map.createLayer('Walk', [tileSetBuilding, tileSetOutside], 0, -32)
-    map.createLayer('Roof', [tileSetBuilding, tileSetOutside], 0, -64)
-    map.createLayer('Top', [tileSetBuilding, tileSetOutside], 0, -96)
-    map.createLayer('More Top', [tileSetBuilding, tileSetOutside], 0, -128)
+    map.createLayer('Bottom', [tileSetBuilding, tileSetOutside], cameraWidth / 2, 48)
+    map.createLayer('Walk', [tileSetBuilding, tileSetOutside], cameraWidth / 2, 16)
+    map.createLayer('Roof', [tileSetBuilding, tileSetOutside], cameraWidth / 2, -16)
+    map.createLayer('Top', [tileSetBuilding, tileSetOutside], cameraWidth / 2, -48)
+    map.createLayer('More Top', [tileSetBuilding, tileSetOutside], cameraWidth / 2, -80)
 
     this.sceneStore.$onAction(({ name, args }) => {
       if (name === 'changeScene') this.scene.start(args[0])
