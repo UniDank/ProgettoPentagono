@@ -102,7 +102,10 @@ export default class StageScene extends Scene {
 
   }
 
-  create() { //https://phaser.io/examples/v3/view/input/zones/basic-input-zone
+  create() {
+    const mainCamera = this.cameras.main
+    mainCamera.fadeIn(500, 0, 0, 0)
+
     this.add.image(0, 0, 'worldMap').setOrigin(0)
 
     this.steps.forEach((step, index) => {
@@ -113,7 +116,10 @@ export default class StageScene extends Scene {
     })
     
     this.sceneStore.$onAction(({ name, args }) => {
-      if (name === 'changeScene') this.scene.start(args[0])
+      if (name === 'changeScene') {
+        mainCamera.fadeOut(500, 0, 0, 0)
+        mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0]))
+      }
     })
   }
 

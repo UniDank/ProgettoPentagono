@@ -1,7 +1,7 @@
 <template>
     <div class="rpgui-content">
         <div v-for="(player, index) in main.party" class="!flex rpgui-container gap-1 left-1" :style="`top: ${index == 0 ? 0.25 : (index * 4.25) + 0.25}rem;`">
-            <div class="!static rpgui-container cool !p-0 h-16 w-16">
+            <div class="!static rpgui-container thin !p-0 h-16 w-16">
                 <img :src="`/players/pg_box_${player.pid}.png`" />
             </div>
             <div class="flex flex-col w-32 gap-1">
@@ -67,7 +67,7 @@
                     <div class="!h-[1rem] !w-4 rpgui-progress-right-edge"></div>
                 </div>
             </div>
-            <div class="!static rpgui-container cool !p-0 h-16 w-16">
+            <div class="!static rpgui-container thin !p-0 h-16 w-16">
                 <img :src="`${enemy.name}`" />
             </div>
         </div>

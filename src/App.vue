@@ -38,7 +38,7 @@
 <template>
   <div :id="containerId" />
   <MainMenu v-if="selectedInterface == 1" />
-  <DebugInterface />
+  <!--<DebugInterface />-->
   <DialogueInterface />
   <StageInterface v-if="selectedInterface == 2" />
   <CombatInterface v-if="selectedInterface == 3" />

@@ -23,6 +23,9 @@ export default class SelectScene extends Scene {
   }
 
   create() {
+    const mainCamera = this.cameras.main
+    mainCamera.fadeIn(500, 0, 0, 0)
+
     this.selectAudio = this.sound.add('btnSelect')
     this.switchAudio = this.sound.add('btnSwitch')
 
@@ -58,7 +61,10 @@ export default class SelectScene extends Scene {
     this.buttons.forEach((btn, i) => btn.on('pointerup', () => this.confirmSelection()))
     
     this.sceneStore.$onAction(({ name, args }) => {
-      if (name === 'changeScene') this.scene.start(args[0])
+      if (name === 'changeScene') {
+        mainCamera.fadeOut(500, 0, 0, 0)
+        mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0]))
+      }
     })
   }
 

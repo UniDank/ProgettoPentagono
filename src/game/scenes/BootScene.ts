@@ -2,7 +2,6 @@ import { Scene } from 'phaser'
 import { useMainStore } from '../../stores/mainStore'
 
 export default class BootScene extends Scene {
-  private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
   private sceneStore = useMainStore()
 
   constructor() {
@@ -10,7 +9,7 @@ export default class BootScene extends Scene {
   }
 
   init() {
-    this.cursors = this.input.keyboard.createCursorKeys()
+  
   }
 
   preload() {
@@ -18,7 +17,8 @@ export default class BootScene extends Scene {
   }
 
   create() {
-    this.cameras.main.fadeIn(500, 0, 0, 0)
+    const mainCamera = this.cameras.main
+    mainCamera.fadeIn(500, 0, 0, 0)
 
     this.anims.createFromAseprite('mainBg')
     const bgSprite = this.add.sprite(0, 0, 'mainBg').setOrigin(0)
@@ -32,7 +32,10 @@ export default class BootScene extends Scene {
     titleSprite.play({ key: 'Clean', repeat: -1, frameRate: 15, repeatDelay: 3000 })
 
     this.sceneStore.$onAction(({ name, args }) => {
-      if (name === 'changeScene') this.scene.start(args[0])
+      if (name === 'changeScene') {
+        mainCamera.fadeOut(500, 0, 0, 0)
+        mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0]))
+      }
     })
   }
 

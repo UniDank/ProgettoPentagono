@@ -272,20 +272,6 @@ inside your html file.
   background-origin: padding-box;
   background-position: center; }
 
-  .rpgui-container.cool {
-  /* border */
-  border-style: solid;
-  border-image-source: url("img/border-image-cool.png");
-  border-image-repeat: repeat;
-  border-image-slice: 28 28 28 28;
-  border-image-width: 30px;
-  border-width: 7px;
-  padding: 0.25rem 0.5rem;
-  /* internal border */
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box; }
-
   .rpgui-container.transparent {
     /* border */
     border-style: solid;
@@ -304,6 +290,25 @@ inside your html file.
     background-clip: padding-box;
     background-origin: padding-box;
     background-position: center; }
+
+    .rpgui-container.thin {
+      /* border */
+      border-style: solid;
+      border-image-source: url("img/border-image-transparent.png");
+      border-image-repeat: repeat;
+      border-image-slice: 6 6 6 6;
+      border-image-width: 9px;
+      border-width: 8px;
+      padding: 0.25rem 0.5rem;
+      /* internal border */
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      /* background */
+      background: url("img/background-image-transparent.png") repeat repeat;
+      background-clip: padding-box;
+      background-origin: padding-box;
+      background-position: center; }
 
 /* game div with golden background image*/
 .rpgui-container.framed-golden {

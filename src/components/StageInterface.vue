@@ -92,7 +92,5 @@
 
     const openSettings = () => console.log("open settings")
 
-    const saveExit = () => {
-        main.changeScene('BootScene')
-    }
+    const saveExit = () => main.changeScene('BootScene')
 </script>

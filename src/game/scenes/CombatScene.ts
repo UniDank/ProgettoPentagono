@@ -18,6 +18,9 @@ export default class CombatScene extends Scene {
   }
 
   create() {
+    const mainCamera = this.cameras.main
+    mainCamera.fadeIn(500, 0, 0, 0)
+
     this.add.image(0, 0, 'combatBg').setOrigin(0)
 
     const cameraWidth = this.cameras.main.width
@@ -32,7 +35,10 @@ export default class CombatScene extends Scene {
     map.createLayer('More Top', [tileSetBuilding, tileSetOutside], cameraWidth / 2, -80)
 
     this.sceneStore.$onAction(({ name, args }) => {
-      if (name === 'changeScene') this.scene.start(args[0])
+      if (name === 'changeScene') {
+        mainCamera.fadeOut(500, 0, 0, 0)
+        mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0]))
+      }
     })
   }
 
