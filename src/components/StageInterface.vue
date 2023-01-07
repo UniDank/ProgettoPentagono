@@ -22,7 +22,7 @@
                             <div class="rpgui-progress-track !h-4 !left-4 !right-4">
                                 <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] blue" :style="`width: ${player.mana / player.maxMana * 100}%;`"></div>
                             </div>
-                            <div class="!h-4 !w-4 rpgui-progress-left2-edge"></div>
+                            <div class="!h-4 !w-4 rpgui-progress-left3-edge"></div>
                             <div class="!h-4 !w-4 rpgui-progress-right-edge"></div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
     import { Player, Characters } from '../classes/Player'
     import { useMainStore } from '../stores/mainStore'
     import { useStageStore } from '../stores/stageStore'
-    import { Item, Inventory } from '../classes/Inventory'
+    import { Item, Inventory, ItemType } from '../classes/Inventory'
     import stories from '../assets/stories.json'
 
     const main = useMainStore()
@@ -76,9 +76,9 @@
     main.party = party
 
     const inventory = reactive<Inventory>(new Inventory([
-        new Item("Vita", 0, 5), new Item("Cuore", 0, 1), new Item("Battito", 0, 3), 
-        new Item("Mana", 1, 3), new Item("Merda", 1, 4), new Item("Shish", 1, 8), 
-        new Item("Lel", 1, 1), new Item("Lil", 1, 9), new Item("Lul", 1, 24)
+        new Item("Vita", ItemType.Health, 5), new Item("Cuore", ItemType.Health, 1), new Item("Mana", ItemType.Mana, 3), 
+        new Item("Energia", ItemType.Energy, 1), new Item("Lira", ItemType.Lyre, 9),
+        new Item("Mana", ItemType.Mana, 3), new Item("Merda", ItemType.Mana, 4), new Item("Shish", ItemType.Mana, 8), 
     ]))
 
     main.inventory = inventory

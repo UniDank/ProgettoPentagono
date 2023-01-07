@@ -532,6 +532,9 @@ ul.rpgui-dropdown-imp {
 .rpgui-icon.potion-blue {
   background-image: url("img/icons/potion-blue.png"); }
 
+.rpgui-icon.lyre {
+  background-image: url("img/icons/lyre-smol.png"); }
+
 .rpgui-icon.weapon-slot {
   background-image: url("img/icons/weapon-slot.png"); }
 
@@ -783,6 +786,14 @@ ul.rpgui-list-imp {
   left: 0px;
   background-image: url("img/progress-bar-left2.png");
   background-size: 100% 100%; }
+
+  .rpgui-progress-left3-edge {
+    position: absolute;
+    height: 42px;
+    width: 40px;
+    left: 0px;
+    background-image: url("img/progress-bar-left3.png");
+    background-size: 100% 100%; }
 
 /* progress bar left edge */
 .rpgui-progress-left-edge {

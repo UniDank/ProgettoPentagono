@@ -1,6 +1,8 @@
 enum ItemType {
-    Health,
-    Mana
+    Health = "potion-red",
+    Mana = "potion-blue",
+    Energy = "potion-green",
+    Lyre = "lyre"
 }
 
 class Item {
@@ -12,6 +14,6 @@ class Inventory {
 }
 
 export {
-    Item, Inventory
+    Item, Inventory, ItemType
 }
 
