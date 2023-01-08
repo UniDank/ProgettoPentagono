@@ -39,6 +39,8 @@ import playerPng5 from '../assets/players/P5.png'
 import selectorPng from '../assets/ButtonPointer.png'
 import btnSelect from '../assets/select_button.mp3'
 import btnSwitch from '../assets/switch_button.mp3'
+import agoracopng from "../assets/pgs/Agoraco.png"
+import agoracojson from "../assets/pgs/Agoraco.json"
 import { useMainStore } from '../../stores/mainStore'
 
 export default class HandlerScene extends Scene {
@@ -56,8 +58,8 @@ export default class HandlerScene extends Scene {
         this.load.on('complete', () => this.time.delayedCall(3000, () => this.cameras.main.fadeOut(500, 0, 0, 0)))
 
         this.cameras.main.once('camerafadeoutcomplete', () => {
-            this.sceneStore.changeScene("BootScene")
-            this.scene.launch('BootScene')
+            this.sceneStore.changeScene("CombatScene")
+            this.scene.launch('CombatScene')
         })
 
         // select scene assets
@@ -91,6 +93,8 @@ export default class HandlerScene extends Scene {
         this.load.image('tiles_Building', mapBuilding)
         this.load.image('tiles_Outside', mapOutside)
         this.load.tilemapTiledJSON('tiles_Map', combatJson)
+        this.load.aseprite("agoraco",agoracopng,agoracojson)
+        this.load.aseprite("pg",agoracopng,agoracojson)
 
         // boot scene assets
         this.load.aseprite('mainBg', mainPng, mainJson)
