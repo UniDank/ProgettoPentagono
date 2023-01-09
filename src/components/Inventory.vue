@@ -20,7 +20,7 @@
             class="rpgui-container framed !absolute !left-[calc(100%+0.75rem)] !-bottom-4 !z-30 flex flex-col gap-1 !h-auto w-52 !p-0">
             <div v-for="player in main.party" @click="addToPlayer(main.inventory.items[addList.findIndex(v => v)], player)"
                 class="relative flex items-center gap-2 px-1 py-1 hover:bg-black/75">
-                <img :src="`/players/pg_box_${player.pid}.png`" class="w-8 h-8" />
+                <img :src="`/boxes/pg_box_${player.pid}.png`" class="w-8 h-8" />
                 <h5>{{ player.name }}</h5>
             </div>
         </div>

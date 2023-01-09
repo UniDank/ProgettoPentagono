@@ -39,7 +39,7 @@ export default class CombatScene extends Scene {
     const mainCamera = this.cameras.main
     mainCamera.fadeIn(500, 0, 0, 0)
 
-    this.add.image(0,this.scale.gameSize.height *0.4 , 'combatBg')
+    this.add.image(0, this.scale.gameSize.height *0.4, 'combatBg')
     
     const map = this.make.tilemap({ key: 'tiles_Map' })
     this.map = map
@@ -61,23 +61,29 @@ export default class CombatScene extends Scene {
       }
     })
     
-    this.player = new TempPlayer(this, "dani",new Vector2(7,7))
-    this.enemy = new TempPlayer(this, "admin",new Vector2(6,5))
+    this.player = new TempPlayer(this, "dani",new Vector2(7, 7))
+    this.enemy = new TempPlayer(this, "admin",new Vector2(6, 5))
 
     const gridEngineConfig = {
       characters: [
         this.player.getCharacterConfig(["cg1"]),
         this.enemy.getCharacterConfig(["cg1"])
       ],
-    };
+    }
+
     this.gridEngine?.create(this.map,gridEngineConfig)
-    //todo: scrivere le animazioni
-    this.gridEngine?.movementStarted().subscribe(({ direction })=>{
-      console.log(direction)
-      this.player.player.anims.play({key: "Left run", repeat: 1 , frameRate: 5})
+    this.gridEngine?.movementStarted().subscribe(({ direction }) => {
+      this.player.player.flipX = direction.includes("left")
+      this.player.player.anims.play({ key: "Run right", repeat: 1 , frameRate: 10 })
     })
     this.gridEngine?.movementStopped().subscribe(({ direction }) => {
-      this.player.player.anims.play({key: "Idle", repeat: -1})
+      this.player.player.anims.play({ key: "Idle", repeat: -1 })
+    })
+
+    this.combatStore.$onAction(({ name, args }) => {
+      if (name === 'actionAttack') 
+        this.player.player.anims.play({ key: "Attack", repeat: 1, frameRate: 10 })
+          .on('animationcomplete', () => this.player.player.anims.play({ key: 'Idle', repeat: -1, frameRate: 10 }))
     })
 
     this.input.keyboard.on("keydown-THREE", ()=>{
@@ -102,11 +108,10 @@ export default class CombatScene extends Scene {
     if (this.timer % 3 === 0){
       this.time.paused = true
       if (this.turn) {
-        console.log("turno!")
-        if (!this.combatStore.moveMode) this.newpos = this.moveTile(this.newpos.x, this.newpos.y, this.combatStore.moveDirection)
+        if (!this.combatStore.moveMode && this.combatStore.moveDirection != "") 
+          this.newpos = this.moveTile(this.newpos.x, this.newpos.y, this.combatStore.moveDirection)
         else this.newpos = this.moveTile(this.newpos.x, this.newpos.y)
         if ((this.combatStore.moveMode && this.cursors.space.isDown) || (!this.combatStore.moveMode && this.combatStore.isConfirmed)){
-          console.log("check space")
           this.combatStore.isConfirmed = false
           if (this.checkTile(this.newpos, this.initialpos, 3)){
             const colorbase = 16777215
@@ -159,33 +164,37 @@ export default class CombatScene extends Scene {
   }
 
   moveTile(x: number, y: number, direction?: string): Vector2 {
-    console.log("move tile")
     switch (true) {
-      case direction == "left" || this.cursors.left.isDown:
+      case direction != "" ? direction == "left" : this.cursors.left.isDown:
         if (this.checkTile(new Vector2(x-1,y),new Vector2(this.initialpos.x, this.initialpos.y),2)){
           this.tintTile(this.walklayer.layer, x, y, this.colorR)
         } else this.tintTile(this.walklayer.layer, x, y, 16777215)
         this.tintTile(this.walklayer.layer, x - 1, y, this.colorC)
+        this.combatStore.moveDirection = ""
         return new Vector2(x - 1, y)
-      case direction == "right" || this.cursors.right.isDown:
+      case direction != "" ? direction == "right" : this.cursors.right.isDown:
         if (this.checkTile(new Vector2(x+1,y),new Vector2(this.initialpos.x, this.initialpos.y),3)){
           this.tintTile(this.walklayer.layer, x, y, this.colorR)
         } else this.tintTile(this.walklayer.layer, x, y, 16777215)
         this.tintTile(this.walklayer.layer, x + 1, y, this.colorC)
+        this.combatStore.moveDirection = ""
         return new Vector2(x + 1, y)
-      case direction == "up" || this.cursors.up.isDown:
+      case direction != "" ? direction == "up" : this.cursors.up.isDown:
         if (this.checkTile(new Vector2(x,y-1),new Vector2(this.initialpos.x, this.initialpos.y),3)){
           this.tintTile(this.walklayer.layer, x, y, this.colorR)
         } else this.tintTile(this.walklayer.layer, x, y, 16777215)
         this.tintTile(this.walklayer.layer, x, y - 1, this.colorC)
+        this.combatStore.moveDirection = ""
         return new Vector2(x, y - 1)
-      case direction == "down" || this.cursors.down.isDown:
+      case direction != "" ? direction == "down" : this.cursors.down.isDown:
         if (this.checkTile(new Vector2(x,y+1),new Vector2(this.initialpos.x, this.initialpos.y),3)){
           this.tintTile(this.walklayer.layer, x, y, this.colorR)
         } else this.tintTile(this.walklayer.layer, x, y, 16777215)
         this.tintTile(this.walklayer.layer, x, y + 1, this.colorC)
+        this.combatStore.moveDirection = ""
         return new Vector2(x, y + 1)
       default:
+        this.combatStore.moveDirection = ""
         return new Vector2(x, y)
     }
   }

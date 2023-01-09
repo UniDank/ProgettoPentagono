@@ -2,7 +2,7 @@
     <div class="rpgui-content">
         <div v-for="(player, index) in main.party" class="!flex rpgui-container gap-1 left-1" :style="`top: ${index == 0 ? 0.25 : (index * 4.25) + 0.25}rem;`">
             <div class="!static rpgui-container thin !p-0 h-16 w-16">
-                <img :src="`/players/pg_box_${player.pid}.png`" />
+                <img :src="`/boxes/pg_box_${player.pid}.png`" />
             </div>
             <div class="flex flex-col w-32 gap-1">
                 <p class="h-4 leading-none">{{ player.name }}</p>
@@ -46,7 +46,7 @@
                         <div class="flex justify-between">
                             <button class="rpgui-button" type="button" @click="confirmMove"><h5>Conferma</h5></button>
                             <button class="rpgui-button !px-2" type="button" @click="combat.toggleMoveMode()">
-                                <Icon :icon="combat.moveMode ? mouseIcon : arrowsIcon" width="32" height="32" />
+                                <Icon :icon="combat.moveMode ? arrowsIcon : mouseIcon" width="32" height="32" />
                             </button>
                         </div>
                     </div>
@@ -66,9 +66,9 @@
                 <div class="rpgui-container !static framed grow flex flex-col items-center">
                     <h4 class="whitespace-nowrap">Prossimo turno:</h4>
                     <div class="flex items-center self-center justify-between">
-                        <img :src="`/players/pg_box_1.png`" />
+                        <img :src="`/boxes/pg_box_1.png`" />
                         <Icon :icon="arrowRightAlt" width="64" height="64" />
-                        <img :src="`/players/pg_box_2.png`" />
+                        <img :src="`/boxes/pg_box_2.png`" />
                     </div>
                 </div>
                 <button class="rpgui-button" type="button" @click="actionRun"><h3>Fuggi</h3></button>
@@ -93,7 +93,7 @@
                 </div>
             </div>
             <div class="!static rpgui-container thin !p-0 h-16 w-16">
-                <img :src="`${enemy.name}`" />
+                <img :src="`/boxes/${enemy.name.toLowerCase()}_box.png`" />
             </div>
         </div>
     </div>
@@ -123,12 +123,12 @@
     const showMove = ref(false)
 
     const enemies = reactive<Enemy[]>([
-        new Enemy("Pippo", 10, 10),
-        new Enemy("Pikachu", 10, 10),
-        new Enemy("Tumore", 10, 10)
+        new Enemy("Bidoof", 10, 10),
+        new Enemy("Ekans", 10, 10),
+        new Enemy("Starly", 10, 10)
     ])
 
-    const actionAttack = () => console.log("attack")
+    const actionAttack = () => combat.actionAttack()
 
     const moveUp = () => combat.moveDirection = "up"
 

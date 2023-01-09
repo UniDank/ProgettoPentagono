@@ -6,11 +6,16 @@ export const useCombatStore = defineStore('combat', () => {
     const moveDirection = ref("")
     const isConfirmed = ref(false)
 
-    const changeMoveToMouse = () => moveMode.value = true
+    const changeMoveToMouse = () => {
+        moveMode.value = true
+        moveDirection.value = ""
+    }
 
     const changeMoveToKeys = () => moveMode.value = false
 
     const toggleMoveMode = () => moveMode.value = !moveMode.value
 
-    return { moveMode, changeMoveToMouse, changeMoveToKeys, toggleMoveMode, moveDirection, isConfirmed }
+    const actionAttack = () => {}
+
+    return { moveMode, changeMoveToMouse, changeMoveToKeys, toggleMoveMode, moveDirection, isConfirmed, actionAttack }
 })

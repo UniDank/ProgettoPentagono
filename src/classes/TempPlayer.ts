@@ -11,7 +11,7 @@ export class TempPlayer {
                 private tilePos: Phaser.Math.Vector2 = new Vector2(0,0)
     ) {
         scene.anims.createFromAseprite(idplayer)
-        this.player = scene.add.sprite(0, 0, idplayer).setInteractive().setScale(1.5)
+        this.player = scene.add.sprite(0, 0, idplayer).setInteractive().setScale(2)
         this.movrange = 1;
 
 

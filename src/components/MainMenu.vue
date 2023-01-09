@@ -33,6 +33,17 @@
             <button class="self-start rpgui-button" type="button" @click="goBack"><h3>Indietro</h3></button>
         </div>
         <div v-if="currentMenu == 4" class="bottom-0 left-0 flex flex-col gap-2 p-8 rpgui-container">
+            <div class="flex flex-col w-4/5 gap-2 p-8 -translate-x-1/2 -translate-y-2/3 h-3/5 top-2/3 left-1/2 rpgui-container framed-golden-2">
+                <h3>
+                    Per un'esperienza ottimale si consiglia di giocare con volume fissato e dimensione 1280x720.
+                    Il gioco è stato sviluppato da Agnello Federico, Bellanti Claudio, Nicosia Daniele, Valenti Marco e Zangara Giorgio come progetto di Ingegneria e Sicurezza del Software con la professoressa Simona Ester Rombo.
+
+                    Per i contatti o per segnalare errori link a github
+                    Elenco dei giochi da cui abbiamo preso immagini e canzoni, non sono di nostra proprietà, tutti i diritti riservati
+                    Elenco dei programmi usati
+                    <a href="https://github.com/UniDank/ProgettoPentagono" target="_blank">Gay</a>
+                </h3>
+            </div>
             <button class="self-start rpgui-button" type="button" @click="goBack"><h3>Indietro</h3></button>
         </div>
     </div>
@@ -48,7 +59,7 @@
 
     const isFullScreen = ref(false)
 
-    const textButtons = ['Nuova Partita', 'Continua', 'Opzioni', 'Crediti', 'Esci']
+    const textButtons = ['Nuova Partita', 'Continua', 'Impostazioni', 'Crediti', 'Esci']
     const selectedBtn = ref(-1)
     const disabledBtn = ref(-1)
     const currentMenu = ref(0)
@@ -97,7 +108,7 @@
                 break;
             case 3:
                 currentMenu.value = 4
-                main.showDialogue('ID_DIALOGO')
+                //main.showDialogue('ID_DIALOGO')
                 break;
             case 4:
                 boot.$reset()

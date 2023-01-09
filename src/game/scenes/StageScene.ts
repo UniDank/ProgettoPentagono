@@ -28,7 +28,7 @@ export default class StageScene extends Scene {
     { type: StepType.dotMark, coords: { x: 720, y: 630 } },
     { type: StepType.dotMark, coords: { x: 684, y: 614 } },
 
-    { type: StepType.nodeBlue, coords: { x: 626 , y: 570 }, step: 1 },
+    { type: StepType.nodeRed, coords: { x: 626 , y: 570 }, step: 1 },
 
     { type: StepType.dotMark, coords: { x: 618 , y: 558 } },
     { type: StepType.dotMark, coords: { x: 602 , y:532 } },
@@ -112,6 +112,7 @@ export default class StageScene extends Scene {
       const image = this.add.image(node.coords.x, node.coords.y, `${this.stepKeys[node.type]}`)
         .setScale(2).setOrigin(0)
       if (node.step != undefined) {
+        if (node.step == this.stageStore.selectedNode) image.setTint(0x00FF00)
         this.clickableNodes.push(image)
         image.setInteractive({ cursor: `url(${cursorPng}), pointer` }).on('pointerup', () => {
           this.clickableNodes.forEach(img => img.clearTint())
