@@ -20,12 +20,14 @@ export default class CombatScene extends Scene {
   private initialpos!: Vector2
   private newpos!: Vector2
   private timer = 0
+  private passedData: any
 
   constructor() {
     super({ key: 'CombatScene' })
   }
 
-  init() {
+  init(data: any) {
+    this.passedData = data
     this.cursors = this.input.keyboard.createCursorKeys()
   }
 
@@ -90,7 +92,9 @@ export default class CombatScene extends Scene {
     })
 
     this.sound.stopByKey("bgSong")
-    this.sound.add('combatSong').play({ loop: true })
+    if (this.passedData.node == 10) this.sound.add('adminSong').play({ loop: true })
+    else if (this.passedData.node == 6) this.sound.add('regitareSong').play({ loop: true })
+    else this.sound.add('combatSong').play({ loop: true })
   }
 
   update() {
@@ -154,12 +158,6 @@ export default class CombatScene extends Scene {
     }
   }
 
-  /***
-   * Permette di muovere il tile.
-   * @param cursors cursore delle freccie
-   * @param x posizione X del tile corrente!
-   * @param y posizione Y del tile corrente!
-   * */
   moveTile(x: number, y: number, direction?: string): Vector2 {
     console.log("move tile")
     switch (true) {

@@ -9,6 +9,9 @@ import titlePng from '../assets/Animated_Title.png'
 import titleJson from '../assets/Animated_Title.json'
 import bgSong from '../assets/background_song.mp3'
 import combatSong from '../assets/combat_song.mp3'
+import adminSong from '../assets/admin_song.mp3'
+import regitareSong from '../assets/regitare_song.mp3'
+
 import worldMap from '../assets/stages/world_map.png'
 import dotMark from '../assets/stages/dotmark.png'
 import nodeBlue from '../assets/stages/node_story.png'
@@ -22,6 +25,7 @@ import pointHome from '../assets/stages/point_home.png'
 import pointTutorial from '../assets/stages/point_tutorial.png'
 import bossRegitare from '../assets/stages/boss_battle_regitare.png'
 import bossAdmin from '../assets/stages/boss_battle_admin.png'
+
 import combatJson from '../assets/maps/Village.json'
 import mapOutside from '../assets/maps/outside.png'
 import mapBuilding from '../assets/maps/building.png'
@@ -86,8 +90,8 @@ export default class HandlerScene extends Scene {
         this.load.on('complete', () => this.time.delayedCall(3000, () => this.cameras.main.fadeOut(500, 0, 0, 0)))
 
         this.cameras.main.once('camerafadeoutcomplete', () => {
-            this.sceneStore.changeScene("StageScene")
-            this.scene.launch('StageScene')
+            this.sceneStore.changeScene("BootScene")
+            this.scene.launch('BootScene')
         })
 
         // select scene assets
@@ -118,6 +122,8 @@ export default class HandlerScene extends Scene {
 
         // combat scene assets
         this.load.audio('combatSong', combatSong)
+        this.load.audio('adminSong', adminSong)
+        this.load.audio('regitareSong', regitareSong)
         this.load.image('combatBg', combatPng)
         this.load.image('tiles_Building', mapBuilding)
         this.load.image('tiles_Outside', mapOutside)

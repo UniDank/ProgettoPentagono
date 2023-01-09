@@ -124,11 +124,13 @@ export default class StageScene extends Scene {
     this.sceneStore.$onAction(({ name, args }) => {
       if (name === 'changeScene') {
         mainCamera.fadeOut(500, 0, 0, 0)
-        mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0]))
+        mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0], { node: this.stageStore.selectedNode }))
       }
     })
 
     this.sound.stopByKey("combatSong")
+    this.sound.stopByKey("adminSong")
+    this.sound.stopByKey("regitareSong")
     this.sound.add('bgSong').play({ loop: true })
   }
 
