@@ -62,6 +62,6 @@
     }
 
     defineExpose({
-        toggleInv
+        toggleInv, showInv: show
     })
 </script>

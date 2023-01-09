@@ -6,7 +6,7 @@ import CombatScene from './scenes/CombatScene'
 import HandlerScene from './scenes/HandlerScene'
 import SelectScene from './scenes/SelectScene'
 import StageScene from './scenes/StageScene'
-import {GridEngine} from "grid-engine";
+import { GridEngine } from "grid-engine"
 
 // https://blog.ourcade.co/posts/2020/phaser3-how-to-communicate-between-scenes/
 // https://github.com/photonstorm/phaser/issues/5064#issuecomment-646183833

@@ -15,9 +15,9 @@
                 </div>
                 <div class="rpgui-progress !h-[1rem]">
                     <div class="rpgui-progress-track !h-[1rem] !left-4 !right-4">
-                        <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] green" :style="`width: ${player.mana / player.maxMana * 100}%;`"></div>
+                        <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] blue" :style="`width: ${player.mana / player.maxMana * 100}%;`"></div>
                     </div>
-                    <div class="!h-[1rem] !w-4 rpgui-progress-left2-edge"></div>
+                    <div class="!h-[1rem] !w-4 rpgui-progress-left3-edge"></div>
                     <div class="!h-[1rem] !w-4 rpgui-progress-right-edge"></div>
                 </div>
             </div>
@@ -25,8 +25,33 @@
         <div class="flex w-[99%] gap-2 bottom-1 left-1 rpgui-container">
             <div class="flex flex-col">
                 <button class="rpgui-button" type="button" @click="actionAttack"><h3>Attacca</h3></button>
-                <button class="rpgui-button" type="button" @click="actionMove"><h3>Muoviti</h3></button>
-                <button class="relative !overflow-visible rpgui-button" type="button" @click="invComp?.toggleInv()">
+                <button class="relative !overflow-visible rpgui-button" type="button" @click="actionMove">
+                    <h3>Muoviti</h3>
+                    <div v-show="showMove" @click.stop 
+                        class="rpgui-container framed !left-[calc(100%+0.5rem)] !absolute !bottom-0 !z-30 flex flex-col justify-between !h-56 w-52 !p-0">
+                        <button class="self-center rpgui-button !p-0" type="button" @click="moveUp">
+                            <Icon :icon="arrowUp" width="48" height="48" />
+                        </button>
+                        <div class="flex justify-around">
+                            <button class="rpgui-button !p-0" type="button" @click="moveLeft">
+                                <Icon :icon="arrowLeft" width="48" height="48" />
+                            </button>
+                            <button class="rpgui-button !p-0" type="button" @click="moveRight">
+                                <Icon :icon="arrowRight" width="48" height="48" />
+                            </button>
+                        </div>
+                        <button class="self-center rpgui-button !p-0" type="button" @click="moveDown">
+                            <Icon :icon="arrowDown" width="48" height="48" />
+                        </button>
+                        <div class="flex justify-between">
+                            <button class="rpgui-button" type="button" @click="confirmMove"><h5>Conferma</h5></button>
+                            <button class="rpgui-button !px-2" type="button" @click="combat.toggleMoveMode()">
+                                <Icon :icon="combat.moveMode ? mouseIcon : arrowsIcon" width="32" height="32" />
+                            </button>
+                        </div>
+                    </div>
+                </button>
+                <button class="relative !overflow-visible rpgui-button" type="button" @click="actionInv">
                     <h3>Inventario</h3>
                     <Inventory ref="invComp" />
                 </button>
@@ -42,7 +67,7 @@
                     <h4 class="whitespace-nowrap">Prossimo turno:</h4>
                     <div class="flex items-center self-center justify-between">
                         <img :src="`/players/pg_box_1.png`" />
-                        <Icon :icon="arrowRight" width="64" height="64" />
+                        <Icon :icon="arrowRightAlt" width="64" height="64" />
                         <img :src="`/players/pg_box_2.png`" />
                     </div>
                 </div>
@@ -63,7 +88,7 @@
                     <div class="rpgui-progress-track !h-[1rem] !left-4 !right-4">
                         <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] blue" :style="`width: ${enemy.mana / enemy.maxMana * 100}%;`"></div>
                     </div>
-                    <div class="!h-[1rem] !w-4 rpgui-progress-left2-edge"></div>
+                    <div class="!h-[1rem] !w-4 rpgui-progress-left3-edge"></div>
                     <div class="!h-[1rem] !w-4 rpgui-progress-right-edge"></div>
                 </div>
             </div>
@@ -76,17 +101,26 @@
 
 <script setup lang="ts">
     import { Icon } from '@iconify/vue/dist/offline'
-    import arrowRight from '@iconify-icons/ic/round-arrow-right-alt'
+    import arrowLeft from '@iconify-icons/ic/round-arrow-left'
+    import arrowRight from '@iconify-icons/ic/round-arrow-right'
+    import arrowUp from '@iconify-icons/ic/round-arrow-drop-up'
+    import arrowDown from '@iconify-icons/ic/round-arrow-drop-down'
+    import mouseIcon from '@iconify-icons/ic/round-mouse'
+    import arrowsIcon from '@iconify-icons/ic/round-compare-arrows'
+    import arrowRightAlt from '@iconify-icons/ic/round-arrow-right-alt'
     import Inventory from './Inventory.vue'
     import { ref, reactive } from 'vue'
     import { Enemy } from '../classes/Enemy'
     import { useMainStore } from '../stores/mainStore'
+    import { useCombatStore } from '../stores/combatStore'
 
     const main = useMainStore()
+    const combat = useCombatStore()
 
     const invComp = ref<InstanceType<typeof Inventory> | null>(null)
 
     const combatLog = ref("Claphos ha subito 2 danni!\nClaphos è in fin di vita!")
+    const showMove = ref(false)
 
     const enemies = reactive<Enemy[]>([
         new Enemy("Pippo", 10, 10),
@@ -96,9 +130,27 @@
 
     const actionAttack = () => console.log("attack")
 
-    const actionMove = () => console.log("move")
+    const moveUp = () => combat.moveDirection = "up"
+
+    const moveDown = () => combat.moveDirection = "down"
+
+    const moveLeft = () => combat.moveDirection = "left"
+
+    const moveRight = () => combat.moveDirection = "right"
+
+    const confirmMove = () => combat.isConfirmed = true
 
     const actionSkip = () => console.log("skip turn")
 
     const actionRun = () => main.changeScene('StageScene')
+
+    const actionMove = () => {
+        showMove.value = !showMove.value
+        invComp.value!.showInv = false
+    }
+
+    const actionInv = () => {
+        invComp.value?.toggleInv()
+        showMove.value = false
+    }
 </script>

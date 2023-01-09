@@ -1,7 +1,7 @@
-import Vector2 = Phaser.Math.Vector2;
-import {Direction} from "grid-engine";
+import Vector2 = Phaser.Math.Vector2
+import { Direction } from "grid-engine"
 
-export class Playertemp{
+export class TempPlayer {
     public player: Phaser.GameObjects.Sprite
     private movrange: number
 
@@ -88,19 +88,19 @@ export class Playertemp{
 
 
     public setEvent(nameevent: string, fn: Function): void{
-        this.player.on(nameevent,fn);
+        this.player.on(nameevent,fn)
     }
 
     public getPosition(): Vector2 {
-        return this.scene.gridEngine.getPosition(this.idplayer);
+        return this.scene.gridEngine.getPosition(this.idplayer)
     }
 
     public isMoving(): boolean{
-        return this.scene.gridEngine.isMoving(this.idplayer);
+        return this.scene.gridEngine.isMoving(this.idplayer)
     }
 
     public get getRangeMov(): number{
-        return this.movrange;
+        return this.movrange
     }
 
     

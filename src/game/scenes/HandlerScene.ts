@@ -8,6 +8,7 @@ import logoJson from '../assets/AnimatedLogo.json'
 import titlePng from '../assets/Animated_Title.png'
 import titleJson from '../assets/Animated_Title.json'
 import bgSong from '../assets/background_song.mp3'
+import combatSong from '../assets/combat_song.mp3'
 import worldMap from '../assets/stages/world_map.png'
 import dotMark from '../assets/stages/dotmark.png'
 import nodeBlue from '../assets/stages/node_story.png'
@@ -39,8 +40,35 @@ import playerPng5 from '../assets/players/P5.png'
 import selectorPng from '../assets/ButtonPointer.png'
 import btnSelect from '../assets/select_button.mp3'
 import btnSwitch from '../assets/switch_button.mp3'
-import agoracopng from "../assets/pgs/Agoraco.png"
-import agoracojson from "../assets/pgs/Agoraco.json"
+
+import fedePng from "../assets/characters/Fede.png"
+import fedeJson from "../assets/characters/Fede.json"
+import daniPng from "../assets/characters/Dani.png"
+import daniJson from "../assets/characters/Dani.json"
+import claPng from "../assets/characters/Cla.png"
+import claJson from "../assets/characters/Cla.json"
+import gioPng from "../assets/characters/Gio.png"
+import gioJson from "../assets/characters/Gio.json"
+import marPng from "../assets/characters/Mar.png"
+import marJson from "../assets/characters/Mar.json"
+
+import adminPng from "../assets/enemies/Administrator.png"
+import adminJson from "../assets/enemies/Administrator.json"
+import beedrillPng from "../assets/enemies/Beedrill.png"
+import beedrillJson from "../assets/enemies/Beedrill.json"
+import bidoofPng from "../assets/enemies/Bidoof.png"
+import bidoofJson from "../assets/enemies/Bidoof.json"
+import carnivinePng from "../assets/enemies/Carnivine.png"
+import carnivineJson from "../assets/enemies/Carnivine.json"
+import ekansPng from "../assets/enemies/Ekans.png"
+import ekansJson from "../assets/enemies/Ekans.json"
+import glitchPng from "../assets/enemies/Glitch.png"
+import glitchJson from "../assets/enemies/Glitch.json"
+import regitarePng from "../assets/enemies/Regitare.png"
+import regitareJson from "../assets/enemies/Regitare.json"
+import starlyPng from "../assets/enemies/Starly.png"
+import starlyJson from "../assets/enemies/Starly.json"
+
 import { useMainStore } from '../../stores/mainStore'
 
 export default class HandlerScene extends Scene {
@@ -58,8 +86,8 @@ export default class HandlerScene extends Scene {
         this.load.on('complete', () => this.time.delayedCall(3000, () => this.cameras.main.fadeOut(500, 0, 0, 0)))
 
         this.cameras.main.once('camerafadeoutcomplete', () => {
-            this.sceneStore.changeScene("CombatScene")
-            this.scene.launch('CombatScene')
+            this.sceneStore.changeScene("StageScene")
+            this.scene.launch('StageScene')
         })
 
         // select scene assets
@@ -89,12 +117,24 @@ export default class HandlerScene extends Scene {
         this.load.image('bossAdmin', bossAdmin)
 
         // combat scene assets
+        this.load.audio('combatSong', combatSong)
         this.load.image('combatBg', combatPng)
         this.load.image('tiles_Building', mapBuilding)
         this.load.image('tiles_Outside', mapOutside)
         this.load.tilemapTiledJSON('tiles_Map', combatJson)
-        this.load.aseprite("agoraco",agoracopng,agoracojson)
-        this.load.aseprite("pg",agoracopng,agoracojson)
+        this.load.aseprite("fede", fedePng, fedeJson)
+        this.load.aseprite("dani", daniPng, daniJson)
+        this.load.aseprite("cla", claPng, claJson)
+        this.load.aseprite("mar", marPng, marJson)
+        this.load.aseprite("gio", gioPng, gioJson)
+        this.load.aseprite("admin", adminPng, adminJson)
+        this.load.aseprite("beedrill", beedrillPng, beedrillJson)
+        this.load.aseprite("bidoof", bidoofPng, bidoofJson)
+        this.load.aseprite("carnivine", carnivinePng, carnivineJson)
+        this.load.aseprite("ekans", ekansPng, ekansJson)
+        this.load.aseprite("glitch", glitchPng, glitchJson)
+        this.load.aseprite("regitare", regitarePng, regitareJson)
+        this.load.aseprite("starly", starlyPng, starlyJson)
 
         // boot scene assets
         this.load.aseprite('mainBg', mainPng, mainJson)
