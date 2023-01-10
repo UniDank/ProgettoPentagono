@@ -109,6 +109,7 @@ export default class StageScene extends Scene {
     this.add.image(0, 0, 'worldMap').setOrigin(0)
 
     const playerSprite = this.add.sprite(0, 0, this.sceneStore.mainPlayer).setScale(2)
+    playerSprite.anims.play({ key: "Idle", repeat: -1 })
 
     this.nodes.forEach((node, index) => {
       const image = this.add.image(node.coords.x, node.coords.y, `${this.stepKeys[node.type]}`)
@@ -139,10 +140,11 @@ export default class StageScene extends Scene {
       }
     })
 
+    this.sound.stopByKey("bgSong")
     this.sound.stopByKey("combatSong")
     this.sound.stopByKey("adminSong")
     this.sound.stopByKey("regitareSong")
-    this.sound.add('bgSong').play({ loop: true })
+    this.sound.add('stageSong').play({ loop: true })
   }
 
   update() {

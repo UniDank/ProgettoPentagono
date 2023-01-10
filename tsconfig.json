@@ -26,8 +26,7 @@
     "./node_modules/phaser/types"
   ],
   "types": [
-    "Phaser",
-    "jquery"
+    "Phaser"
   ],
   "include": [
     "src",

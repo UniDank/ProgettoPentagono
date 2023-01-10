@@ -40,15 +40,30 @@
             <button class="self-start rpgui-button" type="button" @click="goBack"><h3>Indietro</h3></button>
         </div>
         <div v-if="currentMenu == 4" class="bottom-0 left-0 flex flex-col gap-2 p-8 rpgui-container">
-            <div class="flex flex-col w-4/5 gap-2 p-8 -translate-x-1/2 -translate-y-2/3 h-3/5 top-2/3 left-1/2 rpgui-container framed-golden-2">
+            <div class="flex flex-col w-[95%] gap-2 p-8 -translate-x-1/2 -translate-y-2/3 h-3/5 top-2/3 left-1/2 rpgui-container framed-golden-2">
                 <h3>
-                    Per un'esperienza ottimale si consiglia di giocare con volume fissato e dimensione 1280x720.
-                    Il gioco è stato sviluppato da Agnello Federico, Bellanti Claudio, Nicosia Daniele, Valenti Marco e Zangara Giorgio come progetto di Ingegneria e Sicurezza del Software con la professoressa Simona Ester Rombo.
-
-                    Per i contatti o per segnalare errori link a github
-                    Elenco dei giochi da cui abbiamo preso immagini e canzoni, non sono di nostra proprietà, tutti i diritti riservati
-                    Elenco dei programmi usati
-                    <a href="https://github.com/UniDank/ProgettoPentagono" target="_blank">Gay</a>
+                    Il gioco è stato sviluppato da 
+                    <a href="https://github.com/FedeDC512" target="_blank">Agnello Federico</a>, 
+                    <a href="https://github.com/xClaudi0" target="_blank">Bellanti Claudio</a>, 
+                    <a href="https://github.com/zAlweNy26" target="_blank">Nicosia Daniele</a>, 
+                    <a href="https://github.com/valentimarco" target="_blank">Valenti Marco</a> e 
+                    <a href="https://github.com/GiorgioZa" target="_blank">Zangara Giorgio</a> 
+                    come progetto del Corso di Ingegneria e Sicurezza del Software 2022/2023 della 
+                    <a href="https://www.unipa.it/dipartimenti/matematicaeinformatica/cds/informatica2086" target="_blank">Facoltà di Informatica dell’Università di Palermo</a> 
+                    con la supervisione della professoressa 
+                    <a href="https://www.unipa.it/persone/docenti/r/simonaester.rombo" target="_blank">Simona Ester Rombo</a>.<br/>
+                    Per i contatti o per segnalare errori è disponibile il link al 
+                    <a href="https://github.com/UniDank/ProgettoPentagono" target="_blank">GitHub del Progetto</a>.<br/>
+                    L'immagine del titolo "<span class="!text-[#EE7F2E]">Penta Quest</span>", il logo animato 
+                    e la "<span class="!text-[#EE7F2E]">Lira Oscura Dell’Edera</span>" sono immagini originali create esclusivamente per il progetto.
+                    Il resto di immagini, sprite, animazioni e musiche non sono di nostra proprietà, tutti i diritti sono riservati ai rispettivi creatori.<br/>
+                    I <span class="!text-blue-500">Programmi</span>, 
+                    <span class="!text-red-500">Linguaggi</span>, e 
+                    <span class="!text-green-500">Librerie</span> usati per la realizzazione sono stati: 
+                    <span class="!text-blue-500">Draw.io, IntelliJ, VSCode, Spring, JUnit, GitHub, Git, NodeJS, Notion, Asana</span>,
+                    <span class="!text-red-500">Java, TypeScript, JavaScript, HTML, CSS, MongoDB</span>,
+                    <span class="!text-green-500">Electron, Vue, Phaser, Tailwind, RPGUI, Vite, Pinia</span>.<br/>
+                    Per un'esperienza ottimale si consiglia di giocare con volume attivo e dimensione della finestra fissa a 1280x720.
                 </h3>
             </div>
             <button class="self-start rpgui-button" type="button" @click="goBack"><h3>Indietro</h3></button>

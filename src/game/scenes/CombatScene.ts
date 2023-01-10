@@ -4,11 +4,6 @@ import { useCombatStore } from '../../stores/combatStore'
 import { TempPlayer } from "../../classes/TempPlayer"
 import { GridEngine } from "grid-engine"
 import Vector2 = Phaser.Math.Vector2
-import { partition } from 'rxjs'
-import { parseStringStyle } from '@vue/shared'
-import { flowRight } from 'lodash'
-import { Player } from 'src/classes/Player'
-import { Enemy } from 'src/classes/Enemy'
 
 export default class CombatScene extends Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
@@ -94,16 +89,13 @@ export default class CombatScene extends Scene {
 
     this.input.keyboard.on("keydown-THREE", ()=>{
       this.initialpos = new Vector2(this.player.getPosition().x,this.player.getPosition().y)
-      //coloro il range
       this.tintRadius(this.map,this.initialpos.y, this.initialpos.x, 2, this.colorR)
-      //coloro il tile di destinazione
       this.tintTile(this.walklayer.layer, this.initialpos.x, this.initialpos.y, this.colorC)
       this.newpos = this.initialpos
-      console.warn("tile di destinazione", this.newpos)
       this.turn = true
     })
 
-    this.sound.stopByKey("bgSong")
+    this.sound.stopByKey("stageSong")
     if (this.passedData.node == 10) this.sound.add('adminSong').play({ loop: true })
     else if (this.passedData.node == 6) this.sound.add('regitareSong').play({ loop: true })
     else this.sound.add('combatSong').play({ loop: true })
@@ -158,7 +150,7 @@ export default class CombatScene extends Scene {
     }
   }
 
-  tintTile(layer: Phaser.Tilemaps.LayerData, posX: number, posY: number, color: number): void{
+  tintTile(layer: Phaser.Tilemaps.LayerData, posX: number, posY: number, color: number): void {
     for (const arr of layer.data){
       for (const tile of arr){
         if (tile.x === posX && tile.y === posY){
@@ -172,28 +164,28 @@ export default class CombatScene extends Scene {
   moveTile(x: number, y: number, direction?: string): Vector2 {
     switch (true) {
       case direction != "" ? direction == "left" : this.cursors.left.isDown:
-        if (this.checkTile(new Vector2(x-1,y),new Vector2(this.initialpos.x, this.initialpos.y),2)){
+        if (this.checkTile(new Vector2(x-1,y),new Vector2(this.initialpos.x, this.initialpos.y),2)) {
           this.tintTile(this.walklayer.layer, x, y, this.colorR)
         } else this.tintTile(this.walklayer.layer, x, y, 16777215)
         this.tintTile(this.walklayer.layer, x - 1, y, this.colorC)
         this.combatStore.moveDirection = ""
         return new Vector2(x - 1, y)
       case direction != "" ? direction == "right" : this.cursors.right.isDown:
-        if (this.checkTile(new Vector2(x+1,y),new Vector2(this.initialpos.x, this.initialpos.y),3)){
+        if (this.checkTile(new Vector2(x+1,y),new Vector2(this.initialpos.x, this.initialpos.y),3)) {
           this.tintTile(this.walklayer.layer, x, y, this.colorR)
         } else this.tintTile(this.walklayer.layer, x, y, 16777215)
         this.tintTile(this.walklayer.layer, x + 1, y, this.colorC)
         this.combatStore.moveDirection = ""
         return new Vector2(x + 1, y)
       case direction != "" ? direction == "up" : this.cursors.up.isDown:
-        if (this.checkTile(new Vector2(x,y-1),new Vector2(this.initialpos.x, this.initialpos.y),3)){
+        if (this.checkTile(new Vector2(x,y-1),new Vector2(this.initialpos.x, this.initialpos.y),3)) {
           this.tintTile(this.walklayer.layer, x, y, this.colorR)
         } else this.tintTile(this.walklayer.layer, x, y, 16777215)
         this.tintTile(this.walklayer.layer, x, y - 1, this.colorC)
         this.combatStore.moveDirection = ""
         return new Vector2(x, y - 1)
       case direction != "" ? direction == "down" : this.cursors.down.isDown:
-        if (this.checkTile(new Vector2(x,y+1),new Vector2(this.initialpos.x, this.initialpos.y),3)){
+        if (this.checkTile(new Vector2(x,y+1),new Vector2(this.initialpos.x, this.initialpos.y),3)) {
           this.tintTile(this.walklayer.layer, x, y, this.colorR)
         } else this.tintTile(this.walklayer.layer, x, y, 16777215)
         this.tintTile(this.walklayer.layer, x, y + 1, this.colorC)
@@ -209,6 +201,4 @@ export default class CombatScene extends Scene {
     const manhattanDist = (x1: number, y1: number, x2: number, y2: number) => Math.abs(x1 - x2) + Math.abs(y1 - y2)
     return manhattanDist(initpos.x, initpos.y, newpos.x, newpos.y) < radius
   }
-
-  
 }

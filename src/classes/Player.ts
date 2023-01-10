@@ -15,8 +15,8 @@ class Player {
     public currentExp: number
     public level: number
 
-    constructor(public name: string, public attack: number, public health: number, public mana: number, 
-        public agility: number, public APs: number) {
+    constructor(public name: string, public attack: number, public defense: number, public health: number, 
+        public mana: number, public agility: number, public APs: number) {
         this.maxHealth = health
         this.maxMana = mana
         this.maxAPs = APs
@@ -34,6 +34,10 @@ class Player {
     
     public addMana(amount: number) {
         this.mana = Math.min(this.mana += amount, this.maxMana)
+    }
+
+    public addAP(amount: number) {
+        this.APs = Math.min(this.APs += amount, this.maxAPs)
     }
 
     public useMana(amount: number): void {

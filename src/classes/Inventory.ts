@@ -9,11 +9,7 @@ class Item {
     constructor(public name: string, public type: ItemType, public quantity: number, public value: number) {}
 }
 
-class Inventory {
-    constructor(public items: Item[]) {}
-}
-
 export {
-    Item, Inventory, ItemType
+    Item, ItemType
 }
 

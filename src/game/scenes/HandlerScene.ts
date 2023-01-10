@@ -11,6 +11,7 @@ import bgSong from '../assets/background_song.mp3'
 import combatSong from '../assets/combat_song.mp3'
 import adminSong from '../assets/admin_song.mp3'
 import regitareSong from '../assets/regitare_song.mp3'
+import stageSong from '../assets/stage_song.mp3'
 
 import worldMap from '../assets/stages/world_map.png'
 import dotMark from '../assets/stages/dotmark.png'
@@ -106,6 +107,7 @@ export default class HandlerScene extends Scene {
         this.load.aseprite('player5', playerPng5, playerJson5)
 
         // stage scene assets
+        this.load.audio('stageSong', stageSong)
         this.load.image('worldMap', worldMap)
         this.load.image('dotMark', dotMark)
         this.load.image('nodeBlue', nodeBlue)

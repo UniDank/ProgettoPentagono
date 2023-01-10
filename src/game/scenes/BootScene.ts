@@ -23,9 +23,6 @@ export default class BootScene extends Scene {
     this.anims.createFromAseprite('mainBg')
     const bgSprite = this.add.sprite(0, 0, 'mainBg').setOrigin(0)
     bgSprite.play({ key: 'Animation', repeat: -1, frameRate: 15 })
-
-    const bgAudio = this.sound.add('bgSong')
-    bgAudio.play({ loop: true })
     
     this.anims.createFromAseprite('animatedTitle')
     const titleSprite = this.add.sprite(this.scale.gameSize.width * 0.025, this.scale.gameSize.height * 0.05, 'animatedTitle').setOrigin(0).setScale(2)
@@ -37,6 +34,9 @@ export default class BootScene extends Scene {
         mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0]))
       }
     })
+
+    this.sound.stopByKey("stageSong")
+    this.sound.add('bgSong').play({ loop: true })
   }
 
   update() {

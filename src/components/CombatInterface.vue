@@ -124,13 +124,15 @@ import arrowsIcon from '@iconify-icons/ic/round-compare-arrows'
 import arrowRightAlt from '@iconify-icons/ic/round-arrow-right-alt'
 import Inventory from './Inventory.vue'
 import { ref, reactive, watch } from 'vue'
-import { Enemy } from '../classes/Enemy'
+import { Enemy, EnemyType } from '../classes/Enemy'
 import { Player } from '../classes/Player'
 import { useMainStore } from '../stores/mainStore'
 import { useCombatStore } from '../stores/combatStore'
+import { useStageStore } from '../stores/stageStore'
 
 const main = useMainStore()
 const combat = useCombatStore()
+const stage = useStageStore()
 
 const invComp = ref<InstanceType<typeof Inventory> | null>(null)
 
@@ -138,10 +140,15 @@ const combatLog = ref("Claphos ha subito 2 danni!\nClaphos è in fin di vita!")
 const showMove = ref(false)
 
 const initEnemies = reactive<Enemy[]>([
-    new Enemy("Bidoof", 4, 10, 10, 10, 10, 5),
-    new Enemy("Ekans", 5, 10, 10, 10, 10, 8),
-    new Enemy("Starly", 6, 10, 10, 10, 10, 25)
+    new Enemy("Bidoof", 4, 10, 10, 5, 10, 5, EnemyType.Tank),
+    new Enemy("Ekans", 5, 10, 10, 8, 10, 8, EnemyType.Thief),
+    new Enemy("Starly", 6, 10, 10, 3, 10, 25, EnemyType.Mage)
 ])
+
+fetch(`http://localhost:8080/api/v1/${stage.selectedNode}/enemies`).then(res => res.json()).then(json => {
+    const resJson = json as Enemy[]
+    initEnemies.push(...resJson)
+})
 
 const enemies = initEnemies.map(v => Object.assign({}, v))
 
@@ -152,14 +159,25 @@ combat.currentEntity = orderTurn[currentTurn.value]
 
 watch([orderTurn, currentTurn], () => {
     combat.currentEntity = orderTurn[currentTurn.value]
-    if (enemies.length != 0 && main.party.length != 0) {
+    if (enemies.length != 0 || main.party.length != 0) {
         const totalExp = enemies.map(v => v.expReward).reduce((c, p) => c + p)
         main.party.forEach(v => v.currentExp += totalExp / 5)
+        fetch(`http://localhost:8080/api/v1/party`, { 
+            method: 'POST',
+            body: JSON.stringify({
+                "id_stage": stage.selectedNode,
+                "Party": {
+                    "Members": main.party,
+                    "Bag": main.inventory
+                }
+            })
+        })
+        main.changeScene('StageScene')
     }
 })
 
 const actionAttack = () => {
-    if(orderTurn[currentTurn.value].APs <= 0) {
+    if((orderTurn[currentTurn.value] as Player).APs <= 0) {
         currentTurn.value++
         return
     }
