@@ -6,7 +6,7 @@ enum ItemType {
 }
 
 class Item {
-    constructor(public name: string, public type: ItemType, public quantity: number) {}
+    constructor(public name: string, public type: ItemType, public quantity: number, public value: number) {}
 }
 
 class Inventory {

@@ -4,6 +4,11 @@ import { useCombatStore } from '../../stores/combatStore'
 import { TempPlayer } from "../../classes/TempPlayer"
 import { GridEngine } from "grid-engine"
 import Vector2 = Phaser.Math.Vector2
+import { partition } from 'rxjs'
+import { parseStringStyle } from '@vue/shared'
+import { flowRight } from 'lodash'
+import { Player } from 'src/classes/Player'
+import { Enemy } from 'src/classes/Enemy'
 
 export default class CombatScene extends Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
@@ -60,8 +65,10 @@ export default class CombatScene extends Scene {
         mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0]))
       }
     })
+
+    this.add.text(200, 50, `Selezionato: ${this.sceneStore.mainPlayer}`)
     
-    this.player = new TempPlayer(this, "dani",new Vector2(7, 7))
+    this.player = new TempPlayer(this, this.sceneStore.mainPlayer,new Vector2(7, 7))
     this.enemy = new TempPlayer(this, "admin",new Vector2(6, 5))
 
     const gridEngineConfig = {
@@ -203,4 +210,6 @@ export default class CombatScene extends Scene {
     const manhattanDist = (x1: number, y1: number, x2: number, y2: number) => Math.abs(x1 - x2) + Math.abs(y1 - y2)
     return manhattanDist(initpos.x, initpos.y, newpos.x, newpos.y) < radius
   }
+
+  
 }

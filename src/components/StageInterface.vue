@@ -5,9 +5,9 @@
                 <h4 v-html="startText" />
             </button>
             <div class="rpgui-container mt-1 !static framed right-2">
-                <div v-for="(player, index) in party" class="!flex gap-1" :style="`top: ${index == 0 ? 0.25 : (index * 4.25) + 0.25}rem;`">
+                <div v-for="(player, index) in main.party" class="!flex gap-1" :style="`top: ${index == 0 ? 0.25 : (index * 4.25) + 0.25}rem;`">
                     <div class="!static rpgui-container cool !p-0 h-16 w-16">
-                        <img :src="`/boxes/pg_box_${player.pid}.png`" />
+                        <img :src="`/boxes/${player.name.toLowerCase()}_box.png`" />
                     </div>
                     <div class="flex flex-col w-32 gap-1">
                         <p class="h-4 leading-none">{{ player.name }}</p>
@@ -94,27 +94,9 @@
         else startText.value = "Leggi<br/>la storia"
     })
 
-    const party = reactive<Player[]>([ 
-        new Player(Characters.Agoraco, 12, 10), 
-        new Player(Characters.Danblos, 10, 10), 
-        new Player(Characters.Marcurion, 11, 10), 
-        new Player(Characters.Gioxon, 14, 10), 
-        new Player(Characters.Claphos, 18, 10) 
-    ])
-
     /*fetch("http://localhost:3000/salvataggio/party").then(res => res.json()).then(json => {
         console.log(json)
     })*/
-
-    main.party = party
-
-    const inventory = reactive<Inventory>(new Inventory([
-        new Item("Vita", ItemType.Health, 5), new Item("Cuore", ItemType.Health, 1), new Item("Mana", ItemType.Mana, 3), 
-        new Item("Energia", ItemType.Energy, 1), new Item("Lira", ItemType.Lyre, 9),
-        new Item("Mana", ItemType.Mana, 3), new Item("Merda", ItemType.Mana, 4), new Item("Shish", ItemType.Mana, 8), 
-    ]))
-
-    main.inventory = inventory
     
     const startBattle = () => {
         if ([2, 4, 6, 10].includes(stage.selectedNode)) main.changeScene('CombatScene')

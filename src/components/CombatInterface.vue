@@ -1,21 +1,24 @@
 <template>
     <div class="rpgui-content">
-        <div v-for="(player, index) in main.party" class="!flex rpgui-container gap-1 left-1" :style="`top: ${index == 0 ? 0.25 : (index * 4.25) + 0.25}rem;`">
+        <div v-for="(player, index) in main.party" class="!flex rpgui-container gap-1 left-1"
+            :style="`top: ${index == 0 ? 0.25 : (index * 4.25) + 0.25}rem;`">
             <div class="!static rpgui-container thin !p-0 h-16 w-16">
-                <img :src="`/boxes/pg_box_${player.pid}.png`" />
+                <img :src="`/boxes/${player.name.toLowerCase()}_box.png`" />
             </div>
             <div class="flex flex-col w-32 gap-1">
                 <p class="h-4 leading-none">{{ player.name }}</p>
                 <div class="rpgui-progress !h-[1rem]">
                     <div class="rpgui-progress-track !h-[1rem] !left-4 !right-4">
-                        <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] red" :style="`width: ${player.health / player.maxHealth * 100}%;`"></div>
+                        <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] red"
+                            :style="`width: ${player.health / player.maxHealth * 100}%;`"></div>
                     </div>
                     <div class="!h-[1rem] !w-4 rpgui-progress-left1-edge"></div>
                     <div class="!h-[1rem] !w-4 rpgui-progress-right-edge"></div>
                 </div>
                 <div class="rpgui-progress !h-[1rem]">
                     <div class="rpgui-progress-track !h-[1rem] !left-4 !right-4">
-                        <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] blue" :style="`width: ${player.mana / player.maxMana * 100}%;`"></div>
+                        <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] blue"
+                            :style="`width: ${player.mana / player.maxMana * 100}%;`"></div>
                     </div>
                     <div class="!h-[1rem] !w-4 rpgui-progress-left3-edge"></div>
                     <div class="!h-[1rem] !w-4 rpgui-progress-right-edge"></div>
@@ -24,10 +27,12 @@
         </div>
         <div class="flex w-[99%] gap-2 bottom-1 left-1 rpgui-container">
             <div class="flex flex-col">
-                <button class="rpgui-button" type="button" @click="actionAttack"><h3>Attacca</h3></button>
+                <button class="rpgui-button" type="button" @click="actionAttack">
+                    <h3>Attacca</h3>
+                </button>
                 <button class="relative !overflow-visible rpgui-button" type="button" @click="actionMove">
                     <h3>Muoviti</h3>
-                    <div v-show="showMove" @click.stop 
+                    <div v-show="showMove" @click.stop
                         class="rpgui-container framed !left-[calc(100%+0.5rem)] !absolute !bottom-0 !z-30 flex flex-col justify-between !h-56 w-52 !p-0">
                         <button class="self-center rpgui-button !p-0" type="button" @click="moveUp">
                             <Icon :icon="arrowUp" width="48" height="48" />
@@ -44,7 +49,9 @@
                             <Icon :icon="arrowDown" width="48" height="48" />
                         </button>
                         <div class="flex justify-between">
-                            <button class="rpgui-button" type="button" @click="confirmMove"><h5>Conferma</h5></button>
+                            <button class="rpgui-button" type="button" @click="confirmMove">
+                                <h5>Conferma</h5>
+                            </button>
                             <button class="rpgui-button !px-2" type="button" @click="combat.toggleMoveMode()">
                                 <Icon :icon="combat.moveMode ? arrowsIcon : mouseIcon" width="32" height="32" />
                             </button>
@@ -55,7 +62,9 @@
                     <h3>Inventario</h3>
                     <Inventory ref="invComp" />
                 </button>
-                <button class="rpgui-button" type="button" @click="actionSkip"><h3>Passa</h3></button>
+                <button class="rpgui-button" type="button" @click="actionSkip">
+                    <h3>Passa</h3>
+                </button>
             </div>
             <div class="flex flex-col rpgui-container !static framed w-full">
                 <h5 class="whitespace-pre-wrap">
@@ -66,27 +75,32 @@
                 <div class="rpgui-container !static framed grow flex flex-col items-center">
                     <h4 class="whitespace-nowrap">Prossimo turno:</h4>
                     <div class="flex items-center self-center justify-between">
-                        <img :src="`/boxes/pg_box_1.png`" />
+                        <img :src="`/boxes/${orderTurn[currentTurn].name.toLowerCase()}_box.png`" />
                         <Icon :icon="arrowRightAlt" width="64" height="64" />
-                        <img :src="`/boxes/pg_box_2.png`" />
+                        <img :src="`/boxes/${orderTurn[currentTurn + 1].name.toLowerCase()}_box.png`" />
                     </div>
                 </div>
-                <button class="rpgui-button" type="button" @click="actionRun"><h3>Fuggi</h3></button>
+                <button class="rpgui-button" type="button" @click="actionRun">
+                    <h3>Fuggi</h3>
+                </button>
             </div>
         </div>
-        <div v-for="(enemy, index) in enemies" class="!flex rpgui-container gap-1 right-1" :style="`top: ${index == 0 ? 0.25 : (index * 4.25) + 0.25}rem;`">
+        <div v-for="(enemy, index) in enemies" class="!flex rpgui-container gap-1 right-1"
+            :style="`top: ${index == 0 ? 0.25 : (index * 4.25) + 0.25}rem;`">
             <div class="flex flex-col w-32 gap-1">
                 <p class="h-4 ml-auto leading-none">{{ enemy.name }}</p>
                 <div class="rpgui-progress !h-[1rem] -scale-x-100">
                     <div class="rpgui-progress-track !h-[1rem] !left-4 !right-4">
-                        <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] red" :style="`width: ${enemy.health / enemy.maxHealth * 100}%;`"></div>
+                        <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] red"
+                            :style="`width: ${enemy.health / enemy.maxHealth * 100}%;`"></div>
                     </div>
                     <div class="!h-[1rem] !w-4 rpgui-progress-left1-edge"></div>
                     <div class="!h-[1rem] !w-4 rpgui-progress-right-edge"></div>
                 </div>
                 <div class="rpgui-progress !h-[1rem] -scale-x-100">
                     <div class="rpgui-progress-track !h-[1rem] !left-4 !right-4">
-                        <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] blue" :style="`width: ${enemy.mana / enemy.maxMana * 100}%;`"></div>
+                        <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] blue"
+                            :style="`width: ${enemy.mana / enemy.maxMana * 100}%;`"></div>
                     </div>
                     <div class="!h-[1rem] !w-4 rpgui-progress-left3-edge"></div>
                     <div class="!h-[1rem] !w-4 rpgui-progress-right-edge"></div>
@@ -100,57 +114,82 @@
 </template>
 
 <script setup lang="ts">
-    import { Icon } from '@iconify/vue/dist/offline'
-    import arrowLeft from '@iconify-icons/ic/round-arrow-left'
-    import arrowRight from '@iconify-icons/ic/round-arrow-right'
-    import arrowUp from '@iconify-icons/ic/round-arrow-drop-up'
-    import arrowDown from '@iconify-icons/ic/round-arrow-drop-down'
-    import mouseIcon from '@iconify-icons/ic/round-mouse'
-    import arrowsIcon from '@iconify-icons/ic/round-compare-arrows'
-    import arrowRightAlt from '@iconify-icons/ic/round-arrow-right-alt'
-    import Inventory from './Inventory.vue'
-    import { ref, reactive } from 'vue'
-    import { Enemy } from '../classes/Enemy'
-    import { useMainStore } from '../stores/mainStore'
-    import { useCombatStore } from '../stores/combatStore'
+import { Icon } from '@iconify/vue/dist/offline'
+import arrowLeft from '@iconify-icons/ic/round-arrow-left'
+import arrowRight from '@iconify-icons/ic/round-arrow-right'
+import arrowUp from '@iconify-icons/ic/round-arrow-drop-up'
+import arrowDown from '@iconify-icons/ic/round-arrow-drop-down'
+import mouseIcon from '@iconify-icons/ic/round-mouse'
+import arrowsIcon from '@iconify-icons/ic/round-compare-arrows'
+import arrowRightAlt from '@iconify-icons/ic/round-arrow-right-alt'
+import Inventory from './Inventory.vue'
+import { ref, reactive, watch } from 'vue'
+import { Enemy } from '../classes/Enemy'
+import { Player } from '../classes/Player'
+import { useMainStore } from '../stores/mainStore'
+import { useCombatStore } from '../stores/combatStore'
 
-    const main = useMainStore()
-    const combat = useCombatStore()
+const main = useMainStore()
+const combat = useCombatStore()
 
-    const invComp = ref<InstanceType<typeof Inventory> | null>(null)
+const invComp = ref<InstanceType<typeof Inventory> | null>(null)
 
-    const combatLog = ref("Claphos ha subito 2 danni!\nClaphos è in fin di vita!")
-    const showMove = ref(false)
+const combatLog = ref("Claphos ha subito 2 danni!\nClaphos è in fin di vita!")
+const showMove = ref(false)
 
-    const enemies = reactive<Enemy[]>([
-        new Enemy("Bidoof", 10, 10),
-        new Enemy("Ekans", 10, 10),
-        new Enemy("Starly", 10, 10)
-    ])
+const initEnemies = reactive<Enemy[]>([
+    new Enemy("Bidoof", 4, 10, 10, 10, 10, 5),
+    new Enemy("Ekans", 5, 10, 10, 10, 10, 8),
+    new Enemy("Starly", 6, 10, 10, 10, 10, 25)
+])
 
-    const actionAttack = () => combat.actionAttack()
+const enemies = initEnemies.map(v => Object.assign({}, v))
 
-    const moveUp = () => combat.moveDirection = "up"
+const currentTurn = ref(0)
+const orderTurn = reactive<(Player | Enemy)[]>([...main.party, ...enemies])
+orderTurn.sort((p1, p2) => (p1.agility < p2.agility) ? 1 : (p1.agility > p2.agility) ? -1 : 0)
+combat.currentEntity = orderTurn[currentTurn.value]
 
-    const moveDown = () => combat.moveDirection = "down"
-
-    const moveLeft = () => combat.moveDirection = "left"
-
-    const moveRight = () => combat.moveDirection = "right"
-
-    const confirmMove = () => combat.isConfirmed = true
-
-    const actionSkip = () => console.log("skip turn")
-
-    const actionRun = () => main.changeScene('StageScene')
-
-    const actionMove = () => {
-        showMove.value = !showMove.value
-        invComp.value!.showInv = false
+watch([orderTurn, currentTurn], () => {
+    combat.currentEntity = orderTurn[currentTurn.value]
+    if (enemies.length != 0 && main.party.length != 0) {
+        const totalExp = enemies.map(v => v.expReward).reduce((c, p) => c + p)
+        main.party.forEach(v => v.currentExp += totalExp / 5)
     }
+})
 
-    const actionInv = () => {
-        invComp.value?.toggleInv()
-        showMove.value = false
+const actionAttack = () => {
+    if(orderTurn[currentTurn.value].APs <= 0) {
+        currentTurn.value++
+        return
     }
+    orderTurn[currentTurn.value].setDamage(orderTurn[currentTurn.value].attack, orderTurn[combat.selectedEntity])
+    combat.actionAttack(currentTurn.value)
+    currentTurn.value++
+}
+
+const moveUp = () => combat.moveDirection = "up"
+
+const moveDown = () => combat.moveDirection = "down"
+
+const moveLeft = () => combat.moveDirection = "left"
+
+const moveRight = () => combat.moveDirection = "right"
+
+const confirmMove = () => combat.isConfirmed = true
+
+const actionSkip = () => currentTurn.value++;
+
+const actionRun = () => main.changeScene('StageScene')
+
+const actionMove = () => {
+    showMove.value = !showMove.value
+    invComp.value!.showInv = false
+}
+
+const actionInv = () => {
+    invComp.value?.toggleInv()
+    showMove.value = false
+}
 </script>
+
