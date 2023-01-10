@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import { Enemy } from 'src/classes/Enemy'
-import { Player } from 'src/classes/Player'
+import { Enemy } from '../classes/Enemy'
+import { Player } from '../classes/Player'
 import { ref } from 'vue'
 
 export const useCombatStore = defineStore('combat', () => {

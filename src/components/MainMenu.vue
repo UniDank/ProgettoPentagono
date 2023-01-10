@@ -27,9 +27,9 @@
                     <label for="fullscreen" class="text-stroke-3" data-text="Schermo intero">Schermo intero</label>
                     <select class="text-lg rpgui-dropdown lg:text-2xl rpgui-cursor-point">
                         <option value="1920x1080" class="text-lg !rpgui-cursor-point lg:text-2xl">1920 x 1080</option>
-                        <option value="1280x720" class="text-lg !rpgui-cursor-point lg:text-2xl">1280 x 720</option>
+                        <option value="1280x720" selected class="text-lg !rpgui-cursor-point lg:text-2xl">1280 x 720</option>
                         <option value="1024x768" class="text-lg !rpgui-cursor-point lg:text-2xl">1024 x 768</option>
-                        <option value="800x600" selected class="text-lg !rpgui-cursor-point lg:text-2xl">800 x 600</option>
+                        <option value="800x600" class="text-lg !rpgui-cursor-point lg:text-2xl">800 x 600</option>
                     </select>
                 </div>
             </div>

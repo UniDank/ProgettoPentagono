@@ -158,18 +158,20 @@ orderTurn.sort((p1, p2) => (p1.agility < p2.agility) ? 1 : (p1.agility > p2.agil
 combat.currentEntity = orderTurn[currentTurn.value]
 
 watch([orderTurn, currentTurn], () => {
+    if (currentTurn.value == orderTurn.length) currentTurn.value = 0
     combat.currentEntity = orderTurn[currentTurn.value]
-    if (enemies.length != 0 || main.party.length != 0) {
+    if (enemies.length == 0 || main.party.length == 0) {
         const totalExp = enemies.map(v => v.expReward).reduce((c, p) => c + p)
         main.party.forEach(v => v.currentExp += totalExp / 5)
-        fetch(`http://localhost:8080/api/v1/party`, { 
+        fetch(`http://localhost:8080/api/v1/party`, {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
                 "id_stage": stage.selectedNode,
-                "Party": {
-                    "Members": main.party,
-                    "Bag": main.inventory
-                }
+                "members": main.party,
+                "bag": main.inventory
             })
         })
         main.changeScene('StageScene')

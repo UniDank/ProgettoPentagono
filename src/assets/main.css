@@ -9,6 +9,20 @@
     font-weight: normal;
 }
 
+@font-face {
+    font-family: Igiari;
+    src: url('Igiari.ttf');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: Basis;
+    src: url('basis33.ttf');
+    font-style: normal;
+    font-weight: normal;
+}
+
 * {
     margin: 0;
     padding: 0;

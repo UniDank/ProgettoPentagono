@@ -89,7 +89,11 @@
             <div class="fixed z-20 top-8 left-[17%] w-[31%] flex flex-col gap-2 h-[90%]">
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/gioxon_box.png" />
-                    <h5>Giorgio + arco (τόξον, "tocson")</h5>
+                    <b>
+                        <span class="font-medium !leading-none">Gioxon</span><br/>
+                        Unione di "Giorgio" e del greco <b class="!font-['Basis'] text-base">τόξον</b>, "tocson" (arco)<br/>
+                        Un arciere dalla lunga chioma, amico degli animali<br/>
+                    </b>
                 </div>
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/agoraco_box.png" />
@@ -165,8 +169,8 @@ import { ref } from 'vue'
 import { useMainStore } from '../stores/mainStore'
 import { useStageStore } from '../stores/stageStore'
 import stories from '../assets/stories.json'
-import { Player } from 'src/classes/Player'
-import { Item } from 'src/classes/Inventory'
+import { Player } from '../classes/Player'
+import { Item } from '../classes/Inventory'
 
 const main = useMainStore()
 const stage = useStageStore()
@@ -182,16 +186,14 @@ stage.$subscribe((store, vars) => {
 })
 
 fetch(`http://localhost:8080/api/v1/party`).then(res => res.json()).then(json => {
-    const resJson = json as {
+    const resJson = json.data as {
         "id_stage": number,
-        "Party": {
-            "Members": Player[],
-            "Bag": Item[]
-        }
+        "members": Player[],
+        "bag": Item[]
     }
     stage.selectedNode = resJson.id_stage
-    main.party = resJson.Party.Members
-    main.inventory = resJson.Party.Bag
+    main.party = resJson.members
+    main.inventory = resJson.bag
 })
 
 const startBattle = () => {
@@ -212,5 +214,5 @@ const openSettings = () => {
     invComp.value!.showInv = false
 }
 
-const saveExit = () => main.changeScene('BootScene')
+const saveExit = () => window.require('electron').ipcRenderer.invoke('close-window') //main.changeScene('BootScene')
 </script>
