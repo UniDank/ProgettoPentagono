@@ -10,7 +10,7 @@ export const useCombatStore = defineStore('combat', () => {
     const currentEntity = ref<Enemy | Player>()
     const enemies = ref<Enemy[]>()
     const selectedEntity = ref(0)
- 
+
     const changeMoveToMouse = () => {
         moveMode.value = true
         moveDirection.value = ""

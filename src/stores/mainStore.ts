@@ -7,7 +7,7 @@ export const useMainStore = defineStore('main', () => {
     const pausedScene = ref('')
     const afterScene = ref('')
     const showedDialogue = ref('')
-    const mainPlayer = ref('')
+    const mainPlayer = ref("fede")
     const party = ref<Player[]>([ 
         new Player(Characters[0], 5, 12, 10, 10, 10), 
         new Player(Characters[1], 5, 10, 10, 10, 10), 

@@ -22,7 +22,7 @@ dist-ssr
 *.sw?
 
 release
-.vscode/.debug.env
+.vscode
 pnpm-lock.yaml
 yarn.lock
 dist-electron

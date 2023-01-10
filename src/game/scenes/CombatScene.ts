@@ -44,7 +44,7 @@ export default class CombatScene extends Scene {
     const mainCamera = this.cameras.main
     mainCamera.fadeIn(500, 0, 0, 0)
 
-    this.add.image(0, this.scale.gameSize.height *0.4, 'combatBg')
+    this.add.image(0, this.scale.gameSize.height * 0.4, 'combatBg')
     
     const map = this.make.tilemap({ key: 'tiles_Map' })
     this.map = map
@@ -52,7 +52,7 @@ export default class CombatScene extends Scene {
     const tileSetOutside = map.addTilesetImage('outside', 'tiles_Outside')
     this.walklayer = map.createLayer('Bottom', [tileSetBuilding, tileSetOutside], 0, 0)
     map.createLayer('Walk', [tileSetBuilding, tileSetOutside], 0, -32)
-    map.createLayer('Roof', [tileSetBuilding, tileSetOutside], 0, -64)
+    map.createLayer('Roofs', [tileSetBuilding, tileSetOutside], 0, -64)
     map.createLayer('Top', [tileSetBuilding, tileSetOutside], 0, -96)
     map.createLayer('More Top', [tileSetBuilding, tileSetOutside], 0, -128)
 
@@ -65,11 +65,10 @@ export default class CombatScene extends Scene {
         mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0]))
       }
     })
-
-    this.add.text(200, 50, `Selezionato: ${this.sceneStore.mainPlayer}`)
     
-    this.player = new TempPlayer(this, this.sceneStore.mainPlayer,new Vector2(7, 7))
-    this.enemy = new TempPlayer(this, "admin",new Vector2(6, 5))
+    this.player = new TempPlayer(this, "cla", new Vector2(7, 7))
+    this.player.player.anims.play({ key: "Start", repeat: -1 })
+    this.enemy = new TempPlayer(this, "admin", new Vector2(6, 5))
 
     const gridEngineConfig = {
       characters: [

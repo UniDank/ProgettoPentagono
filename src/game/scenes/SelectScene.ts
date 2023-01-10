@@ -33,23 +33,23 @@ export default class SelectScene extends Scene {
     this.add.image(0, 0, 'selectBg').setOrigin(0)
     
     this.anims.createFromAseprite('player1')
-    const player1 = this.add.sprite(this.scale.gameSize.width * 0.1, this.scale.gameSize.height / 2, 'player1').setInteractive()
+    const player1 = this.add.sprite(this.scale.gameSize.width * 0.1, this.scale.gameSize.height * 0.5, 'player1').setInteractive()
     player1.play({ key: 'Idle1', repeat: -1, frameRate: 5 })
 
     this.anims.createFromAseprite('player2')
-    const player2 = this.add.sprite(this.scale.gameSize.width * 0.3, this.scale.gameSize.height / 2, 'player2').setInteractive()
+    const player2 = this.add.sprite(this.scale.gameSize.width * 0.3, this.scale.gameSize.height * 0.5, 'player2').setInteractive()
     player2.play({ key: 'Idle2', repeat: -1, frameRate: 5 })
 
     this.anims.createFromAseprite('player3')
-    const player3 = this.add.sprite(this.scale.gameSize.width * 0.5, this.scale.gameSize.height / 2, 'player3').setInteractive()
+    const player3 = this.add.sprite(this.scale.gameSize.width * 0.5, this.scale.gameSize.height * 0.5, 'player3').setInteractive()
     player3.play({ key: 'Idle3', repeat: -1, frameRate: 5 })
 
     this.anims.createFromAseprite('player4')
-    const player4 = this.add.sprite(this.scale.gameSize.width * 0.7, this.scale.gameSize.height / 2, 'player4').setInteractive()
+    const player4 = this.add.sprite(this.scale.gameSize.width * 0.7, this.scale.gameSize.height * 0.5, 'player4').setInteractive()
     player4.play({ key: 'Idle4', repeat: -1, frameRate: 5 })
 
     this.anims.createFromAseprite('player5')
-    const player5 = this.add.sprite(this.scale.gameSize.width * 0.9, this.scale.gameSize.height / 2, 'player5').setInteractive()
+    const player5 = this.add.sprite(this.scale.gameSize.width * 0.9, this.scale.gameSize.height * 0.5, 'player5').setInteractive()
     player5.play({ key: 'Idle5', repeat: -1, frameRate: 5 })
 
     this.buttonSelector = this.add.image(this.scale.gameSize.width * 0.1, this.scale.gameSize.height * 0.675, 'selector')
