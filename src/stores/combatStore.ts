@@ -9,6 +9,7 @@ export const useCombatStore = defineStore('combat', () => {
     const isConfirmed = ref(false)
     const currentEntity = ref<Enemy | Player>()
     const enemies = ref<Enemy[]>()
+    const combatLog = ref("")
     const selectedEntity = ref(0)
 
     const changeMoveToMouse = () => {
@@ -32,6 +33,7 @@ export const useCombatStore = defineStore('combat', () => {
         actionAttack, 
         currentEntity, 
         enemies,
-        selectedEntity
+        selectedEntity,
+        combatLog
     }
 })

@@ -35,10 +35,14 @@ import arrowLeft from '@iconify-icons/ic/round-arrow-left'
 import arrowRight from '@iconify-icons/ic/round-arrow-right'
 import { Player } from '../classes/Player'
 import { ref, watch } from 'vue'
-import { useMainStore } from '../stores/mainStore'
 import { Item, ItemType } from '../classes/Inventory'
+import { useMainStore } from '../stores/mainStore'
+import { useCombatStore } from '../stores/combatStore'
+import { useStageStore } from '../stores/stageStore'
 
 const main = useMainStore()
+const combat = useCombatStore()
+const stage = useStageStore()
 
 const show = ref(false)
 
@@ -46,6 +50,8 @@ const numPages = Math.ceil(main.inventory.length / 5)
 const currentPage = ref(0)
 
 watch(currentPage, () => addList.value.fill(false))
+
+watch(show, () => stage.enableNodes = !show.value)
 
 const addList = ref<boolean[]>(main.inventory.map(() => false))
 
@@ -63,16 +69,20 @@ const addToPlayer = (item: Item, player: Player) => {
     if (item.type == ItemType.Health && player.health > 0 && player.health != player.maxHealth) {
         player.addHealth(item.value)
         item.quantity -= 1
+        combat.combatLog += `${player.name} ha usato una pozione di vita!\n`
     } else if (item.type == ItemType.Mana && player.mana != player.maxMana) {
         player.addMana(item.value)
         item.quantity -= 1
+        combat.combatLog += `${player.name} ha usato una pozione di mana!\n`
     } else if (item.type == ItemType.Lyre && player.health <= 0) {
         player.addHealth(player.maxHealth)
         player.addMana(player.maxMana)
         player.addAP(player.maxAPs)
+        combat.combatLog += `${player.name} ha usato la Lira!\n`
     } else if (item.type == ItemType.Energy && player.APs > 0 && player.APs != player.maxAPs) {
         player.APs += item.value
         item.quantity -= 1
+        combat.combatLog += `${player.name} ha usato una pozione di energia!\n`
     }
     main.inventory = main.inventory.filter(v => v.quantity > 0)
 }

@@ -127,10 +127,14 @@ export default class StageScene extends Scene {
             node.type == StepType.nodeYellow) playerSprite.setPosition(node.coords.x + image.width, node.coords.y - (image.height / 2))
           else playerSprite.setPosition(node.coords.x + image.width, node.coords.y + image.height)
           playerSprite.setDepth(1)
-          this.clickableNodes.forEach(img => img.clearTint())
           this.stageStore.selectNode(node.step ?? 0)
         })
       }
+    })
+
+    this.stageStore.$subscribe((store, vars) => {
+      if (vars.enableNodes) this.clickableNodes.forEach(v => v.setInteractive())
+      else if (!vars.enableNodes) this.clickableNodes.forEach(v => v.disableInteractive())
     })
     
     this.sceneStore.$onAction(({ name, args }) => {

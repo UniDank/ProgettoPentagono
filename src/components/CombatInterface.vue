@@ -66,9 +66,9 @@
                     <h3>Passa</h3>
                 </button>
             </div>
-            <div class="flex flex-col rpgui-container !static framed w-full">
-                <h5 class="whitespace-pre-wrap">
-                    {{ combatLog }}
+            <div ref="logElement" class="rpgui-container !static h-[198px] framed w-full !overflow-y-auto">
+                <h5 ref="textElement" class="whitespace-pre-wrap">
+                    {{ combat.combatLog }}
                 </h5>
             </div>
             <div class="flex flex-col">
@@ -123,7 +123,7 @@ import mouseIcon from '@iconify-icons/ic/round-mouse'
 import arrowsIcon from '@iconify-icons/ic/round-compare-arrows'
 import arrowRightAlt from '@iconify-icons/ic/round-arrow-right-alt'
 import Inventory from './Inventory.vue'
-import { ref, reactive, watch } from 'vue'
+import { ref, reactive, watch, onMounted } from 'vue'
 import { Enemy, EnemyType } from '../classes/Enemy'
 import { Player } from '../classes/Player'
 import { useMainStore } from '../stores/mainStore'
@@ -135,15 +135,16 @@ const combat = useCombatStore()
 const stage = useStageStore()
 
 const invComp = ref<InstanceType<typeof Inventory> | null>(null)
-
-const combatLog = ref("Claphos ha subito 2 danni!\nClaphos è in fin di vita!")
 const showMove = ref(false)
+const logElement = ref<HTMLDivElement>(), textElement = ref<HTMLHeadingElement>()
 
 const initEnemies = reactive<Enemy[]>([
     new Enemy("Bidoof", 4, 10, 10, 5, 10, 5, EnemyType.Tank),
     new Enemy("Ekans", 5, 10, 10, 8, 10, 8, EnemyType.Thief),
     new Enemy("Starly", 6, 10, 10, 3, 10, 25, EnemyType.Mage)
 ])
+
+combat.combatLog = ""
 
 fetch(`http://localhost:8080/api/v1/${stage.selectedNode}/enemies`).then(res => res.json()).then(json => {
     const resJson = json as Enemy[]
@@ -157,9 +158,10 @@ const orderTurn = reactive<(Player | Enemy)[]>([...main.party, ...enemies])
 orderTurn.sort((p1, p2) => (p1.agility < p2.agility) ? 1 : (p1.agility > p2.agility) ? -1 : 0)
 combat.currentEntity = orderTurn[currentTurn.value]
 
-watch([orderTurn, currentTurn], () => {
+watch([orderTurn, currentTurn], async () => {
     if (currentTurn.value == orderTurn.length) currentTurn.value = 0
     combat.currentEntity = orderTurn[currentTurn.value]
+    combat.combatLog += `Ora è il turno di ${combat.currentEntity.name}!\n`
     if (enemies.length == 0 || main.party.length == 0) {
         const totalExp = enemies.map(v => v.expReward).reduce((c, p) => c + p)
         main.party.forEach(v => v.currentExp += totalExp / 5)
@@ -173,9 +175,12 @@ watch([orderTurn, currentTurn], () => {
                 "members": main.party,
                 "bag": main.inventory
             })
-        })
-        main.changeScene('StageScene')
+        }).then(() => main.changeScene('StageScene'))
     }
+})
+
+onMounted(() => {
+    new ResizeObserver(() => logElement.value!.scrollTop = logElement.value!.scrollHeight).observe(textElement.value!)
 })
 
 const actionAttack = () => {
@@ -184,6 +189,7 @@ const actionAttack = () => {
         return
     }
     orderTurn[currentTurn.value].setDamage(orderTurn[currentTurn.value].attack, orderTurn[combat.selectedEntity])
+    combat.combatLog += `${orderTurn[currentTurn.value].name} ha inflitto ${orderTurn[currentTurn.value].attack} danni a ${orderTurn[combat.selectedEntity].name}!\n`
     combat.actionAttack(currentTurn.value)
     currentTurn.value++
 }
@@ -196,9 +202,15 @@ const moveLeft = () => combat.moveDirection = "left"
 
 const moveRight = () => combat.moveDirection = "right"
 
-const confirmMove = () => combat.isConfirmed = true
+const confirmMove = () => {
+    combat.isConfirmed = true
+    combat.combatLog += `${combat.currentEntity?.name} si è spostato!\n`
+}
 
-const actionSkip = () => currentTurn.value++;
+const actionSkip = () => {
+    combat.combatLog += `${combat.currentEntity?.name} ha saltato il turno!\n`
+    currentTurn.value++
+}
 
 const actionRun = () => main.changeScene('StageScene')
 

@@ -58,7 +58,7 @@
                     e la "<span class="!text-[#EE7F2E]">Lira Oscura Dell’Edera</span>" sono immagini originali create esclusivamente per il progetto.
                     Il resto di immagini, sprite, animazioni e musiche non sono di nostra proprietà, tutti i diritti sono riservati ai rispettivi creatori.<br/>
                     I <span class="!text-blue-500">Programmi</span>, 
-                    <span class="!text-red-500">Linguaggi</span>, e 
+                    <span class="!text-red-500">Linguaggi</span> e 
                     <span class="!text-green-500">Librerie</span> usati per la realizzazione sono stati: 
                     <span class="!text-blue-500">Draw.io, IntelliJ, VSCode, Spring, JUnit, GitHub, Git, NodeJS, Notion, Asana</span>,
                     <span class="!text-red-500">Java, TypeScript, JavaScript, HTML, CSS, MongoDB</span>,

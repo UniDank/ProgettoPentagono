@@ -78,7 +78,7 @@
         <div v-if="textShown" class="top-0 left-0 w-full h-full rpgui-container">
             <div class="w-[70%] h-5/6 top-16 left-1/4 rpgui-container !overflow-y-auto framed !p-4">
                 <img class="float-left mr-4 rounded-lg" :src="`/stories/${imageShown}`" />
-                <h3 class="whitespace-pre-wrap">{{ textShown }}</h3>
+                <h3 class="whitespace-pre-wrap" v-html="textShown"></h3>
                 <button class="ml-[87%] rpgui-button" type="button" @click="textShown = ''">
                     <h3>Chiudi</h3>
                 </button>
@@ -86,75 +86,126 @@
         </div>
         <div v-if="showSummary">
             <img class="fixed top-0 left-0 z-20 w-full h-auto" src="/Glossario.png" />
-            <div class="fixed z-20 top-8 left-[17%] w-[31%] flex flex-col gap-2 h-[90%]">
+            <div class="fixed z-20 top-6 left-[17%] w-[32%] flex flex-col gap-1.5 h-[90%]">
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/gioxon_box.png" />
                     <b>
-                        <span class="font-medium !leading-none">Gioxon</span><br/>
-                        Unione di "Giorgio" e del greco <b class="!font-['Basis'] text-base">τόξον</b>, "tocson" (arco)<br/>
-                        Un arciere dalla lunga chioma, amico degli animali<br/>
+                        <span class="font-medium !leading-none">Gioxon</span> - unione di "Giorgio" e <b class="!font-['Basis'] text-base">τόξον</b>, "tocson" (in greco arco) - 
+                        Un arciere dalla lunga chioma, amico degli animali.<br/>
+                    </b>
+                </div>
+                <div class="flex gap-2">
+                    <img class="rpgui-container !static thin !p-0" src="/boxes/marcurion_box.png" />
+                    <b>
+                        <span class="font-medium !leading-none">Marcurion</span> - unione di "Marco" e <b class="!font-['Basis'] text-base">ἀργύριον</b>, "argurion" (in greco danaro, moneta) - 
+                        Un ladro di cui non si conosce l’identità, si pensa sia un goblin.<br/>
+                    </b>
+                </div>
+                <div class="flex gap-2">
+                    <img class="rpgui-container !static thin !p-0" src="/boxes/claphos_box.png" />
+                    <b>
+                        <span class="font-medium !leading-none">Claphos</span> - unione di "Claudio" e <b class="!font-['Basis'] text-base">ξίφος</b>, "csiphos" (in greco spada) -
+                        Un guerriero che ha combattuto durante una antica guerra.<br/>
+                    </b>
+                </div>
+                <div class="flex gap-2">
+                    <img class="rpgui-container !static thin !p-0" src="/boxes/map_box.png" />
+                    <b>
+                        <span class="font-medium !leading-none">Regno di Empaizo</span> - da <b class="!font-['Basis'] text-base">ἐμπαίζω</b>, "empaizo" (in greco giocare, scherzare) - 
+                        Il regno in cui si svolge l’avventura di Penta Quest.<br/>
+                    </b>
+                </div>
+                <div class="flex gap-2">
+                    <img class="rpgui-container !static thin !p-0" src="/boxes/ontos_box.png" />
+                    <b>
+                        <span class="font-medium !leading-none">Villaggio di Òntos</span> - da <b class="!font-['Basis'] text-base">ὄντος</b>, "ontos" (in greco realtà, genitivo di <b class="!font-['Basis'] text-base">ὄν</b>, “on”) -
+                        Villaggio fittizio da cui dicono di provenire gli eroi, invece di dire la verità.<br/>
+                    </b>
+                </div>
+                <div class="flex gap-2">
+                    <img class="rpgui-container !static thin !p-0" src="/boxes/alsos_box.png" />
+                    <b>
+                        <span class="font-medium !leading-none">Bosco Àlsos</span> - da <b class="!font-['Basis'] text-base">ἄλσος</b>, "alsos" (in greco bosco, selva, foresta) - 
+                        Bosco del quale si raccontano favole ai bambini per tenerli lontani.<br/>
+                    </b>
+                </div>
+                <div class="flex gap-2">
+                    <img class="rpgui-container !static thin !p-0" src="/boxes/end_box.png" />
+                    <b>
+                        <span class="font-medium !leading-none !text-[#EE7F2E]">T.R.E.N.T.A.</span> - <span class="font-medium !leading-none">“<span class="!text-[#EE7F2E]">T</span>erra <span class="!text-[#EE7F2E]">R</span>icolma di <span class="!text-[#EE7F2E]">E</span>ffigi <span class="!text-[#EE7F2E]">N</span>efaste e <span class="!text-[#EE7F2E]">T</span>ombe <span class="!text-[#EE7F2E]">A</span>ntiche”</span> - 
+                        Le lande a Nord-Ovest dove le leggende narrano si possano raggiungere i “Confini del Mondo”.<br/>
+                    </b>
+                </div>
+                <div class="flex gap-2">
+                    <img class="rpgui-container !static thin !p-0" src="/boxes/hacker_box.png" />
+                    <b>
+                        <span class="font-medium !leading-none">Hacker</span> - una persona che utilizza le proprie competenze informatiche per esplorare i dettagli di sistemi informatici e utilizzarli in modo malevolo.<br/>
+                    </b>
+                </div>
+                <div class="flex gap-2">
+                    <img class="rpgui-container !static thin !p-0" src="/boxes/admin_box.png" />
+                    <b>
+                        <span class="font-medium !leading-none">The Administrator</span> - un’entità che si autodefinisce Amministratore e che sostiene di avere il controllo sul Regno di Empaizo.<br/>
+                    </b>
+                </div>
+            </div>
+            <div class="fixed z-20 top-6 left-[51%] w-[32%] flex flex-col gap-1.5 h-[90%]">
+                <div class="flex gap-2">
+                    <img class="rpgui-container !static thin !p-0" src="/boxes/danblos_box.png" />
+                    <b>
+                        <span class="font-medium !leading-none">Danblos</span> - unione di "Daniele" e <b class="!font-['Basis'] text-base">βίβλος</b>, "biblos" <br/>(in greco libro) - 
+                        Uno studioso che combatte col <br/>potere della streoneria.<br/>
                     </b>
                 </div>
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/agoraco_box.png" />
-                    <h5>Ma che ne so mi scusi</h5>
+                    <b>
+                        <span class="font-medium !leading-none">Agoraco</span> - unione di "Federico" e <b class="!font-['Basis'] text-base">ἀγορά</b>, "agorà" (in greco piazza, mercato) - 
+                        Un mercante girovago, combatte usando la merce raccolta nei suoi viaggi.<br/>
+                    </b>
                 </div>
                 <div class="flex gap-2">
-                    <img class="rpgui-container !static thin !p-0" src="/boxes/marcurion_box.png" />
-                    <h5>Ma che ne so mi scusi</h5>
+                    <img class="rpgui-container !static thin !p-0" src="/boxes/rombos_box.png" />
+                    <b>
+                        <span class="font-medium !leading-none">Magnifica Maga Rombòs</span> - da <b class="!font-['Basis'] text-base">ῥόμβος</b>, "rombos" (in greco oggetto magico, rombo) - 
+                        Una chiaroveggente <br/>che aiuta gli eroi nel momento del bisogno.<br/>
+                    </b>
                 </div>
                 <div class="flex gap-2">
-                    <img class="rpgui-container !static thin !p-0" src="/boxes/danblos_box.png" />
-                    <h5>Ma che ne so mi scusi</h5>
+                    <img class="rpgui-container !static thin !p-0" src="/boxes/didascal_box.png" />
+                    <b>
+                        <span class="font-medium !leading-none">Villaggio di Didascalèion</span> - da <b class="!font-['Basis'] text-base">διδασκαλεῖον</b>, "didascaleion" (in greco scuola) - 
+                        Villaggio in cui <br/>gli eroi si trovano appena arrivati.<br/>
+                    </b>
                 </div>
                 <div class="flex gap-2">
-                    <img class="rpgui-container !static thin !p-0" src="/boxes/claphos_box.png" />
-                    <h5>Ma che ne so mi scusi</h5>
-                </div>
-                <div class="flex gap-2">
-                    <img class="rpgui-container !static thin !p-0" src="/boxes/admin_box.png" />
-                    <h5>Ma che ne so mi scusi</h5>
-                </div>
-                <div class="flex gap-2">
-                    <img class="rpgui-container !static thin !p-0" src="/boxes/regitare_box.png" />
-                    <h5>Ma che ne so mi scusi</h5>
-                </div>
-                Excepteur aliqua laborum nulla tempor nisi ut adipisicing labore nulla aliquip labore. Exercitation
-                excepteur magna nostrud nulla incididunt laborum adipisicing ut qui commodo ex pariatur ut. Aute id
-                occaecat cillum fugiat laboris ea occaecat laborum anim incididunt laborum elit incididunt esse.
-            </div>
-            <div class="fixed z-20 top-8 left-[51%] w-[29%] flex flex-col gap-2 h-[90%]">
-                <div class="flex gap-2">
-                    <img class="rpgui-container !static thin !p-0" src="/boxes/gioxon_box.png" />
-                    <h5>Ma che ne so mi scusi</h5>
-                </div>
-                <div class="flex gap-2">
-                    <img class="rpgui-container !static thin !p-0" src="/boxes/agoraco_box.png" />
-                    <h5>Ma che ne so mi scusi</h5>
-                </div>
-                <div class="flex gap-2">
-                    <img class="rpgui-container !static thin !p-0" src="/boxes/marcurion_box.png" />
-                    <h5>Ma che ne so mi scusi</h5>
-                </div>
-                <div class="flex gap-2">
-                    <img class="rpgui-container !static thin !p-0" src="/boxes/danblos_box.png" />
-                    <h5>Ma che ne so mi scusi</h5>
-                </div>
-                <div class="flex gap-2">
-                    <img class="rpgui-container !static thin !p-0" src="/boxes/claphos_box.png" />
-                    <h5>Ma che ne so mi scusi</h5>
-                </div>
-                <div class="flex gap-2">
-                    <img class="rpgui-container !static thin !p-0" src="/boxes/admin_box.png" />
-                    <h5>Ma che ne so mi scusi</h5>
+                    <img class="rpgui-container !static thin !p-0" src="/boxes/matetai_box.png" />
+                    <b>
+                        <span class="font-medium !leading-none">Màtetai</span> - da <b class="!font-['Basis'] text-base">μαθηταί</b>, "matetai" (in greco scolari, plurale di <b class="!font-['Basis'] text-base">μαθητής</b> “matetes”) - 
+                        Eroi valorosi in <br/>grado di sconfiggere i mostri usando le arti magiche.<br/>
+                    </b>
                 </div>
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/regitare_box.png" />
-                    <h5>Ma che ne so mi scusi</h5>
+                    <b>
+                        <span class="font-medium !leading-none">Regitare</span> - da <b class="!font-['Basis'] text-base">rex,regis</b> (in latino re, sovrano) e <b class="!font-['Basis'] text-base">θαρρέω</b>, "tarreo" (in greco essere coraggioso) - <br/>
+                        Re famoso per la sua avventura nel Bosco Àlsos.<br/>
+                    </b>
                 </div>
-                Excepteur aliqua laborum nulla tempor nisi ut adipisicing labore nulla aliquip labore. Exercitation
-                excepteur magna nostrud nulla incididunt laborum adipisicing ut qui commodo ex pariatur ut. Aute id
-                occaecat cillum fugiat laboris ea occaecat laborum anim incididunt laborum elit incididunt esse.
+                <div class="flex gap-2">
+                    <img class="rpgui-container !static thin !p-0" src="/boxes/lyre_box.png" />
+                    <b>
+                        <span class="font-medium !leading-none !text-[#EE7F2E]">L.O.D.E.</span> - <span class="font-medium !leading-none">“<span class="!text-[#EE7F2E]">L</span>ira <span class="!text-[#EE7F2E]">O</span>scura <span class="!text-[#EE7F2E]">D</span>ell’<span class="!text-[#EE7F2E]">E</span>dera”</span> - 
+                        Uno strumento <br/>che, secondo una favola raccontata dalla Maga <br/>Rombòs, gode di poteri magici curativi benefici.<br/>
+                    </b>
+                </div>
+                <div class="flex gap-2">
+                    <img class="rpgui-container !static thin !p-0" src="/boxes/bug_box.png" />
+                    <b>
+                        <span class="font-medium !leading-none">Bug</span> e <span class="font-medium !leading-none">Glitch</span> - L'Hacker ha sfruttato dei Bug nel sistema per impostare il proprio Account come Amministratore, <br/>e attacca gli eroi in battaglia sfruttando dei Glitch.<br/>
+                    </b>
+                </div>
+
             </div>
             <button class="fixed z-20 bottom-4 right-4 rpgui-button" type="button" @click="showSummary = false">
                 <h3>Chiudi</h3>
@@ -165,7 +216,7 @@
 
 <script setup lang="ts">
 import InventoryComp from './Inventory.vue'
-import { ref } from 'vue'
+import { ref, watch} from 'vue'
 import { useMainStore } from '../stores/mainStore'
 import { useStageStore } from '../stores/stageStore'
 import stories from '../assets/stories.json'
@@ -175,15 +226,19 @@ import { Item } from '../classes/Inventory'
 const main = useMainStore()
 const stage = useStageStore()
 
-const textShown = ref(""), startText = ref("Leggi<br/>la storia"), imageShown = ref("")
+const textShown = ref(""), startText = ref(""), imageShown = ref("")
 const showSettings = ref(false), showSummary = ref(false)
 const invComp = ref<InstanceType<typeof InventoryComp> | null>(null)
 
-stage.$subscribe((store, vars) => {
-    if ([2, 4, 6, 10].includes(vars.selectedNode)) startText.value = "Inizia<br/>la battaglia"
-    else if ([1, 9].includes(vars.selectedNode)) startText.value = "Leggi<br/>il tutorial"
+const setCurrentText = (node: number) => {
+    if ([2, 4, 6, 10].includes(node)) startText.value = "Inizia<br/>la battaglia"
+    else if ([1, 9].includes(node)) startText.value = "Leggi<br/>il tutorial"
     else startText.value = "Leggi<br/>la storia"
-})
+}
+
+setCurrentText(stage.selectedNode)
+
+stage.$subscribe((store, vars) => setCurrentText(vars.selectedNode))
 
 fetch(`http://localhost:8080/api/v1/party`).then(res => res.json()).then(json => {
     const resJson = json.data as {
@@ -195,6 +250,9 @@ fetch(`http://localhost:8080/api/v1/party`).then(res => res.json()).then(json =>
     main.party = resJson.members
     main.inventory = resJson.bag
 })
+
+watch([textShown, showSummary, showSettings], () => 
+    stage.enableNodes = textShown.value == "" && !showSummary.value && !showSettings.value)
 
 const startBattle = () => {
     if ([2, 4, 6, 10].includes(stage.selectedNode)) main.changeScene('CombatScene')
