@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { Enemy } from '../classes/Enemy'
+import { Enemy, EnemyType } from '../classes/Enemy'
 import { Player } from '../classes/Player'
 import { ref } from 'vue'
 
@@ -8,9 +8,14 @@ export const useCombatStore = defineStore('combat', () => {
     const moveDirection = ref("")
     const isConfirmed = ref(false)
     const currentEntity = ref<Enemy | Player>()
-    const enemies = ref<Enemy[]>()
+    const enemies = ref<Enemy[]>([
+        new Enemy("Bidoof", 4, 10, 10, 5, 10, 5, EnemyType.Tank),
+        new Enemy("Ekans", 5, 10, 10, 8, 10, 8, EnemyType.Thief),
+        new Enemy("Starly", 6, 10, 10, 3, 10, 25, EnemyType.Mage)
+    ])
     const combatLog = ref("")
     const selectedEntity = ref(0)
+    const isMoving = ref(false)
 
     const changeMoveToMouse = () => {
         moveMode.value = true
@@ -23,6 +28,8 @@ export const useCombatStore = defineStore('combat', () => {
 
     const actionAttack = (turnIndex: number) => selectedEntity.value = turnIndex
 
+    const actionMove = (move: boolean) => isMoving.value = move
+
     return { 
         moveMode, 
         changeMoveToMouse, 
@@ -34,6 +41,8 @@ export const useCombatStore = defineStore('combat', () => {
         currentEntity, 
         enemies,
         selectedEntity,
-        combatLog
+        combatLog,
+        actionMove,
+        isMoving
     }
 })

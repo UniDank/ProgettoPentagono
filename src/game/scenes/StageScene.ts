@@ -92,7 +92,7 @@ export default class StageScene extends Scene {
 
     { type: StepType.nodeYellow, coords: { x: 284, y: 60 }, step: 11 },
   ]
-  public clickableNodes: Phaser.GameObjects.Image[] = []
+  private clickableNodes: Phaser.GameObjects.Image[] = []
 
   constructor() {
     super({ key: 'StageScene' })
@@ -140,15 +140,22 @@ export default class StageScene extends Scene {
     this.sceneStore.$onAction(({ name, args }) => {
       if (name === 'changeScene') {
         mainCamera.fadeOut(500, 0, 0, 0)
-        mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0], { node: this.stageStore.selectedNode }))
+        if (args[0] == 'CombatScene') {
+          mainCamera.on('camerafadeoutcomplete', () => this.scene.launch(args[0], { node: this.stageStore.selectedNode }).sleep())
+        } else mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0]))
       }
     })
 
+    this.events.on(Phaser.Scenes.Events.WAKE, () => {
+      mainCamera.fadeIn(500, 0, 0, 0)
+      this.sound.stopByKey("combatSong")
+      this.sound.stopByKey("adminSong")
+      this.sound.stopByKey("regitareSong")
+      this.sound.play("stageSong", { loop: true })
+    })
+
     this.sound.stopByKey("bgSong")
-    this.sound.stopByKey("combatSong")
-    this.sound.stopByKey("adminSong")
-    this.sound.stopByKey("regitareSong")
-    this.sound.add('stageSong').play({ loop: true })
+    this.sound.play("stageSong", { loop: true })
   }
 
   update() {

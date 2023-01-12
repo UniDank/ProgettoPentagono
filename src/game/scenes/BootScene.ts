@@ -36,7 +36,7 @@ export default class BootScene extends Scene {
     })
 
     this.sound.stopByKey("stageSong")
-    this.sound.add('bgSong').play({ loop: true })
+    this.sound.play("bgSong", { loop: true })
   }
 
   update() {

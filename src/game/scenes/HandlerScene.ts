@@ -130,11 +130,11 @@ export default class HandlerScene extends Scene {
         this.load.image('tiles_Building', mapBuilding)
         this.load.image('tiles_Outside', mapOutside)
         this.load.tilemapTiledJSON('tiles_Map', combatJson)
-        this.load.aseprite("fede", fedePng, fedeJson)
-        this.load.aseprite("dani", daniPng, daniJson)
-        this.load.aseprite("cla", claPng, claJson)
-        this.load.aseprite("mar", marPng, marJson)
-        this.load.aseprite("gio", gioPng, gioJson)
+        this.load.aseprite("agoraco", fedePng, fedeJson)
+        this.load.aseprite("danblos", daniPng, daniJson)
+        this.load.aseprite("claphos", claPng, claJson)
+        this.load.aseprite("marcurion", marPng, marJson)
+        this.load.aseprite("gioxon", gioPng, gioJson)
         this.load.aseprite("admin", adminPng, adminJson)
         this.load.aseprite("beedrill", beedrillPng, beedrillJson)
         this.load.aseprite("bidoof", bidoofPng, bidoofJson)
@@ -159,6 +159,12 @@ export default class HandlerScene extends Scene {
             .on('animationcomplete', () => logoSprite.play({ key: 'Flash', repeat: -1, frameRate: 12, repeatDelay: 2000 }))
         
         this.input.setDefaultCursor(`url(${cursorPng}), pointer`)
+
+        this.sound.add('bgSong')
+        this.sound.add('adminSong')
+        this.sound.add('regitareSong')
+        this.sound.add('combatSong')
+        this.sound.add('stageSong')
 
         this.updateCamera(this.scale.gameSize.width, this.scale.gameSize.height)
 

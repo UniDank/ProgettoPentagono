@@ -9,7 +9,7 @@ export default class SelectScene extends Scene {
   private switchAudio!: Phaser.Sound.BaseSound
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
   private sceneStore = useMainStore()
-  private selectablePlayers = ["gio", "dani", "mar", "fede", "cla"]
+  private selectablePlayers = ["gioxon", "danblos", "marcurion", "agoraco", "claphos"]
 
   constructor() {
     super({ key: 'SelectScene' })
@@ -84,9 +84,9 @@ export default class SelectScene extends Scene {
   }
 
   confirmSelection() {
-    this.sceneStore.changeScene('StageScene')
     this.sceneStore.mainPlayer = this.selectablePlayers[this.selectedButtonIndex]
     this.selectAudio.play()
+    this.sceneStore.changeScene('StageScene')
   }
 
   update() {

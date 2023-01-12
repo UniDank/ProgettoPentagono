@@ -85,7 +85,7 @@
                 </button>
             </div>
         </div>
-        <div v-for="(enemy, index) in enemies" class="!flex rpgui-container gap-1 right-1"
+        <div v-for="(enemy, index) in combat.enemies" class="!flex rpgui-container gap-1 right-1"
             :style="`top: ${index == 0 ? 0.25 : (index * 4.25) + 0.25}rem;`">
             <div class="flex flex-col w-32 gap-1">
                 <p class="h-4 ml-auto leading-none">{{ enemy.name }}</p>
@@ -123,8 +123,8 @@ import mouseIcon from '@iconify-icons/ic/round-mouse'
 import arrowsIcon from '@iconify-icons/ic/round-compare-arrows'
 import arrowRightAlt from '@iconify-icons/ic/round-arrow-right-alt'
 import Inventory from './Inventory.vue'
-import { ref, reactive, watch, onMounted } from 'vue'
-import { Enemy, EnemyType } from '../classes/Enemy'
+import { ref, reactive, watch, onMounted, onUnmounted } from 'vue'
+import { Enemy } from '../classes/Enemy'
 import { Player } from '../classes/Player'
 import { useMainStore } from '../stores/mainStore'
 import { useCombatStore } from '../stores/combatStore'
@@ -138,23 +138,15 @@ const invComp = ref<InstanceType<typeof Inventory> | null>(null)
 const showMove = ref(false)
 const logElement = ref<HTMLDivElement>(), textElement = ref<HTMLHeadingElement>()
 
-const initEnemies = reactive<Enemy[]>([
-    new Enemy("Bidoof", 4, 10, 10, 5, 10, 5, EnemyType.Tank),
-    new Enemy("Ekans", 5, 10, 10, 8, 10, 8, EnemyType.Thief),
-    new Enemy("Starly", 6, 10, 10, 3, 10, 25, EnemyType.Mage)
-])
-
 combat.combatLog = ""
 
 fetch(`http://localhost:8080/api/v1/${stage.selectedNode}/enemies`).then(res => res.json()).then(json => {
     const resJson = json as Enemy[]
-    initEnemies.push(...resJson)
+    combat.enemies.push(...resJson)
 })
 
-const enemies = initEnemies.map(v => Object.assign({}, v))
-
 const currentTurn = ref(0)
-const orderTurn = reactive<(Player | Enemy)[]>([...main.party, ...enemies])
+const orderTurn = reactive<(Player | Enemy)[]>([...main.party, ...combat.enemies])
 orderTurn.sort((p1, p2) => (p1.agility < p2.agility) ? 1 : (p1.agility > p2.agility) ? -1 : 0)
 combat.currentEntity = orderTurn[currentTurn.value]
 
@@ -162,8 +154,8 @@ watch([orderTurn, currentTurn], async () => {
     if (currentTurn.value == orderTurn.length) currentTurn.value = 0
     combat.currentEntity = orderTurn[currentTurn.value]
     combat.combatLog += `Ora è il turno di ${combat.currentEntity.name}!\n`
-    if (enemies.length == 0 || main.party.length == 0) {
-        const totalExp = enemies.map(v => v.expReward).reduce((c, p) => c + p)
+    if (combat.enemies.length == 0 || main.party.length == 0) {
+        const totalExp = combat.enemies.map(v => v.expReward).reduce((c, p) => c + p)
         main.party.forEach(v => v.currentExp += totalExp / 5)
         fetch(`http://localhost:8080/api/v1/party`, {
             method: 'POST',
@@ -181,6 +173,10 @@ watch([orderTurn, currentTurn], async () => {
 
 onMounted(() => {
     new ResizeObserver(() => logElement.value!.scrollTop = logElement.value!.scrollHeight).observe(textElement.value!)
+})
+
+onUnmounted(() => {
+    stage.enableNodes = true
 })
 
 const actionAttack = () => {
@@ -216,6 +212,7 @@ const actionRun = () => main.changeScene('StageScene')
 
 const actionMove = () => {
     showMove.value = !showMove.value
+    combat.actionMove(showMove.value)
     invComp.value!.showInv = false
 }
 

@@ -51,11 +51,10 @@ const currentPage = ref(0)
 
 watch(currentPage, () => addList.value.fill(false))
 
-watch(show, () => stage.enableNodes = !show.value)
-
 const addList = ref<boolean[]>(main.inventory.map(() => false))
 
 const toggleInv = () => {
+    stage.enableNodes = show.value
     show.value = !show.value
     if (show.value == false) addList.value.fill(false)
 }
