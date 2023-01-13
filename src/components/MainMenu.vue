@@ -8,16 +8,6 @@
                 {{ text }}
             </h1>
         </div>
-        <div v-if="currentMenu == 1" class="left-0 flex justify-around w-full top-1/4 rpgui-container">
-            <h2 class="text-center text-stroke-5" data-text="Gioxon">Gioxon</h2>
-            <h2 class="text-center text-stroke-5" data-text="Danblos">Danblos</h2>
-            <h2 class="text-center text-stroke-5" data-text="Marcurion">Marcurion</h2>
-            <h2 class="text-center text-stroke-5" data-text="Agoraco">Agoraco</h2>
-            <h2 class="text-center text-stroke-5" data-text="Claphos">Claphos</h2>
-        </div>
-        <div v-if="currentMenu == 1" class="bottom-0 left-0 flex flex-col gap-2 p-8 rpgui-container">
-            <button class="self-start rpgui-button" type="button" @click="goBack"><h3>Indietro</h3></button>
-        </div>
         <div v-if="currentMenu == 3" class="rpgui-container !top-1/3 left-0 pl-8 flex flex-col gap-4">
             <h1 data-text="Opzioni di gioco" class="text-stroke-5">Opzioni di gioco</h1>
             <div class="flex gap-4">
@@ -72,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-    import { ref, onMounted } from 'vue'
+    import { ref, onMounted, onUnmounted } from 'vue'
     import { useBootStore } from '../stores/bootStore'
     import { useMainStore } from '../stores/mainStore'
 
@@ -103,10 +93,6 @@
     }
 
     function goBack() {
-        if (main.afterScene != 'BootScene') {
-            window.addEventListener('keydown', menuSelect)
-            main.changeScene('BootScene')
-        }
         currentMenu.value = 0
         selectedBtn.value = -1
     }
@@ -117,27 +103,24 @@
         selectAudio.play()
         switch (index) {
             case 0:
-                currentMenu.value = 1
-                window.removeEventListener('keydown', menuSelect)
                 main.changeScene('SelectScene')
-                break;
+                break
             case 1:
                 currentMenu.value = 2
-                main.changeScene('MainScene')
-                break;
+                main.changeScene('StageScene')
+                break
             case 2:
                 currentMenu.value = 3
-                break;
+                break
             case 3:
                 currentMenu.value = 4
-                //main.showDialogue('ID_DIALOGO')
-                break;
+                break
             case 4:
                 boot.$reset()
                 window.require('electron').ipcRenderer.invoke('close-window')
-                break;
+                break
             default:
-                break;
+                break
         }
     }
 
@@ -165,6 +148,10 @@
             }
         }
     }
+
+    onUnmounted(() => {
+        window.removeEventListener('keydown', menuSelect)
+    })
 
     onMounted(async () => {
         if (true) { //TODO: Se non c'è alcun salvataggio, disabilitare il bottone 'Continue'

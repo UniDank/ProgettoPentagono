@@ -1,4 +1,4 @@
-import { Scene } from 'phaser'
+import { Scene, Cameras } from 'phaser'
 import { useMainStore } from '../../stores/mainStore'
 
 export default class SelectScene extends Scene {
@@ -25,7 +25,9 @@ export default class SelectScene extends Scene {
 
   create() {
     const mainCamera = this.cameras.main
-    mainCamera.fadeIn(500, 0, 0, 0)
+    mainCamera.fadeIn(300, 0, 0, 0, (camera: Cameras.Scene2D.Camera, progress: number) => {
+      if (progress >= 0.7) this.sceneStore.changeInterface("SelectInterface")
+    })
 
     this.selectAudio = this.sound.add('btnSelect')
     this.switchAudio = this.sound.add('btnSwitch')
@@ -63,7 +65,8 @@ export default class SelectScene extends Scene {
     
     this.sceneStore.$onAction(({ name, args }) => {
       if (name === 'changeScene') {
-        mainCamera.fadeOut(500, 0, 0, 0)
+        mainCamera.fadeOut(300, 0, 0, 0)
+        this.sceneStore.closeInterface()
         mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0]))
       }
     })

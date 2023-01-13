@@ -4,9 +4,9 @@ import { Player, Characters } from '../classes/Player'
 import { ref } from 'vue'
 
 export const useMainStore = defineStore('main', () => {
-    const pausedScene = ref('')
-    const afterScene = ref('')
-    const showedDialogue = ref('')
+    const currentScene = ref("")
+    const currentInterface = ref("")
+    const showedDialogue = ref("")
     const mainPlayer = ref("fede")
     const party = ref<Player[]>([ 
         new Player(Characters[0], 5, 5, 12, 10, 10, 10), 
@@ -20,11 +20,13 @@ export const useMainStore = defineStore('main', () => {
         new Item("Energia", ItemType.Energy, 10, 10),
     ])
 
-    const changeScene = (scene: string) => afterScene.value = scene
+    const changeScene = (scene: string) => currentScene.value = scene
 
-    const pauseScene = (scene: string) => pausedScene.value = scene
+    const changeInterface = (userInterface: string) => currentInterface.value = userInterface
+
+    const closeInterface = () => currentInterface.value = ""
     
     const showDialogue = (dialogue: string) => showedDialogue.value = dialogue
 
-    return { pauseScene, changeScene, showDialogue, pausedScene, afterScene, party, inventory, mainPlayer}
+    return { changeScene, showDialogue, currentScene, party, inventory, mainPlayer, currentInterface, changeInterface, closeInterface }
 })

@@ -1,4 +1,4 @@
-import { Scene } from 'phaser'
+import { Scene, Cameras } from 'phaser'
 import { useMainStore } from '../../stores/mainStore'
 import { useCombatStore } from '../../stores/combatStore'
 import { Entity } from "../../classes/Entity"
@@ -41,7 +41,9 @@ export default class CombatScene extends Scene {
 
   create() {
     const mainCamera = this.cameras.main
-    mainCamera.fadeIn(500, 0, 0, 0)
+    mainCamera.fadeIn(300, 0, 0, 0, (camera: Cameras.Scene2D.Camera, progress: number) => {
+      if (progress >= 0.7) this.sceneStore.changeInterface("CombatInterface")
+    })
 
     this.add.image(25, 275, 'combatBg').setScale(0.8)
     
@@ -60,7 +62,8 @@ export default class CombatScene extends Scene {
 
     this.sceneStore.$onAction(({ name, args }) => {
       if (name === 'changeScene') {
-        mainCamera.fadeOut(500, 0, 0, 0)
+        mainCamera.fadeOut(300, 0, 0, 0)
+        this.sceneStore.closeInterface()
         mainCamera.on('camerafadeoutcomplete', () => this.scene.stop().wake(args[0]))
       }
     })

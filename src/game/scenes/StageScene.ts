@@ -1,4 +1,4 @@
-import { Scene } from 'phaser'
+import { Scene, Cameras } from 'phaser'
 import cursorPng from '../assets/point.png'
 import { useMainStore } from '../../stores/mainStore'
 import { useStageStore } from '../../stores/stageStore'
@@ -104,7 +104,9 @@ export default class StageScene extends Scene {
 
   create() {
     const mainCamera = this.cameras.main
-    mainCamera.fadeIn(500, 0, 0, 0)
+    mainCamera.fadeIn(300, 0, 0, 0, (camera: Cameras.Scene2D.Camera, progress: number) => {
+      if (progress >= 0.7) this.sceneStore.changeInterface("StageInterface")
+    })
 
     this.add.image(0, 0, 'worldMap').setOrigin(0)
 
@@ -140,7 +142,8 @@ export default class StageScene extends Scene {
     
     this.sceneStore.$onAction(({ name, args }) => {
       if (name === 'changeScene') {
-        mainCamera.fadeOut(500, 0, 0, 0)
+        mainCamera.fadeOut(300, 0, 0, 0)
+        this.sceneStore.closeInterface()
         if (args[0] == 'CombatScene') {
           mainCamera.on('camerafadeoutcomplete', () => this.scene.launch(args[0], { node: this.stageStore.selectedNode }).sleep())
         } else mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0]))
@@ -148,7 +151,9 @@ export default class StageScene extends Scene {
     })
 
     this.events.on(Phaser.Scenes.Events.WAKE, () => {
-      mainCamera.fadeIn(500, 0, 0, 0)
+      mainCamera.fadeIn(300, 0, 0, 0, (camera: Cameras.Scene2D.Camera, progress: number) => {
+        if (progress >= 0.7) this.sceneStore.changeInterface("StageInterface")
+      })
       this.sound.stopByKey("combatSong")
       this.sound.stopByKey("adminSong")
       this.sound.stopByKey("regitareSong")

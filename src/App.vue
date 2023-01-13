@@ -2,6 +2,7 @@
   import MainMenu from './components/MainMenu.vue'
   import DebugInterface from './components/DebugInterface.vue'
   import CombatInterface from './components/CombatInterface.vue'
+  import SelectInterface from './components/SelectInterface.vue'
   import StageInterface from './components/StageInterface.vue'
   import DialogueInterface from './components/DialogueInterface.vue'
 
@@ -14,9 +15,11 @@
   const selectedInterface = ref(0)
 
   sceneStore.$onAction(({ name, args }) => {
-    if (name === 'changeScene' && args[0] == 'BootScene') selectedInterface.value = 1
-    if (name === 'changeScene' && args[0] == 'StageScene') selectedInterface.value = 2
-    if (name === 'changeScene' && args[0] == 'CombatScene') selectedInterface.value = 3
+    if (name === 'closeInterface') selectedInterface.value = 0
+    if (name === 'changeInterface' && args[0] == 'MainMenu') selectedInterface.value = 1
+    if (name === 'changeInterface' && args[0] == 'SelectInterface') selectedInterface.value = 2
+    if (name === 'changeInterface' && args[0] == 'StageInterface') selectedInterface.value = 3
+    if (name === 'changeInterface' && args[0] == 'CombatInterface') selectedInterface.value = 4
   })
 
   const gameInstance = ref<Phaser.Game>()
@@ -40,8 +43,9 @@
   <MainMenu v-if="selectedInterface == 1" />
   <!--<DebugInterface />-->
   <DialogueInterface />
-  <StageInterface v-if="selectedInterface == 2" />
-  <CombatInterface v-if="selectedInterface == 3" />
+  <SelectInterface v-if="selectedInterface == 2" />
+  <StageInterface v-if="selectedInterface == 3" />
+  <CombatInterface v-if="selectedInterface == 4" />
 </template>
 
 <style>

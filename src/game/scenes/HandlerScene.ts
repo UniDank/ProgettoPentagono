@@ -88,7 +88,7 @@ export default class HandlerScene extends Scene {
     preload() {
         this.load.aseprite('animatedLogo', logoPng, logoJson)
 
-        this.load.on('complete', () => this.time.delayedCall(3000, () => this.cameras.main.fadeOut(500, 0, 0, 0)))
+        this.load.on('complete', () => this.time.delayedCall(3000, () => this.cameras.main.fadeOut(300, 0, 0, 0)))
 
         this.cameras.main.once('camerafadeoutcomplete', () => {
             this.sceneStore.changeScene("BootScene")
