@@ -148,7 +148,10 @@ fetch(`http://localhost:8080/api/v1/${stage.selectedNode}/enemies`).then(res => 
 const currentTurn = ref(0)
 const orderTurn = reactive<(Player | Enemy)[]>([...main.party, ...combat.enemies])
 orderTurn.sort((p1, p2) => (p1.agility < p2.agility) ? 1 : (p1.agility > p2.agility) ? -1 : 0)
+combat.currentTurn = currentTurn.value
+combat.orderTurn = orderTurn
 combat.currentEntity = orderTurn[currentTurn.value]
+combat.combatLog += `Ora è il turno di ${combat.currentEntity.name}!\n`
 
 watch([orderTurn, currentTurn], async () => {
     if (currentTurn.value == orderTurn.length) currentTurn.value = 0
@@ -156,7 +159,7 @@ watch([orderTurn, currentTurn], async () => {
     combat.combatLog += `Ora è il turno di ${combat.currentEntity.name}!\n`
     if (combat.enemies.length == 0 || main.party.length == 0) {
         const totalExp = combat.enemies.map(v => v.expReward).reduce((c, p) => c + p)
-        main.party.forEach(v => v.currentExp += totalExp / 5)
+        main.party.forEach(v => v.addExp(totalExp / 5))
         fetch(`http://localhost:8080/api/v1/party`, {
             method: 'POST',
             headers: {
@@ -169,7 +172,11 @@ watch([orderTurn, currentTurn], async () => {
             })
         }).then(() => main.changeScene('StageScene'))
     }
+    combat.currentTurn = currentTurn.value
+    combat.orderTurn = orderTurn
 })
+
+combat.$subscribe((store, vars) => currentTurn.value = vars.currentTurn)
 
 onMounted(() => {
     new ResizeObserver(() => logElement.value!.scrollTop = logElement.value!.scrollHeight).observe(textElement.value!)
@@ -201,6 +208,7 @@ const moveRight = () => combat.moveDirection = "right"
 const confirmMove = () => {
     combat.isConfirmed = true
     combat.combatLog += `${combat.currentEntity?.name} si è spostato!\n`
+    showMove.value = false
 }
 
 const actionSkip = () => {

@@ -6,11 +6,100 @@ import HandlerScene from './scenes/HandlerScene'
 import SelectScene from './scenes/SelectScene'
 import StageScene from './scenes/StageScene'
 import { GridEngine } from "grid-engine"
+import { Animations } from 'phaser'
+import GetValue = Phaser.Utils.Objects.GetValue
+import GetFastValue = Phaser.Utils.Objects.GetFastValue
 
 declare module 'phaser' {
   interface Scene {
-      gridEngine: GridEngine
+    gridEngine: GridEngine
   }
+  namespace Animations {
+    interface AnimationState {
+      createFromAseprite(game: Phaser.Game, key: string, tags?: string[] | undefined): Animation[]
+    }
+  }
+}
+
+Animations.AnimationState.prototype.createFromAseprite = function (game: Phaser.Game, key: string, tags?: string[] | undefined): Animations.Animation[] {
+  let output: Animations.Animation[] = []
+  let data = game.cache.json.get(key)
+
+  if (!data) {
+    return output;
+  }
+
+  let meta = GetValue(data, 'meta', null);
+  let frames = GetValue(data, 'frames', null);
+
+  if (meta && frames) {
+    let frameTags = GetValue(meta, 'frameTags', []);
+
+    frameTags.forEach((tag: any) => {
+      let animFrames: { key: string, frame: string, duration: number }[] = [];
+
+      let name = GetFastValue(tag, 'name', null);
+      let from = GetFastValue(tag, 'from', 0);
+      let to = GetFastValue(tag, 'to', 0);
+      let direction = GetFastValue(tag, 'direction', 'forward');
+
+      if (!name) {
+        // Skip if no name
+        return;
+      }
+
+      if (!tags || (tags && tags.indexOf(name) > -1)) {
+        // Get all the frames for this tag
+        let tempFrames: { frame: string, duration: number }[] = [];
+        let minDuration = Number.MAX_SAFE_INTEGER;
+
+        for (let i = from; i <= to; i++) {
+          let frameKey = i.toString();
+          let frame = frames[frameKey];
+
+          if (frame) {
+            let frameDuration = GetFastValue(frame, 'duration', Number.MAX_SAFE_INTEGER);
+
+            if (frameDuration < minDuration) {
+              minDuration = frameDuration;
+            }
+
+            tempFrames.push({ frame: frameKey, duration: frameDuration });
+          }
+        }
+
+        tempFrames.forEach((entry) => {
+          animFrames.push({
+            key: key,
+            frame: entry.frame,
+            duration: (minDuration - entry.duration)
+          });
+        });
+
+        let totalDuration = (minDuration * animFrames.length);
+
+        if (direction === 'reverse') {
+          animFrames = animFrames.reverse();
+        }
+
+        // Create the animation
+        let createConfig = {
+          key: name,
+          frames: animFrames,
+          duration: totalDuration,
+          yoyo: (direction === 'pingpong')
+        };
+
+        let result = this.create(createConfig);
+
+        if (result) {
+          output.push(result);
+        }
+      }
+    });
+  }
+
+  return output;
 }
 
 function launch(containerId: string) {

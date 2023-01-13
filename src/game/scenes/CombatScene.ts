@@ -35,11 +35,15 @@ export default class CombatScene extends Scene {
     
   }
 
+  randomNumber(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+
   create() {
     const mainCamera = this.cameras.main
     mainCamera.fadeIn(500, 0, 0, 0)
 
-    this.add.image(0, this.scale.gameSize.height * 0.4, 'combatBg')
+    this.add.image(25, 275, 'combatBg').setScale(0.8)
     
     const map = this.make.tilemap({ key: 'tiles_Map' })
     this.map = map
@@ -51,8 +55,8 @@ export default class CombatScene extends Scene {
     map.createLayer('Top', [tileSetBuilding, tileSetOutside], 0, -96)
     map.createLayer('More Top', [tileSetBuilding, tileSetOutside], 0, -128)
 
-    this.cameras.main.centerOn(0, 0).setOrigin(0)
-    this.cameras.main.setBounds(-this.scale.gameSize.width * 0.5, -this.scale.gameSize.height * 0.1, this.map.widthInPixels, this.map.heightInPixels)
+    this.cameras.main.setZoom(1.25).centerOn(0, 0).setOrigin(0)
+    this.cameras.main.setBounds(-this.scale.gameSize.width + this.map.widthInPixels + 25, 60, this.map.widthInPixels, this.map.heightInPixels)
 
     this.sceneStore.$onAction(({ name, args }) => {
       if (name === 'changeScene') {
@@ -62,24 +66,32 @@ export default class CombatScene extends Scene {
     })
 
     this.sceneStore.party.filter(p => p.health > 0).forEach(p => {
-      const randomX = Math.round(Math.random() * 7) + 3
-      const randomY = Math.round(Math.random() * 7) + 3
-      // controllare che non lo posizioni in una tile già occupata
-      // capire e risolvere il perchè non fa partire l'animazione corretta
+      let randomX = this.randomNumber(3, 10)
+      let randomY = this.randomNumber(3, 10)
+      if (this.players.size > 0) {
+        while ([...this.enemies.keys(), ...this.players.keys()]
+          .findIndex(v => v.getInitPosition().x == randomX && v.getInitPosition().y == randomY) != -1) {
+          randomX = this.randomNumber(3, 10)
+          randomY = this.randomNumber(3, 10)
+        }
+      }
       const player = new Entity(this, p.name.toLowerCase(), new Vector2(randomX, randomY))
-      const playerAnim = player.animations.find(a => a.key == "Idle") ?? "Idle"
-      player.sprite.anims.play({ key: playerAnim, repeat: -1 })
+      player.sprite.anims.play({ key: "Idle", repeat: -1 })
       this.players.set(player, p)
     })
 
     this.combatStore.enemies.forEach(e => {
-      const randomX = Math.round(Math.random() * 7) + 3
-      const randomY = Math.round(Math.random() * 7) + 3
-      // controllare che non lo posizioni in una tile già occupata
-      // capire e risolvere il perchè non fa partire l'animazione corretta
+      let randomX = this.randomNumber(3, 10)
+      let randomY = this.randomNumber(3, 10)
+      if (this.enemies.size > 0) {
+        while ([...this.enemies.keys(), ...this.players.keys()]
+          .find(v => v.getInitPosition().x == randomX && v.getInitPosition().y == randomY ) != undefined) {
+          randomX = this.randomNumber(3, 10)
+          randomY = this.randomNumber(3, 10)
+        }
+      }
       const enemy = new Entity(this, e.name.toLowerCase(), new Vector2(randomX, randomY))
-      const enemyAnim = enemy.animations.find(a => a.key == "Idle") ?? "Idle"
-      enemy.sprite.anims.play({ key: enemyAnim, repeat: -1 })
+      enemy.sprite.anims.play({ key: "Idle", repeat: -1 })
       this.enemies.set(enemy, e)
     })
 
@@ -90,27 +102,19 @@ export default class CombatScene extends Scene {
       ]
     }
 
-    this.gridEngine?.create(this.map, gridEngineConfig)
-    this.gridEngine?.movementStarted().subscribe(({ direction }) => {
-      // capire come ottenere l'entità di cui è il turno
-      const currentEntity = Array.from(this.players.keys()).find(key => this.players.get(key)?.name == this.combatStore.currentEntity?.name)
-      currentEntity!.sprite.flipX = direction.includes("left")
-      currentEntity!.sprite.anims.play({ key: "Run right", repeat: 1 , frameRate: 10 })
+    this.gridEngine.create(this.map, gridEngineConfig)
+    this.gridEngine.movementStarted().subscribe(({ direction }) => {
+      this.getCurrentEntity().sprite.flipX = direction.includes("left")
+      this.getCurrentEntity().sprite.anims.play({ key: "Run right", repeat: 1 , frameRate: 10 })
     })
-    this.gridEngine?.movementStopped().subscribe(({ direction }) => {
-      // capire come ottenere l'entità di cui è il turno
-      const currentEntity = Array.from(this.players.keys()).find(key => this.players.get(key)?.name == this.combatStore.currentEntity?.name)
-      currentEntity!.sprite.anims.play({ key: "Idle", repeat: -1 })
+    this.gridEngine.movementStopped().subscribe(({ direction }) => {
+      this.getCurrentEntity().sprite.anims.play({ key: "Idle", repeat: -1 })
     })
 
     this.combatStore.$onAction(({ name, args }) => {
       if (name === 'actionAttack') {
-        // capire come ottenere l'entità di cui è il turno
-        const currentEntity = Array.from(this.players.keys()).find(key => this.players.get(key)?.name == this.combatStore.currentEntity?.name)
-        currentEntity!.sprite.anims.chain([
-          { key: "Attack", repeat: 1, frameRate: 10 }, 
-          { key: 'Idle', repeat: -1, frameRate: 10 }
-        ])
+        this.getCurrentEntity().sprite.anims.play({ key: "Attack", repeat: 1, frameRate: 10 })
+          .on('animationcomplete', () => this.getCurrentEntity().sprite.anims.play({ key: 'Idle', repeat: -1, frameRate: 10 }))
       }
       if (name === 'actionMove') {
         if (args[0]) this.startMovement()
@@ -126,11 +130,14 @@ export default class CombatScene extends Scene {
     else this.sound.play('combatSong', { loop: true })
   }
 
+  getCurrentEntity() {
+    const currentEntity = Array.from(this.players.entries()).find(v => v[1].name == this.combatStore.currentEntity?.name)
+    return currentEntity![0]
+  }
+
   startMovement() {
-    // capire come ottenere l'entità di cui è il turno
-    const currentEntity = Array.from(this.players.keys()).find(key => this.players.get(key)?.name == this.combatStore.currentEntity?.name)
-    this.initialPos = new Vector2(currentEntity!.getPosition().x, currentEntity!.getPosition().y)
-    this.tintRadius(this.map,this.initialPos.y, this.initialPos.x, 2, this.colorR)
+    this.initialPos = new Vector2(this.getCurrentEntity().getPosition().x, this.getCurrentEntity().getPosition().y)
+    this.tintRadius(this.map, this.initialPos.y, this.initialPos.x, 2, this.colorR)
     this.tintTile(this.walkLayer.layer, this.initialPos.x, this.initialPos.y, this.colorC)
     this.newPos = this.initialPos
     this.turn = true
@@ -158,11 +165,9 @@ export default class CombatScene extends Scene {
           this.combatStore.isConfirmed = false
           if (this.checkTile(this.newPos, this.initialPos, 3)){
             this.stopMovement()
-            // capire come ottenere l'entità di cui è il turno
-            const currentEntity = Array.from(this.players.keys()).find(key => this.players.get(key)?.name == this.combatStore.currentEntity?.name)
-            currentEntity!.movePlayerTo(this.newPos)
-          }
-          else console.warn("Movimento impossibile, riprova")
+            this.getCurrentEntity().movePlayerTo(this.newPos)
+            this.combatStore.currentTurn += 1
+          } else console.warn("Movimento impossibile, riprova")
         }
       }
       this.time.paused = false

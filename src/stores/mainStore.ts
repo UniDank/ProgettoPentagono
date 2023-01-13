@@ -17,7 +17,7 @@ export const useMainStore = defineStore('main', () => {
     ])
     const inventory = ref<Item[]>([
         new Item("Vita", ItemType.Health, 20, 10), new Item("Mana", ItemType.Mana, 15, 10), 
-        new Item("Energia", ItemType.Energy, 10, 10), new Item("Lira", ItemType.Lyre, 1, 1),
+        new Item("Energia", ItemType.Energy, 10, 10),
     ])
 
     const changeScene = (scene: string) => afterScene.value = scene

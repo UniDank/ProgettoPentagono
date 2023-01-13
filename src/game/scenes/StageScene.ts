@@ -108,6 +108,7 @@ export default class StageScene extends Scene {
 
     this.add.image(0, 0, 'worldMap').setOrigin(0)
 
+    this.anims.createFromAseprite(this.sceneStore.mainPlayer)
     const playerSprite = this.add.sprite(0, 0, this.sceneStore.mainPlayer).setScale(2)
     playerSprite.anims.play({ key: "Idle", repeat: -1 })
 
@@ -133,8 +134,8 @@ export default class StageScene extends Scene {
     })
 
     this.stageStore.$subscribe((store, vars) => {
-      if (vars.enableNodes) this.clickableNodes.forEach(v => v.setInteractive())
-      else if (!vars.enableNodes) this.clickableNodes.forEach(v => v.disableInteractive())
+      if (vars.enableNodes) this.clickableNodes.forEach(v => v.visible ? v.setInteractive() : v)
+      else if (!vars.enableNodes) this.clickableNodes.forEach(v => v.visible ? v.disableInteractive() : v)
     })
     
     this.sceneStore.$onAction(({ name, args }) => {

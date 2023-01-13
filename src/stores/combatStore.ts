@@ -4,7 +4,7 @@ import { Player } from '../classes/Player'
 import { ref } from 'vue'
 
 export const useCombatStore = defineStore('combat', () => {
-    const moveMode = ref(true)
+    const moveMode = ref(false)
     const moveDirection = ref("")
     const isConfirmed = ref(false)
     const currentEntity = ref<Enemy | Player>()
@@ -16,6 +16,8 @@ export const useCombatStore = defineStore('combat', () => {
     const combatLog = ref("")
     const selectedEntity = ref(0)
     const isMoving = ref(false)
+    const currentTurn = ref(0)
+    const orderTurn = ref<(Enemy | Player)[]>([])
 
     const changeMoveToMouse = () => {
         moveMode.value = true
@@ -43,6 +45,8 @@ export const useCombatStore = defineStore('combat', () => {
         selectedEntity,
         combatLog,
         actionMove,
-        isMoving
+        isMoving,
+        orderTurn,
+        currentTurn
     }
 })

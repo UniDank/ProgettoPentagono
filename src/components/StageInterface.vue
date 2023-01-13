@@ -1,7 +1,7 @@
 <template>
     <div class="rpgui-content">
         <div class="top-0 left-0 flex flex-col justify-between h-full p-1 rpgui-container"
-            :class="{ 'pointer-events-none': textShown }">
+            :class="{ 'pointer-events-none': openStory }">
             <button :disabled="stage.playedStages.includes(stage.selectedNode)" class="!py-3 !px-12 rpgui-button"
                 type="button" @click="startBattle">
                 <h4 v-html="startText" />
@@ -75,11 +75,13 @@
         <div class="p-2 top-9 right-7 rpgui-container">
             <h1 class="text-stroke-5" data-text="Regno di Empaizo">Regno di Empaizo</h1>
         </div>
-        <div v-if="textShown" class="top-0 left-0 w-full h-full rpgui-container">
+        <div v-if="openStory" class="top-0 left-0 w-full h-full rpgui-container">
             <div class="w-[70%] h-5/6 top-16 left-1/4 rpgui-container !overflow-y-auto framed !p-4">
-                <img class="float-left mr-4 rounded-lg" :src="`/stories/${imageShown}`" />
-                <h3 class="whitespace-pre-wrap" v-html="textShown"></h3>
-                <button class="ml-[87%] rpgui-button" type="button" @click="textShown = ''">
+                <img class="float-left mr-4 rounded-lg" :src="`/stories/${image1Shown}`" />
+                <h3 class="whitespace-pre-wrap" v-html="text1Shown"></h3>
+                <img v-if="image2Shown" class="float-right ml-4 rounded-lg clear-left" :src="`/stories/${image2Shown}`" />
+                <h3 class="whitespace-pre-wrap" v-html="text2Shown"></h3>
+                <button class="ml-[87%] rpgui-button" type="button" @click="openStory = false">
                     <h3>Chiudi</h3>
                 </button>
             </div>
@@ -216,17 +218,18 @@
 
 <script setup lang="ts">
 import InventoryComp from './Inventory.vue'
-import { ref, watch} from 'vue'
+import { ref, watch } from 'vue'
 import { useMainStore } from '../stores/mainStore'
 import { useStageStore } from '../stores/stageStore'
 import stories from '../assets/stories.json'
 import { Player } from '../classes/Player'
-import { Item } from '../classes/Inventory'
+import { Item, ItemType } from '../classes/Inventory'
 
 const main = useMainStore()
 const stage = useStageStore()
 
-const textShown = ref(""), startText = ref(""), imageShown = ref("")
+const openStory = ref(false), startText = ref("")
+const text1Shown = ref(""), text2Shown = ref(""), image1Shown = ref(""), image2Shown = ref("")
 const showSettings = ref(false), showSummary = ref(false)
 const invComp = ref<InstanceType<typeof InventoryComp> | null>(null)
 
@@ -251,14 +254,19 @@ fetch(`http://localhost:8080/api/v1/party`).then(res => res.json()).then(json =>
     main.inventory = resJson.bag
 })
 
-watch([textShown, showSummary, showSettings], () => 
-    stage.enableNodes = textShown.value == "" && !showSummary.value && !showSettings.value)
+watch([openStory, showSummary, showSettings], () => 
+    stage.enableNodes = !openStory.value && !showSummary.value && !showSettings.value)
 
 const startBattle = () => {
     if ([2, 4, 6, 10].includes(stage.selectedNode)) main.changeScene('CombatScene')
     else {
-        imageShown.value = stories[stage.selectedNode].images[0].name
-        textShown.value = stories[stage.selectedNode].text
+        openStory.value = true
+        image1Shown.value = stories[stage.selectedNode].images[0].name
+        text1Shown.value = stories[stage.selectedNode].text[0]
+        image2Shown.value = stories[stage.selectedNode].images[1]?.name ?? ""
+        text2Shown.value = stories[stage.selectedNode].text[1] ?? ""
+        if (stage.selectedNode == 7 && main.inventory.find(i => i.name == "Lira") == undefined) 
+            main.inventory.push(new Item("Lira", ItemType.Lyre, 1, 1))
     }
 }
 

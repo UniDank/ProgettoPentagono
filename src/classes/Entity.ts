@@ -7,12 +7,12 @@ export class Entity {
     public animations: Phaser.Animations.Animation[] = []
 
     constructor(private scene: Phaser.Scene, public spriteName: string, private tilePos = new Vector2(0, 0)) {
-        this.animations = scene.anims.createFromAseprite(spriteName)
-        this.sprite = scene.add.sprite(0, 0, spriteName).setInteractive().setScale(2)
+        this.sprite = scene.add.sprite(0, 0, spriteName).setInteractive().setScale(1.6)
+        this.animations = this.sprite.anims.createFromAseprite(this.scene.game, spriteName)
         this.movRange = 1
     }
 
-    public getCharacterConfig(collision: string[] = []): any{
+    public getCharacterConfig(collision: string[] = []): any {
         return {
             id: this.spriteName,
             sprite: this.sprite,
@@ -22,19 +22,23 @@ export class Entity {
             collides: {
                 collisionGroups: collision
             }
-        };
+        }
     }
 
-    public movePlayerTo(position: Vector2): void{
+    public movePlayerTo(position: Vector2): void {
         this.scene.gridEngine.moveTo(this.spriteName, { x: position.x, y: position.y })
     }
 
     private movePlayer(direction: Direction): void {
-        this.scene.gridEngine.move(this.spriteName,direction);
+        this.scene.gridEngine.move(this.spriteName, direction)
     }
 
     public setEvent(event: string, fn: Function): void {
         this.sprite.on(event, fn)
+    }
+
+    public getInitPosition(): Vector2 {
+        return new Vector2(this.tilePos.x, this.tilePos.y)
     }
 
     public getPosition(): Position {
