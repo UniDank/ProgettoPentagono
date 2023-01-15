@@ -8,6 +8,7 @@ export const useMainStore = defineStore('main', () => {
     const currentInterface = ref("")
     const showedDialogue = ref("")
     const mainPlayer = ref("fede")
+    const currentVolume = ref(1)
     const party = ref<Player[]>([ 
         new Player(Characters[0], 5, 5, 12, 10, 10, 10), 
         new Player(Characters[1], 5, 7, 10, 10, 10, 10), 
@@ -28,5 +29,19 @@ export const useMainStore = defineStore('main', () => {
     
     const showDialogue = (dialogue: string) => showedDialogue.value = dialogue
 
-    return { changeScene, showDialogue, currentScene, party, inventory, mainPlayer, currentInterface, changeInterface, closeInterface }
+    const changeVolume = (perc: number) => currentVolume.value = perc
+
+    return { 
+        changeScene, 
+        showDialogue, 
+        currentScene, 
+        party, 
+        inventory, 
+        mainPlayer, 
+        currentInterface, 
+        changeInterface, 
+        closeInterface,
+        changeVolume,
+        currentVolume
+    }
 })

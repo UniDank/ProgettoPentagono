@@ -57,14 +57,13 @@
                                 </option>
                                 <option value="1024x768" class="text-lg !rpgui-cursor-point lg:text-2xl">1024 x 768
                                 </option>
-                                <option value="800x600" selected class="text-lg !rpgui-cursor-point lg:text-2xl">800 x
-                                    600</option>
+                                <option value="800x600" selected class="text-lg !rpgui-cursor-point lg:text-2xl">800 x 600</option>
                             </select>
                         </div>
                     </div>
                     <div class="flex gap-4">
                         <h2 data-text="Volume:" class="text-stroke-3">Volume:</h2>
-                        <input class="rpgui-slider" type="range" min="0" max="100" value="50">
+                        <input v-model="volumeSlider" class="rpgui-slider" type="range" min="0" max="100" @change="main.changeVolume(volumeSlider)">
                     </div>
                 </div>
             </button>
@@ -232,6 +231,7 @@ const openStory = ref(false), startText = ref("")
 const text1Shown = ref(""), text2Shown = ref(""), image1Shown = ref(""), image2Shown = ref("")
 const showSettings = ref(false), showSummary = ref(false)
 const invComp = ref<InstanceType<typeof InventoryComp> | null>(null)
+const volumeSlider = ref(main.currentVolume)
 
 const setCurrentText = (node: number) => {
     if ([2, 4, 6, 10].includes(node)) startText.value = "Inizia<br/>la battaglia"
@@ -261,9 +261,9 @@ const startBattle = () => {
     if ([2, 4, 6, 10].includes(stage.selectedNode)) main.changeScene('CombatScene')
     else {
         openStory.value = true
-        image1Shown.value = stories[stage.selectedNode].images[0].name
+        image1Shown.value = stories[stage.selectedNode].images[0]
         text1Shown.value = stories[stage.selectedNode].text[0]
-        image2Shown.value = stories[stage.selectedNode].images[1]?.name ?? ""
+        image2Shown.value = stories[stage.selectedNode].images[1] ?? ""
         text2Shown.value = stories[stage.selectedNode].text[1] ?? ""
         if (stage.selectedNode == 7 && main.inventory.find(i => i.name == "Lira") == undefined) 
             main.inventory.push(new Item("Lira", ItemType.Lyre, 1, 1))

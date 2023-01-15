@@ -44,12 +44,10 @@ Animations.AnimationState.prototype.createFromAseprite = function (game: Phaser.
       let direction = GetFastValue(tag, 'direction', 'forward');
 
       if (!name) {
-        // Skip if no name
         return;
       }
 
       if (!tags || (tags && tags.indexOf(name) > -1)) {
-        // Get all the frames for this tag
         let tempFrames: { frame: string, duration: number }[] = [];
         let minDuration = Number.MAX_SAFE_INTEGER;
 
@@ -82,7 +80,6 @@ Animations.AnimationState.prototype.createFromAseprite = function (game: Phaser.
           animFrames = animFrames.reverse();
         }
 
-        // Create the animation
         let createConfig = {
           key: name,
           frames: animFrames,

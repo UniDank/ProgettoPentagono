@@ -1,17 +1,11 @@
 [
   {
     "images": [
-      {
-        "name": "story1.png",
-        "position": "bottom-right"
-      },
-      {
-        "name": "story2.png",
-        "position": "top-right"
-      }
+      "story1.png",
+      "story2.png"
     ],
     "text": [
-      "Cinque studenti universitari impegnati con lo sviluppo del loro videogioco, notano che uno dei loro pc si comporta in modo strano quando viene avviata la demo del videogame durante uno degli Scrum Meeting settimanali. A causa di circostanze ignote, i cinque aspiranti programmatori si ritrovano catapultati all’interno del mondo virtuale da loro programmato, e iniziano la ricerca di un modo per tornare al mondo reale.",
+      "Cinque studenti universitari impegnati con lo sviluppo del loro videogioco, notano che uno dei loro pc si comporta in modo strano quando viene avviata la demo del videogame durante uno degli Scrum Meeting settimanali. A causa di circostanze ignote, i cinque aspiranti programmatori si ritrovano catapultati all’interno del mondo virtuale da loro programmato, e iniziano la ricerca di un modo per tornare al mondo reale.<br/><br/>",
       "Il primo incontro del gruppo presso il villaggio di Didascalèion è la Magnifica Maga Rombòs, una giovane chiaroveggente che vuole sapere di più sui cinque forestieri. Il gruppo racconta di provenire dal villaggio di Òntos a sud, e poiché non possono rivelare di essere coloro che hanno letteralmente creato sia la Maga che l’intero Regno di Empaizo, gli eroi raccontano a Rombòs di essere degli avventurieri senza meta alla ricerca di \"qualcosa che non provenga da questo mondo\", sperando che la Maga possa aiutarli in qualche modo. Sorpresa del loro obbiettivo, la chiaroveggente si offre di addestrare i cinque avventurieri per la loro impresa, proponendo loro di insegnargli le basi del combattimento per diventare dei Màtetai, degli eroi valorosi in grado di sconfiggere i mostri usando le arti magiche. Ma proprio quando stanno per accettare la proposta della Maga, ecco che vengono attaccati da un gruppo di nemici: meglio sperimentare con la pratica che con la teoria!<br/><br/>Questa prima parte della storia è disponibile in un <a href='https://youtu.be/nFIEBcLFbao' target='_blank'>Concept Video</a> realizzato per mostrare il sistema di dialogo!"
     ]
   },
@@ -25,18 +19,12 @@
   },
   {
     "images": [
-      {
-        "name": "story3.png",
-        "position": "top-left"
-      },
-      {
-        "name": "story9.gif",
-        "position": "bottom-right"
-      }
+      "story3.png",
+      "story9.gif"
     ],
     "text": [
       "Sconfitta la minaccia inaspettata, la Maga Rombòs riconosce il valore dei cinque eroi, e rivela loro che si tramanda da tempi antichi una Leggenda sui \"Confini del Mondo\", una zona da cui è bene tenersi lontani. Molti viaggiatori si sono avventurati nelle terre a Nord-Ovest del Regno, ma senza mai fare ritorno: per questo gli abitanti di Didascalèion hanno ribattezzato quella zona come \"Terra Ricolma di Effigi Nefaste e Tombe Antiche\", a causa dei numerosi viaggi senza ritorno degli avventurieri presso questa presunta \"Fine del Mondo\".",
-      "Gli eroi, nonostante gli avvertimenti della Maga, decidono così di mettersi in viaggio insieme a quest’ultima per Nord-Ovest al fine di trovare qualcosa che li possa aiutare nel loro scopo: uscire dal videogioco."
+      "<br/>Gli eroi, nonostante gli avvertimenti della Maga, decidono così di mettersi in viaggio insieme a quest’ultima per Nord-Ovest al fine di trovare qualcosa che li possa aiutare nel loro scopo: uscire dal videogioco."
     ]
   },
   {
@@ -45,13 +33,12 @@
   },
   {
     "images": [
-      {
-        "name": "story4.gif",
-        "position": "bottom-right"
-      }
+      "story4.gif",
+      "story10.gif"
     ],
     "text": [
-      "Arrivati in una radura vicino al bosco Àlsos, la Maga Rombòs racconta ai cinque avventurieri di una antica favola tramandata dalla sua famiglia, per tenere lontani i bambini dal bosco. La favola narra di Regitare, il Re Coraggioso, un antico sovrano che durante una delle sue esplorazioni si avventurò presso il bosco Àlsos alla ricerca della \"Lira Oscura Dell’Edera\". Si diceva che questa Lira godesse di poteri magici curativi benefici per chi la possedesse, ma proprio a causa della sua potenza sia stata nascosta nelle profondità più recondite del bosco. Regitare però, durante la ricerca della Lira Oscura si perse nel bosco e rimase a vagare per giorni e giorni. Alcuni raccontano che ancora oggi, la notte, scorgano il fantasma del Re mentre cerca la Lira nascosta, vagando tra gli alberi. Che sia solo una favola, o ci sia un fondo di verità in questa storiella raccontata ai bambini per non farli andare nel bosco?"
+      "Arrivati in una radura vicino al bosco Àlsos, la Maga Rombòs racconta ai cinque avventurieri di una antica favola tramandata dalla sua famiglia, per tenere lontani i bambini dal bosco. La favola narra di Regitare, il Re Coraggioso, un antico sovrano che durante una delle sue esplorazioni si avventurò presso il bosco Àlsos alla ricerca della \"Lira Oscura Dell’Edera\".",
+      "Si diceva che questa Lira godesse di poteri magici curativi benefici per chi la possedesse, ma proprio a causa della sua potenza sia stata nascosta nelle profondità più recondite del bosco. Regitare però, durante la ricerca della Lira Oscura si perse nel bosco e rimase a vagare per giorni e giorni. Alcuni raccontano che ancora oggi, la notte, scorgano il fantasma del Re mentre cerca la Lira nascosta, vagando tra gli alberi. Che sia solo una favola, o ci sia un fondo di verità in questa storiella raccontata ai bambini per non farli andare nel bosco?"
     ]
   },
   {
@@ -60,10 +47,7 @@
   },
   {
     "images": [
-      {
-        "name": "story5.png",
-        "position": "top-left"
-      }
+      "story5.png"
     ],
     "text": [
       "Allora le voci sul bosco erano vere! Sconfitto il fantasma di Regitare, gli eroi trovano una radura all’interno del bosco, e non riescono a credere ai loro occhi: la \"Lira Oscura Dell’Edera\" era proprio davanti a loro. Ancora increduli, raccolgono l’oggetto magico e ne comprendono subito l’utilizzo, come se qualcosa o qualcuno avesse spiegato loro il suo funzionamento. Forse lo spirito di Regitare, il Re Coraggioso? O forse è il bosco Àlsos stesso ad avergli comunicato come utilizzarla?<br/><br/>- La Lira Oscura Dell’Edera è stata aggiunta all’inventario!<br/>Utilizza la Lira dall’inventario per portare in vita gli alleati sconfitti in battaglia!"
@@ -71,13 +55,12 @@
   },
   {
     "images": [
-      {
-        "name": "story6.gif",
-        "position": "bottom-left"
-      }
+      "story6.gif",
+      "story11.gif"
     ],
     "text": [
-      "Giunti presso la \"Terra Ricolma di Effigi Nefaste e Tombe Antiche\", ai Confini del Mondo, gli eroi trovano un’entità che si autodefinisce \"The Administrator\" e che sostiene di avere il controllo sul Regno di Empaizo. Gli studenti sono sicuri che oltre loro cinque, nessun altro dovrebbe aver accesso al gioco come Amministratore, e sono increduli nello scoprire che qualcuno si stia impersonando tale. Deducono che un Hacker sia riuscito ad accedere ai dati privati relativi al gioco, e che questo abbia impostato il suo Account come Amministratore sfruttando dei Bug. Dopo un improvviso attacco da parte di \"The Administrator\" che poteva essere fatale se non fosse stato per la prontezza della Magnifica Maga, uno degli avventurieri nota che tutta la potenza del nemico deriva da una \"Console dei Comandi\" in suo possesso, dalla quale egli scaglia attacchi a tutta potenza, aiutato dai Glitch da lui generati. Appurato che con la sconfitta di \"The Administrator\" gli eroi avrebbero avuto accesso ad un Terminale, e quindi ad un punto di comunicazione con il mondo reale, decidono di attuare una strategia che gli permetta di sconfiggere il nemico. Inizia così l’ultima battaglia degli avventurieri nel Regno di Empaizo!"
+      "Giunti presso la \"Terra Ricolma di Effigi Nefaste e Tombe Antiche\", ai Confini del Mondo, gli eroi trovano un’entità che si autodefinisce \"The Administrator\" e che sostiene di avere il controllo sul Regno di Empaizo. Gli studenti sono sicuri che oltre loro cinque, nessun altro dovrebbe aver accesso al gioco come Amministratore, e sono increduli nello scoprire che qualcuno si stia impersonando tale. Deducono che un Hacker sia riuscito ad accedere ai dati privati relativi al gioco, e che questo abbia impostato il suo Account come Amministratore sfruttando dei Bug.",
+      "Dopo un improvviso attacco da parte di \"The Administrator\" che poteva essere fatale se non fosse stato per la prontezza della Magnifica Maga, uno degli avventurieri nota che tutta la potenza del nemico deriva da una \"Console dei Comandi\" in suo possesso, dalla quale egli scaglia attacchi a tutta potenza, aiutato dai Glitch da lui generati. Appurato che con la sconfitta di \"The Administrator\" gli eroi avrebbero avuto accesso ad un Terminale, e quindi ad un punto di comunicazione con il mondo reale, decidono di attuare una strategia che gli permetta di sconfiggere il nemico.<br/>Inizia così l’ultima battaglia degli avventurieri nel Regno di Empaizo!"
     ]
   },
   {
@@ -90,18 +73,12 @@
   },
   {
     "images": [
-      {
-        "name": "story7.png",
-        "position": "bottom-right"
-      },
-      {
-        "name": "story8.gif",
-        "position": "top-right"
-      }
+      "story8.gif",
+      "story7.png"
     ],
     "text": [
       "Gli eroi hanno trionfato sul falso Amministratore e sono usciti vittoriosi dalla battaglia. Dopo aver confessato la verità sulla loro identità alla Maga Rombòs, gli avventurieri si avvicinano alla carcassa di \"The Administrator\" alla ricerca del Terminale. Avendo accesso alla Console dei Comandi, sono in grado di poter tornare al mondo reale, e si rivolgono a Rombòs per un ultimo saluto. Se non fosse stato per il suo aiuto, starebbero ancora vagando per Didascalèion in cerca di chissà cosa. Grazie a lei hanno imparato il lavoro di squadra, che spesso non può mettere d’accordo tutti ma è essenziale per un fine comune. Hanno imparato a sfruttare le proprie potenzialità in modo da collaborare e ottenere il risultato migliore tutti insieme. Lei li ha aiutati nel momento del bisogno e supportati nella loro avventura.",
-      "Dopo un saluto commovente con dei tratti più di un addio che di un arrivederci, gli eroi salutano la Maga sapendo che qualora avessero voluto tornare in quelle terre, lei sarebbe stata lì ad aspettarli. I cinque programmatori fanno quindi partire il comando sul Terminale per uscire dal gioco e si dissolvono nel cielo lasciando, solo per il momento, il Regno di Empaizo. L’avventura di loro cinque, la Penta Quest, è conclusa."
+      "Dopo un saluto commovente con dei tratti più di un addio che di un arrivederci, gli eroi salutano la Maga sapendo che qualora avessero voluto tornare in quelle terre, lei sarebbe stata lì ad aspettarli. I cinque programmatori fanno quindi partire il comando sul Terminale per uscire dal gioco e si dissolvono nel cielo lasciando, solo per il momento, il Regno di Empaizo.<br/><br/>L’avventura dei cinque eroi, la Penta Quest, è conclusa."
     ]
   }
 ]

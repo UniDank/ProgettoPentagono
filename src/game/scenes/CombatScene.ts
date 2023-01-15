@@ -14,8 +14,8 @@ export default class CombatScene extends Scene {
   private enemies: Map<Entity, Enemy> = new Map()
   private map!: Phaser.Tilemaps.Tilemap
   private walkLayer!:  Phaser.Tilemaps.TilemapLayer
-  private colorR: number = 0xffcc4a
-  private colorC: number = 0x23ccaa
+  private radiusColor: number = 0xFFCC4A
+  private selectionColor: number = 0x23CCAA
   private turn!: boolean
   private initialPos!: Vector2
   private newPos!: Vector2
@@ -32,7 +32,7 @@ export default class CombatScene extends Scene {
   }
 
   preload() {
-    
+
   }
 
   randomNumber(min: number, max: number) {
@@ -112,12 +112,16 @@ export default class CombatScene extends Scene {
     })
     this.gridEngine.movementStopped().subscribe(({ direction }) => {
       this.getCurrentEntity().sprite.anims.play({ key: "Idle", repeat: -1 })
+      this.combatStore.currentTurn += 1
     })
 
     this.combatStore.$onAction(({ name, args }) => {
       if (name === 'actionAttack') {
         this.getCurrentEntity().sprite.anims.play({ key: "Attack", repeat: 1, frameRate: 10 })
-          .on('animationcomplete', () => this.getCurrentEntity().sprite.anims.play({ key: 'Idle', repeat: -1, frameRate: 10 }))
+          .on('animationcomplete', () => {
+            this.getCurrentEntity().sprite.anims.play({ key: 'Idle', repeat: -1, frameRate: 10 })
+            this.combatStore.currentTurn += 1
+          })
       }
       if (name === 'actionMove') {
         if (args[0]) this.startMovement()
@@ -134,23 +138,22 @@ export default class CombatScene extends Scene {
   }
 
   getCurrentEntity() {
-    const currentEntity = Array.from(this.players.entries()).find(v => v[1].name == this.combatStore.currentEntity?.name)
-    return currentEntity![0]
+    const currentEntity = Array.from(this.players.keys()).find(v => v.spriteName == this.combatStore.currentEntity?.name.toLowerCase())
+    return currentEntity!
   }
 
   startMovement() {
     this.initialPos = new Vector2(this.getCurrentEntity().getPosition().x, this.getCurrentEntity().getPosition().y)
-    this.tintRadius(this.map, this.initialPos.y, this.initialPos.x, 2, this.colorR)
-    this.tintTile(this.walkLayer.layer, this.initialPos.x, this.initialPos.y, this.colorC)
+    this.tintRadius(this.map, this.initialPos.y, this.initialPos.x, 2, this.radiusColor)
+    this.tintTile(this.walkLayer.layer, this.initialPos.x, this.initialPos.y, this.selectionColor)
     this.newPos = this.initialPos
     this.turn = true
   }
 
   stopMovement() {
-    const colorbase = 16777215
     for (const arr of this.walkLayer.layer.data) {
       for (const tile of arr) {
-        tile.tint = colorbase
+        tile.tint = 16777215
       }
     }
     this.turn = false
@@ -169,7 +172,6 @@ export default class CombatScene extends Scene {
           if (this.checkTile(this.newPos, this.initialPos, 3)){
             this.stopMovement()
             this.getCurrentEntity().movePlayerTo(this.newPos)
-            this.combatStore.currentTurn += 1
           } else console.warn("Movimento impossibile, riprova")
         }
       }
@@ -214,30 +216,30 @@ export default class CombatScene extends Scene {
     switch (true) {
       case direction != "" ? direction == "left" : this.cursors.left.isDown:
         if (this.checkTile(new Vector2(x-1,y),new Vector2(this.initialPos.x, this.initialPos.y),2)) {
-          this.tintTile(this.walkLayer.layer, x, y, this.colorR)
+          this.tintTile(this.walkLayer.layer, x, y, this.radiusColor)
         } else this.tintTile(this.walkLayer.layer, x, y, 16777215)
-        this.tintTile(this.walkLayer.layer, x - 1, y, this.colorC)
+        this.tintTile(this.walkLayer.layer, x - 1, y, this.selectionColor)
         this.combatStore.moveDirection = ""
         return new Vector2(x - 1, y)
       case direction != "" ? direction == "right" : this.cursors.right.isDown:
         if (this.checkTile(new Vector2(x+1,y),new Vector2(this.initialPos.x, this.initialPos.y),3)) {
-          this.tintTile(this.walkLayer.layer, x, y, this.colorR)
+          this.tintTile(this.walkLayer.layer, x, y, this.radiusColor)
         } else this.tintTile(this.walkLayer.layer, x, y, 16777215)
-        this.tintTile(this.walkLayer.layer, x + 1, y, this.colorC)
+        this.tintTile(this.walkLayer.layer, x + 1, y, this.selectionColor)
         this.combatStore.moveDirection = ""
         return new Vector2(x + 1, y)
       case direction != "" ? direction == "up" : this.cursors.up.isDown:
         if (this.checkTile(new Vector2(x,y-1),new Vector2(this.initialPos.x, this.initialPos.y),3)) {
-          this.tintTile(this.walkLayer.layer, x, y, this.colorR)
+          this.tintTile(this.walkLayer.layer, x, y, this.radiusColor)
         } else this.tintTile(this.walkLayer.layer, x, y, 16777215)
-        this.tintTile(this.walkLayer.layer, x, y - 1, this.colorC)
+        this.tintTile(this.walkLayer.layer, x, y - 1, this.selectionColor)
         this.combatStore.moveDirection = ""
         return new Vector2(x, y - 1)
       case direction != "" ? direction == "down" : this.cursors.down.isDown:
         if (this.checkTile(new Vector2(x,y+1),new Vector2(this.initialPos.x, this.initialPos.y),3)) {
-          this.tintTile(this.walkLayer.layer, x, y, this.colorR)
+          this.tintTile(this.walkLayer.layer, x, y, this.radiusColor)
         } else this.tintTile(this.walkLayer.layer, x, y, 16777215)
-        this.tintTile(this.walkLayer.layer, x, y + 1, this.colorC)
+        this.tintTile(this.walkLayer.layer, x, y + 1, this.selectionColor)
         this.combatStore.moveDirection = ""
         return new Vector2(x, y + 1)
       default:

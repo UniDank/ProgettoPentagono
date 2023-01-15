@@ -157,7 +157,7 @@ export default class HandlerScene extends Scene {
         const logoSprite = this.add.sprite(this.scale.gameSize.width / 2, this.scale.gameSize.height / 2, 'animatedLogo')
         logoSprite.play({ key: 'Morph', frameRate: 10 })
             .on('animationcomplete', () => logoSprite.play({ key: 'Flash', repeat: -1, frameRate: 12, repeatDelay: 2000 }))
-        
+
         this.input.setDefaultCursor(`url(${cursorPng}), pointer`)
 
         this.sound.add('bgSong')
@@ -165,6 +165,14 @@ export default class HandlerScene extends Scene {
         this.sound.add('regitareSong')
         this.sound.add('combatSong')
         this.sound.add('stageSong')
+
+        this.sound.volume = this.sceneStore.currentVolume / 100
+
+        this.sceneStore.$onAction(({ name, args }) => {
+            if (name === "changeVolume") {
+                this.sound.volume = args[0] / 100
+            }
+        })
 
         this.updateCamera(this.scale.gameSize.width, this.scale.gameSize.height)
 

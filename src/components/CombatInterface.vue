@@ -27,10 +27,10 @@
         </div>
         <div class="flex w-[99%] gap-2 bottom-1 left-1 rpgui-container">
             <div class="flex flex-col">
-                <button class="rpgui-button" type="button" @click="actionAttack">
+                <button class="rpgui-button" type="button" @click="actionAttack" :disabled="(combat.currentEntity instanceof Enemy)">
                     <h3>Attacca</h3>
                 </button>
-                <button class="relative !overflow-visible rpgui-button" type="button" @click="actionMove">
+                <button class="relative !overflow-visible rpgui-button" type="button" @click="actionMove" :disabled="(combat.currentEntity instanceof Enemy)">
                     <h3>Muoviti</h3>
                     <div v-show="showMove" @click.stop
                         class="rpgui-container framed !left-[calc(100%+0.5rem)] !absolute !bottom-0 !z-30 flex flex-col justify-between !h-56 w-52 !p-0">
@@ -58,11 +58,11 @@
                         </div>
                     </div>
                 </button>
-                <button class="relative !overflow-visible rpgui-button" type="button" @click="actionInv">
+                <button class="relative !overflow-visible rpgui-button" type="button" @click="actionInv" :disabled="(combat.currentEntity instanceof Enemy)">
                     <h3>Inventario</h3>
                     <Inventory ref="invComp" />
                 </button>
-                <button class="rpgui-button" type="button" @click="actionSkip">
+                <button class="rpgui-button" type="button" @click="actionSkip" :disabled="(combat.currentEntity instanceof Enemy)">
                     <h3>Passa</h3>
                 </button>
             </div>
@@ -80,7 +80,7 @@
                         <img :src="`/boxes/${orderTurn[currentTurn + 1].name.toLowerCase()}_box.png`" />
                     </div>
                 </div>
-                <button class="rpgui-button" type="button" @click="actionRun">
+                <button class="rpgui-button" type="button" @click="actionRun" :disabled="(combat.currentEntity instanceof Enemy)">
                     <h3>Fuggi</h3>
                 </button>
             </div>
@@ -194,7 +194,6 @@ const actionAttack = () => {
     orderTurn[currentTurn.value].setDamage(orderTurn[currentTurn.value].attack, orderTurn[combat.selectedEntity])
     combat.combatLog += `${orderTurn[currentTurn.value].name} ha inflitto ${orderTurn[currentTurn.value].attack} danni a ${orderTurn[combat.selectedEntity].name}!\n`
     combat.actionAttack(currentTurn.value)
-    currentTurn.value++
 }
 
 const moveUp = () => combat.moveDirection = "up"
