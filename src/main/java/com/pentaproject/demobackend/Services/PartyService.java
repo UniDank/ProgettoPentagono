@@ -30,24 +30,30 @@ public class PartyService {
     public void insertParty(@NonNull Party party){
         rep.insert(party);
     }
-
+    
     /**
-     * Metodo per ottenere dal db un oggetto party indicando il suo id.
-     * @param id id dell'oggetto in db
-     * @throws NoSuchElementException Quando non esiste il valore cercato nel db.
+     * Permette di ottenere tutto il party
+     * @return Party 
+     * @throws NoSuchElementException se non trova il party nel db
      * */
-    public Party getParty(int id) throws NoSuchElementException {
-        return rep.findById(id).orElseThrow(NoSuchElementException::new);
+    
+    public Party getParty() throws NoSuchElementException{
+        return rep.findAll().stream().findFirst().orElseThrow(NoSuchElementException::new);
     }
+    
+    
+
+    
 
     /**
      * Permette di generare un oggetto party
      * @param bag lista di Item
      * @param heroList lista di Hero
      * */
-    public Party generateParty(List<Hero> heroList, List<Item> bag) {
-        return new Party(value++, heroList, bag);
+    public Party generateParty(int id_stage,List<Hero> heroList, List<Item> bag) {
+        return new Party(id_stage, heroList, bag);
     }
+    
 }
 
 

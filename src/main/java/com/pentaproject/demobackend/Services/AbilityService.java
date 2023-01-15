@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
 
 /**
  * Classe Service per la gestione della logica relativa agli oggetti di tipo ability
+ * Non in uso in questa versione
  * @version 1.0
  * @author Marco
  * */

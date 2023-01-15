@@ -1,13 +1,15 @@
 package com.pentaproject.demobackend.Controllers;
 
 import com.pentaproject.demobackend.Controllers.FormatResponse.ApiResponse;
-import com.pentaproject.demobackend.Model.Abilities.Ability;
 import com.pentaproject.demobackend.Model.Heroes.Hero;
-import com.pentaproject.demobackend.Services.AbilityService;
 import com.pentaproject.demobackend.Services.HeroService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 
+
+/**
+ * Non in uso in questa versione
+ * */
 @Controller
 public class HeroController {
 

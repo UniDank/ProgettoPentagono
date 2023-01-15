@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * Classe Service per la gestione della logica relativa agli oggetti di tipo hero
+ * Non in uso in questa versione
  * @version 1.0
  * @author Marco
  * */
@@ -24,8 +25,8 @@ public class HeroService {
         return rep.findById(id).orElse(null);
     }
 
-    public Hero generateHero(String name,Integer attack, Integer defence , Integer life, Integer mana){
-        return new Hero(name,attack,defence,life,mana);
+    public Hero generateHero(String name,Integer attack, Integer defence , Integer health, Integer mana, Integer agility, Integer APs){
+        return new Hero(name,attack,defence,health,mana,agility,APs);
     }
 
     public void insertAbility(Hero hero) {

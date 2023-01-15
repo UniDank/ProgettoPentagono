@@ -1,12 +1,16 @@
 package com.pentaproject.demobackend.Controllers;
 
 import com.pentaproject.demobackend.Controllers.FormatResponse.ApiResponse;
-import com.pentaproject.demobackend.Model.Heroes.Hero;
 import com.pentaproject.demobackend.Model.Items.Item;
-import com.pentaproject.demobackend.Services.HeroService;
+
 import com.pentaproject.demobackend.Services.ItemService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+
+
+/**
+ * Non in uso in questa versione
+ * */
 
 @Controller
 public class ItemController {

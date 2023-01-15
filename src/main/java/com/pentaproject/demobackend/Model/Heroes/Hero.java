@@ -1,7 +1,6 @@
 package com.pentaproject.demobackend.Model.Heroes;
 
 
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +17,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Hero {
     private String name;
     private Integer attack;
-    private Integer defence;
-    private Integer life;
-    private Integer Mana;
+    private Integer defense;
+    private Integer health;
+    private Integer mana;
+    private Integer agility;
+    private Integer APs;
 }

@@ -5,4 +5,6 @@ public enum EnemyType {
     Tank,
     Thief,
     Mage,
+    Unknown, 
+    Melee
 }

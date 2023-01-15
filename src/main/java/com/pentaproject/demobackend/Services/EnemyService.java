@@ -1,22 +1,28 @@
 package com.pentaproject.demobackend.Services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pentaproject.demobackend.Model.Abilities.Ability;
+
 import com.pentaproject.demobackend.Model.Enemies.Enemy;
 import com.pentaproject.demobackend.Model.Enemies.EnemyType;
+
 import com.pentaproject.demobackend.Model.Stage.Stage;
 import com.pentaproject.demobackend.Model.Stage.StageSelector;
 import com.pentaproject.demobackend.Repositories.EnemyRepository;
+
 import lombok.AllArgsConstructor;
+
+
 
 import org.springframework.stereotype.Service;
 
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+
+import java.io.IOException;
+import java.util.*;
+
+import java.util.stream.Collectors;
+
 
 /**
  * Classe Service per la gestione della logica relativa agli oggetti di tipo Enemy
@@ -30,6 +36,7 @@ public class EnemyService {
     private EnemyRepository rep;
 
     private ObjectMapper json;
+ 
 
     public void insertEnemy(Enemy enemy){
         rep.insert(enemy);
@@ -39,8 +46,8 @@ public class EnemyService {
         return rep.findById(id).orElse(null);
     }
 
-    public Enemy generateEnemy(String name, Integer life, Integer mana, Integer attack, Integer defence, List<Ability> abilitiesList, EnemyType category) throws IllegalArgumentException{
-        Enemy pippo = new Enemy(name,life,mana,attack,defence,abilitiesList,category);
+    public Enemy generateEnemy(String name, Integer health, Integer mana, Integer attack, Integer defense, Integer agility, Integer APs ,EnemyType category) throws IllegalArgumentException{
+        Enemy pippo = new Enemy(name,health,mana,attack,defense,agility,APs,category);
         insertEnemy(pippo);
         return pippo;
     }
@@ -48,56 +55,111 @@ public class EnemyService {
     public List<Enemy> getEnemies() {
         return rep.findAll();
     }
-
-
-
-    /*
-        Creazione dei nemici da passare al frontend:
-        1. prelevo dal db 3 template di nemici che rispettano i requisiti dello stage
-        2. li clono
-        3. li mando al frontend
-    */
-
+    
     //TODO: NEED REFACTORY
-    public List<Enemy> getEnemiesFromStage(int id) {
-        try {
-
-            File file = new File("G:\\Programmi_vari\\Programmi_Uni\\Java\\demoBackend\\src\\main\\resources\\valuestage.json");
+    /**
+     * Metodo per ottenere rispetto id stage, i nemici che fanno parte dello stage
+     * @param id id dello stage
+     * @return List<Enemy> Lista di nemici 
+     * @throws IOException Nel caso non riesce a recuperare il file
+     * */
+    public List<Enemy> getEnemiesFromStage(int id) throws IOException {
+            //de-serealizzazione del file json valuestage, contentente i parametri min-max dei nemici
+            File file = new File("C:\\Users\\Marco\\IdeaProjects\\ProgettoPentagono\\src\\main\\resources\\valuestage.json");
             StageSelector value = json.readValue(file, StageSelector.class);
-            Stage stage = value.getStages().get(id);
+            Stage stage = value.getStages().stream().filter(x-> x.getId() == id).findFirst().get();
             String[] attack = stage.getAttack().split("-");
-            String[] defence = stage.getDefence().split("-");
-            String[] life = stage.getAttack().split("-");
+            String[] defence = stage.getDefense().split("-");
+            String[] life = stage.getHealth().split("-");
+            String[] exp = stage.getExpGained().split("-");
+            String[] agility = stage.getAgility().split("-");
+            boolean boss = stage.isBoss();
+            int clone = stage.getClone();
+            String[] Entities = stage.getEntity().split(",");
+            int enemies = stage.getEnemies();
+            
+            List<Enemy> template = rep.findBy(Entities);
+            Random random = new Random();
+            
 
-            List<Enemy> template = rep.
-                    findEnemiesByLifeBetweenAndDefenceBetweenAndAttackBetween(Integer.valueOf(life[0]),
-                            Integer.valueOf(life[1]),Integer.valueOf(defence[0]),
-                            Integer.valueOf(defence[1]),Integer.valueOf(attack[0]),
-                            Integer.valueOf(attack[1]));
-            Collections.shuffle(template);
-            List<Enemy> enemiesforcloning = template.stream().limit(3).toList();
-            List<Enemy> Cloned = new ArrayList<>();
-
-            Random rand = new Random(21);
-            for(int i = 0; i < stage.getEnemies() - 3; i++){
-                int j = rand.nextInt(0,3);
-                Enemy enemy = enemiesforcloning.get(j);
-                Cloned.add((Enemy) enemy.clone());
-            }
-
-            Cloned.addAll(enemiesforcloning);
-
-            return Cloned.stream().toList();
-
-
-
+        //generazione dei nemici con valori causali
+        if(!boss){
+            return template.stream()
+                    .map(enemy -> {
+                        enemy.setHealth(random.nextInt(Integer.parseInt(life[0]), Integer.parseInt(life[1])));
+                        enemy.setDefense(random.nextInt(Integer.parseInt(defence[0]), Integer.parseInt(defence[1])));
+                        enemy.setAttack(random.nextInt(Integer.parseInt(attack[0]), Integer.parseInt(attack[1])));
+                        enemy.setAgility(random.nextInt(Integer.parseInt(agility[0]), Integer.parseInt(agility[1])));
+                        enemy.setExpReward(random.nextInt(Integer.parseInt(exp[0]), Integer.parseInt(exp[1])));
+                        return enemy;
+                    })
+                    .collect(Collectors.collectingAndThen(
+                            Collectors.toList(),
+                            collected -> {
+                                Collections.shuffle(collected);
+                                for (int i = 0; i < clone; i++) {
+                                    Enemy c = (Enemy) collected.get(i).clone();
+                                    c.setName(c.getName() + (i + 1));
+                                    c.setHealth(random.nextInt(Integer.parseInt(life[0]), Integer.parseInt(life[1])));
+                                    c.setDefense(random.nextInt(Integer.parseInt(defence[0]), Integer.parseInt(defence[1])));
+                                    c.setAttack(random.nextInt(Integer.parseInt(attack[0]), Integer.parseInt(attack[1])));
+                                    c.setAgility(random.nextInt(Integer.parseInt(agility[0]), Integer.parseInt(agility[1])));
+                                    c.setExpReward(random.nextInt(Integer.parseInt(exp[0]), Integer.parseInt(exp[1])));
+                                    collected.add(c);
+                                }
+                                return collected.stream();
+                            }
+                    ))
+                    .limit(enemies)
+                    .collect(Collectors.toList());
         }
-        catch (Exception ex){
-            System.out.println(ex.getMessage());
+        else {
+            Enemy Benemy = template.stream().filter(x-> x.getName().startsWith("Admin")|| x.getName().startsWith("Regitare")).findFirst().get();
+            template.remove(Benemy);
+            Benemy.setHealth(random.nextInt(Integer.parseInt(life[0]), Integer.parseInt(life[1])));
+            Benemy.setDefense(random.nextInt(Integer.parseInt(defence[0]), Integer.parseInt(defence[1])));
+            Benemy.setAttack(random.nextInt(Integer.parseInt(attack[0]), Integer.parseInt(attack[1])));
+            Benemy.setAgility(random.nextInt(Integer.parseInt(agility[0]), Integer.parseInt(agility[1])));
+            Benemy.setExpReward(random.nextInt(Integer.parseInt(exp[0]), Integer.parseInt(exp[1])));
+            List<Enemy> result = template.stream()
+                    .map(enemy -> {
+                        enemy.setHealth(random.nextInt(Integer.parseInt(life[0]), Integer.parseInt(life[1])));
+                        enemy.setDefense(random.nextInt(Integer.parseInt(defence[0]), Integer.parseInt(defence[1])));
+                        enemy.setAttack(random.nextInt(Integer.parseInt(attack[0]), Integer.parseInt(attack[1])));
+                        enemy.setAgility(random.nextInt(Integer.parseInt(agility[0]), Integer.parseInt(agility[1])));
+                        enemy.setExpReward(random.nextInt(Integer.parseInt(exp[0]), Integer.parseInt(exp[1])));
+                        return enemy;
+                    })
+                    .collect(Collectors.collectingAndThen(
+                            Collectors.toList(),
+                            collected -> {
+                                Collections.shuffle(collected);
+                                int j = 0;
+                                for (int i = 0; i < clone; i++,j++) {
+                                    if(j > collected.size()) j = 0;
+                                    Enemy c = (Enemy) collected.get(j).clone();
+                                    c.setName(c.getName() + (i + 1));
+                                    c.setHealth(random.nextInt(Integer.parseInt(life[0]), Integer.parseInt(life[1])));
+                                    c.setDefense(random.nextInt(Integer.parseInt(defence[0]), Integer.parseInt(defence[1])));
+                                    c.setAttack(random.nextInt(Integer.parseInt(attack[0]), Integer.parseInt(attack[1])));
+                                    c.setAgility(random.nextInt(Integer.parseInt(agility[0]), Integer.parseInt(agility[1])));
+                                    c.setExpReward(random.nextInt(Integer.parseInt(exp[0]), Integer.parseInt(exp[1])));
+                                    collected.add(c);
+                                }
+                                return collected.stream();
+                            }
+                    ))
+                    .limit(enemies - 1)
+                    .collect(Collectors.toList());
+            result.add(Benemy);
+            return result;
+            
         }
-        return new ArrayList<>();
+
+
     }
-
-
+    
+    
+    
 
 }

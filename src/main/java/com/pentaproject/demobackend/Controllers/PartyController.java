@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 
+import java.util.NoSuchElementException;
+
 /* {
         "Party": {
             "Members": [
@@ -33,13 +35,20 @@ public class PartyController {
 
     private PartyService partyService;
 
-    public ApiResponse<Party> getParty(int id){
-        //TODO: Gestione degli errori
-        return new ApiResponse<>(HttpStatus.OK,partyService.getParty(id));
+    public ApiResponse<Party> getParty(){
+        Party alfa;
+        try{
+            alfa = partyService.getParty();
+            return new ApiResponse<>(HttpStatus.OK,alfa);
+        }
+        catch (NoSuchElementException ex){
+            return new ApiResponse<>(HttpStatus.NOT_FOUND,"Non esiste il party");
+        }
     }
 
     public ApiResponse<?> setParty(Party party){
-        //TODO: gestione degli errori
+        if(party == null) 
+            return new ApiResponse<>(HttpStatus.BAD_REQUEST,"Body invalido");
         partyService.insertParty(party);
         return new ApiResponse<>(HttpStatus.OK,"");
     }
