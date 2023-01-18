@@ -32,6 +32,8 @@ export const useCombatStore = defineStore('combat', () => {
 
     const actionMove = (move: boolean) => isMoving.value = move
 
+    const updateEnemies = (list: Enemy[]) => enemies.value = list
+
     return { 
         moveMode, 
         changeMoveToMouse, 
@@ -47,6 +49,7 @@ export const useCombatStore = defineStore('combat', () => {
         actionMove,
         isMoving,
         orderTurn,
-        currentTurn
+        currentTurn,
+        updateEnemies
     }
 })

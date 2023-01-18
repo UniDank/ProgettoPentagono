@@ -88,7 +88,7 @@
         <div v-for="(enemy, index) in combat.enemies" class="!flex rpgui-container gap-1 right-1"
             :style="`top: ${index == 0 ? 0.25 : (index * 4.25) + 0.25}rem;`">
             <div class="flex flex-col w-32 gap-1">
-                <p class="h-4 ml-auto leading-none">{{ enemy.name }}</p>
+                <p class="h-4 ml-auto leading-none">{{ isNaN(Number(enemy.name[enemy.name.length - 1])) ? enemy.name : `${enemy.name.slice(0, -1)} ${enemy.name[enemy.name.length - 1]}` }}</p>
                 <div class="rpgui-progress !h-[1rem] -scale-x-100">
                     <div class="rpgui-progress-track !h-[1rem] !left-4 !right-4">
                         <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] red"
@@ -139,11 +139,6 @@ const showMove = ref(false)
 const logElement = ref<HTMLDivElement>(), textElement = ref<HTMLHeadingElement>()
 
 combat.combatLog = ""
-
-fetch(`http://localhost:8080/api/v1/${stage.selectedNode}/enemies`).then(res => res.json()).then(json => {
-    const resJson = json.data as Enemy[]
-    combat.enemies = [...resJson]
-})
 
 const currentTurn = ref(0)
 const orderTurn = reactive<(Player | Enemy)[]>([...main.party, ...combat.enemies])
