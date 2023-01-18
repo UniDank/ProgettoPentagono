@@ -1,7 +1,9 @@
 import { Scene, Cameras } from 'phaser'
 import cursorPng from '../assets/point.png'
+import { Enemy } from "../../classes/Enemy"
 import { useMainStore } from '../../stores/mainStore'
 import { useStageStore } from '../../stores/stageStore'
+import { useCombatStore } from '../../stores/combatStore'
 
 enum StepType {
   dotMark, nodeBlue, nodeRed, nodeYellow, nodeGreen, pointAdmin, pointRegitare, pointBattle, pointHome
@@ -19,6 +21,7 @@ type Step = {
 export default class StageScene extends Scene {
   private sceneStore = useMainStore()
   private stageStore = useStageStore()
+  private combatStore = useCombatStore()
   private stepKeys = Object.values(StepType)
   private nodes: Step[] = [
     // Dal node giallo in basso all'albero
@@ -145,7 +148,13 @@ export default class StageScene extends Scene {
         mainCamera.fadeOut(300, 0, 0, 0)
         this.sceneStore.closeInterface()
         if (args[0] == 'CombatScene') {
-          mainCamera.on('camerafadeoutcomplete', () => this.scene.launch(args[0], { node: this.stageStore.selectedNode }).sleep())
+          mainCamera.on('camerafadeoutcomplete', async () => {
+            await fetch(`http://localhost:8080/api/v1/${this.stageStore.selectedNode}/enemies`).then(res => res.json()).then(json => {
+              const resJson = json.data as Enemy[]
+              this.combatStore.updateEnemies(resJson)
+            })
+            this.scene.launch(args[0], { node: this.stageStore.selectedNode }).sleep()
+          })
         } else mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0]))
       }
     })

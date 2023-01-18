@@ -1,7 +1,6 @@
 import { Scene, Cameras } from 'phaser'
 import { useMainStore } from '../../stores/mainStore'
 import { useCombatStore } from '../../stores/combatStore'
-import { useStageStore } from '../../stores/stageStore'
 import { Entity } from "../../classes/Entity"
 import { Player } from "../../classes/Player"
 import { Enemy } from "../../classes/Enemy"
@@ -11,7 +10,6 @@ export default class CombatScene extends Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
   private sceneStore = useMainStore()
   private combatStore = useCombatStore()
-  private stageStore = useStageStore()
   private players: Map<Entity, Player> = new Map()
   private enemies: Map<Entity, Enemy> = new Map()
   private map!: Phaser.Tilemaps.Tilemap
@@ -41,7 +39,7 @@ export default class CombatScene extends Scene {
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
 
-  async create() {
+  create() {
     const mainCamera = this.cameras.main
     mainCamera.fadeIn(300, 0, 0, 0, (camera: Cameras.Scene2D.Camera, progress: number) => {
       if (progress >= 0.7) this.sceneStore.changeInterface("CombatInterface")
@@ -68,11 +66,6 @@ export default class CombatScene extends Scene {
         this.sceneStore.closeInterface()
         mainCamera.on('camerafadeoutcomplete', () => this.scene.stop().wake(args[0]))
       }
-    })
-
-    await fetch(`http://localhost:8080/api/v1/${this.stageStore.selectedNode}/enemies`).then(res => res.json()).then(json => {
-      const resJson = json.data as Enemy[]
-      this.combatStore.updateEnemies(resJson)
     })
 
     this.sceneStore.party.filter(p => p.health > 0).forEach(p => {
