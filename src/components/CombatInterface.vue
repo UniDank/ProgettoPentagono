@@ -107,7 +107,7 @@
                 </div>
             </div>
             <div class="!static rpgui-container thin !p-0 h-16 w-16">
-                <img :src="`/boxes/${enemy.name.toLowerCase()}_box.png`" />
+                <img :src="`/boxes/${isNaN(Number(enemy.name[enemy.name.length - 1])) ? enemy.name.toLowerCase() : enemy.name.slice(0, -1).toLowerCase()}_box.png`" />
             </div>
         </div>
     </div>
@@ -141,8 +141,8 @@ const logElement = ref<HTMLDivElement>(), textElement = ref<HTMLHeadingElement>(
 combat.combatLog = ""
 
 fetch(`http://localhost:8080/api/v1/${stage.selectedNode}/enemies`).then(res => res.json()).then(json => {
-    const resJson = json as Enemy[]
-    combat.enemies.push(...resJson)
+    const resJson = json.data as Enemy[]
+    combat.enemies = [...resJson]
 })
 
 const currentTurn = ref(0)
@@ -160,17 +160,6 @@ watch([orderTurn, currentTurn], async () => {
     if (combat.enemies.length == 0 || main.party.length == 0) {
         const totalExp = combat.enemies.map(v => v.expReward).reduce((c, p) => c + p)
         main.party.forEach(v => v.addExp(totalExp / 5))
-        fetch(`http://localhost:8080/api/v1/party`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                "id_stage": stage.selectedNode,
-                "members": main.party,
-                "bag": main.inventory
-            })
-        }).then(() => main.changeScene('StageScene'))
     }
     combat.currentTurn = currentTurn.value
     combat.orderTurn = orderTurn
@@ -184,6 +173,17 @@ onMounted(() => {
 
 onUnmounted(() => {
     stage.enableNodes = true
+    fetch(`http://localhost:8080/api/v1/party`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "id_stage": stage.selectedNode,
+            "members": main.party,
+            "bag": main.inventory
+        })
+    }).then(() => main.changeScene('StageScene'))
 })
 
 const actionAttack = () => {

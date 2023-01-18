@@ -57,13 +57,15 @@
                                 </option>
                                 <option value="1024x768" class="text-lg !rpgui-cursor-point lg:text-2xl">1024 x 768
                                 </option>
-                                <option value="800x600" selected class="text-lg !rpgui-cursor-point lg:text-2xl">800 x 600</option>
+                                <option value="800x600" selected class="text-lg !rpgui-cursor-point lg:text-2xl">800 x
+                                    600</option>
                             </select>
                         </div>
                     </div>
                     <div class="flex gap-4">
                         <h2 data-text="Volume:" class="text-stroke-3">Volume:</h2>
-                        <input v-model="volumeSlider" class="rpgui-slider" type="range" min="0" max="100" @change="main.changeVolume(volumeSlider)">
+                        <input v-model="volumeSlider" class="rpgui-slider" type="range" min="0" max="100"
+                            @change="main.changeVolume(volumeSlider)">
                     </div>
                 </div>
             </button>
@@ -76,10 +78,14 @@
         </div>
         <div v-if="openStory" class="top-0 left-0 w-full h-full rpgui-container">
             <div class="w-[70%] h-5/6 top-16 left-1/4 rpgui-container !overflow-y-auto framed !p-4">
-                <img class="float-left mr-4 rounded-lg" :src="`/stories/${image1Shown}`" />
-                <h3 class="whitespace-pre-wrap" v-html="text1Shown"></h3>
-                <img v-if="image2Shown" class="float-right ml-4 rounded-lg clear-left" :src="`/stories/${image2Shown}`" />
-                <h3 class="whitespace-pre-wrap" v-html="text2Shown"></h3>
+                <template v-for="{text, image} in getStory" :key="story">
+                    <img class="rounded-lg"
+                        :class="{ 'float-left mr-4 clear-right': image.position == 'left', 
+                            'float-right ml-4 clear-left': image.position == 'right', 
+                            'text-center clear-both': image.position == 'center' }"
+                        :src="`/stories/${image.name}`" />
+                    <h3 class="whitespace-pre-wrap" :class="{ 'text-center': [1, 7, 9].includes(stage.selectedNode) }" v-html="text"></h3>
+                </template>
                 <button class="ml-[87%] rpgui-button" type="button" @click="openStory = false">
                     <h3>Chiudi</h3>
                 </button>
@@ -91,62 +97,77 @@
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/gioxon_box.png" />
                     <b>
-                        <span class="font-medium !leading-none">Gioxon</span> - unione di "Giorgio" e <b class="!font-['Basis'] text-base">τόξον</b>, "tocson" (in greco arco) - 
-                        Un arciere dalla lunga chioma, amico degli animali.<br/>
+                        <span class="font-medium !leading-none">Gioxon</span> - unione di "Giorgio" e <b
+                            class="!font-['Basis'] text-base">τόξον</b>, "tocson" (in greco arco) -
+                        Un arciere dalla lunga chioma, amico degli animali.<br />
                     </b>
                 </div>
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/marcurion_box.png" />
                     <b>
-                        <span class="font-medium !leading-none">Marcurion</span> - unione di "Marco" e <b class="!font-['Basis'] text-base">ἀργύριον</b>, "argurion" (in greco danaro, moneta) - 
-                        Un ladro di cui non si conosce l’identità, si pensa sia un goblin.<br/>
+                        <span class="font-medium !leading-none">Marcurion</span> - unione di "Marco" e <b
+                            class="!font-['Basis'] text-base">ἀργύριον</b>, "argurion" (in greco danaro, moneta) -
+                        Un ladro di cui non si conosce l’identità, si pensa sia un goblin.<br />
                     </b>
                 </div>
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/claphos_box.png" />
                     <b>
-                        <span class="font-medium !leading-none">Claphos</span> - unione di "Claudio" e <b class="!font-['Basis'] text-base">ξίφος</b>, "csiphos" (in greco spada) -
-                        Un guerriero che ha combattuto durante una antica guerra.<br/>
+                        <span class="font-medium !leading-none">Claphos</span> - unione di "Claudio" e <b
+                            class="!font-['Basis'] text-base">ξίφος</b>, "csiphos" (in greco spada) -
+                        Un guerriero che ha combattuto durante una antica guerra.<br />
                     </b>
                 </div>
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/map_box.png" />
                     <b>
-                        <span class="font-medium !leading-none">Regno di Empaizo</span> - da <b class="!font-['Basis'] text-base">ἐμπαίζω</b>, "empaizo" (in greco giocare, scherzare) - 
-                        Il regno in cui si svolge l’avventura di Penta Quest.<br/>
+                        <span class="font-medium !leading-none">Regno di Empaizo</span> - da <b
+                            class="!font-['Basis'] text-base">ἐμπαίζω</b>, "empaizo" (in greco giocare, scherzare) -
+                        Il regno in cui si svolge l’avventura di Penta Quest.<br />
                     </b>
                 </div>
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/ontos_box.png" />
                     <b>
-                        <span class="font-medium !leading-none">Villaggio di Òntos</span> - da <b class="!font-['Basis'] text-base">ὄντος</b>, "ontos" (in greco realtà, genitivo di <b class="!font-['Basis'] text-base">ὄν</b>, “on”) -
-                        Villaggio fittizio da cui dicono di provenire gli eroi, invece di dire la verità.<br/>
+                        <span class="font-medium !leading-none">Villaggio di Òntos</span> - da <b
+                            class="!font-['Basis'] text-base">ὄντος</b>, "ontos" (in greco realtà, genitivo di <b
+                            class="!font-['Basis'] text-base">ὄν</b>, “on”) -
+                        Villaggio fittizio da cui dicono di provenire gli eroi, invece di dire la verità.<br />
                     </b>
                 </div>
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/alsos_box.png" />
                     <b>
-                        <span class="font-medium !leading-none">Bosco Àlsos</span> - da <b class="!font-['Basis'] text-base">ἄλσος</b>, "alsos" (in greco bosco, selva, foresta) - 
-                        Bosco del quale si raccontano favole ai bambini per tenerli lontani.<br/>
+                        <span class="font-medium !leading-none">Bosco Àlsos</span> - da <b
+                            class="!font-['Basis'] text-base">ἄλσος</b>, "alsos" (in greco bosco, selva, foresta) -
+                        Bosco del quale si raccontano favole ai bambini per tenerli lontani.<br />
                     </b>
                 </div>
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/end_box.png" />
                     <b>
-                        <span class="font-medium !leading-none !text-[#EE7F2E]">T.R.E.N.T.A.</span> - <span class="font-medium !leading-none">“<span class="!text-[#EE7F2E]">T</span>erra <span class="!text-[#EE7F2E]">R</span>icolma di <span class="!text-[#EE7F2E]">E</span>ffigi <span class="!text-[#EE7F2E]">N</span>efaste e <span class="!text-[#EE7F2E]">T</span>ombe <span class="!text-[#EE7F2E]">A</span>ntiche”</span> - 
-                        Le lande a Nord-Ovest dove le leggende narrano si possano raggiungere i “Confini del Mondo”.<br/>
+                        <span class="font-medium !leading-none !text-[#EE7F2E]">T.R.E.N.T.A.</span> - <span
+                            class="font-medium !leading-none">“<span class="!text-[#EE7F2E]">T</span>erra <span
+                                class="!text-[#EE7F2E]">R</span>icolma di <span class="!text-[#EE7F2E]">E</span>ffigi
+                            <span class="!text-[#EE7F2E]">N</span>efaste e <span class="!text-[#EE7F2E]">T</span>ombe
+                            <span class="!text-[#EE7F2E]">A</span>ntiche”</span> -
+                        Le lande a Nord-Ovest dove le leggende narrano si possano raggiungere i “Confini del
+                        Mondo”.<br />
                     </b>
                 </div>
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/hacker_box.png" />
                     <b>
-                        <span class="font-medium !leading-none">Hacker</span> - una persona che utilizza le proprie competenze informatiche per esplorare i dettagli di sistemi informatici e utilizzarli in modo malevolo.<br/>
+                        <span class="font-medium !leading-none">Hacker</span> - una persona che utilizza le proprie
+                        competenze informatiche per esplorare i dettagli di sistemi informatici e utilizzarli in modo
+                        malevolo.<br />
                     </b>
                 </div>
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/admin_box.png" />
                     <b>
-                        <span class="font-medium !leading-none">The Administrator</span> - un’entità che si autodefinisce Amministratore e che sostiene di avere il controllo sul Regno di Empaizo.<br/>
+                        <span class="font-medium !leading-none">The Administrator</span> - un’entità che si
+                        autodefinisce Amministratore e che sostiene di avere il controllo sul Regno di Empaizo.<br />
                     </b>
                 </div>
             </div>
@@ -154,56 +175,71 @@
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/danblos_box.png" />
                     <b>
-                        <span class="font-medium !leading-none">Danblos</span> - unione di "Daniele" e <b class="!font-['Basis'] text-base">βίβλος</b>, "biblos" <br/>(in greco libro) - 
-                        Uno studioso che combatte col <br/>potere della streoneria.<br/>
+                        <span class="font-medium !leading-none">Danblos</span> - unione di "Daniele" e <b
+                            class="!font-['Basis'] text-base">βίβλος</b>, "biblos" <br />(in greco libro) -
+                        Uno studioso che combatte col <br />potere della streoneria.<br />
                     </b>
                 </div>
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/agoraco_box.png" />
                     <b>
-                        <span class="font-medium !leading-none">Agoraco</span> - unione di "Federico" e <b class="!font-['Basis'] text-base">ἀγορά</b>, "agorà" (in greco piazza, mercato) - 
-                        Un mercante girovago, combatte usando la merce raccolta nei suoi viaggi.<br/>
+                        <span class="font-medium !leading-none">Agoraco</span> - unione di "Federico" e <b
+                            class="!font-['Basis'] text-base">ἀγορά</b>, "agorà" (in greco piazza, mercato) -
+                        Un mercante girovago, combatte usando la merce raccolta nei suoi viaggi.<br />
                     </b>
                 </div>
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/rombos_box.png" />
                     <b>
-                        <span class="font-medium !leading-none">Magnifica Maga Rombòs</span> - da <b class="!font-['Basis'] text-base">ῥόμβος</b>, "rombos" (in greco oggetto magico, rombo) - 
-                        Una chiaroveggente <br/>che aiuta gli eroi nel momento del bisogno.<br/>
+                        <span class="font-medium !leading-none">Magnifica Maga Rombòs</span> - da <b
+                            class="!font-['Basis'] text-base">ῥόμβος</b>, "rombos" (in greco oggetto magico, rombo) -
+                        Una chiaroveggente <br />che aiuta gli eroi nel momento del bisogno.<br />
                     </b>
                 </div>
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/didascal_box.png" />
                     <b>
-                        <span class="font-medium !leading-none">Villaggio di Didascalèion</span> - da <b class="!font-['Basis'] text-base">διδασκαλεῖον</b>, "didascaleion" (in greco scuola) - 
-                        Villaggio in cui <br/>gli eroi si trovano appena arrivati.<br/>
+                        <span class="font-medium !leading-none">Villaggio di Didascalèion</span> - da <b
+                            class="!font-['Basis'] text-base">διδασκαλεῖον</b>, "didascaleion" (in greco scuola) -
+                        Villaggio in cui <br />gli eroi si trovano appena arrivati.<br />
                     </b>
                 </div>
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/matetai_box.png" />
                     <b>
-                        <span class="font-medium !leading-none">Màtetai</span> - da <b class="!font-['Basis'] text-base">μαθηταί</b>, "matetai" (in greco scolari, plurale di <b class="!font-['Basis'] text-base">μαθητής</b> “matetes”) - 
-                        Eroi valorosi in <br/>grado di sconfiggere i mostri usando le arti magiche.<br/>
+                        <span class="font-medium !leading-none">Màtetai</span> - da <b
+                            class="!font-['Basis'] text-base">μαθηταί</b>, "matetai" (in greco scolari, plurale di <b
+                            class="!font-['Basis'] text-base">μαθητής</b> “matetes”) -
+                        Eroi valorosi in <br />grado di sconfiggere i mostri usando le arti magiche.<br />
                     </b>
                 </div>
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/regitare_box.png" />
                     <b>
-                        <span class="font-medium !leading-none">Regitare</span> - da <b class="!font-['Basis'] text-base">rex,regis</b> (in latino re, sovrano) e <b class="!font-['Basis'] text-base">θαρρέω</b>, "tarreo" (in greco essere coraggioso) - <br/>
-                        Re famoso per la sua avventura nel Bosco Àlsos.<br/>
+                        <span class="font-medium !leading-none">Regitare</span> - da <b
+                            class="!font-['Basis'] text-base">rex,regis</b> (in latino re, sovrano) e <b
+                            class="!font-['Basis'] text-base">θαρρέω</b>, "tarreo" (in greco essere coraggioso) - <br />
+                        Re famoso per la sua avventura nel Bosco Àlsos.<br />
                     </b>
                 </div>
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/lyre_box.png" />
                     <b>
-                        <span class="font-medium !leading-none !text-[#EE7F2E]">L.O.D.E.</span> - <span class="font-medium !leading-none">“<span class="!text-[#EE7F2E]">L</span>ira <span class="!text-[#EE7F2E]">O</span>scura <span class="!text-[#EE7F2E]">D</span>ell’<span class="!text-[#EE7F2E]">E</span>dera”</span> - 
-                        Uno strumento <br/>che, secondo una favola raccontata dalla Maga <br/>Rombòs, gode di poteri magici curativi benefici.<br/>
+                        <span class="font-medium !leading-none !text-[#EE7F2E]">L.O.D.E.</span> - <span
+                            class="font-medium !leading-none">“<span class="!text-[#EE7F2E]">L</span>ira <span
+                                class="!text-[#EE7F2E]">O</span>scura <span class="!text-[#EE7F2E]">D</span>ell’<span
+                                class="!text-[#EE7F2E]">E</span>dera”</span> -
+                        Uno strumento <br />che, secondo una favola raccontata dalla Maga <br />Rombòs, gode di poteri
+                        magici curativi benefici.<br />
                     </b>
                 </div>
                 <div class="flex gap-2">
                     <img class="rpgui-container !static thin !p-0" src="/boxes/bug_box.png" />
                     <b>
-                        <span class="font-medium !leading-none">Bug</span> e <span class="font-medium !leading-none">Glitch</span> - L'Hacker ha sfruttato dei Bug nel sistema per impostare il proprio Account come Amministratore, <br/>e attacca gli eroi in battaglia sfruttando dei Glitch.<br/>
+                        <span class="font-medium !leading-none">Bug</span> e <span
+                            class="font-medium !leading-none">Glitch</span> - L'Hacker ha sfruttato dei Bug nel sistema
+                        per impostare il proprio Account come Amministratore, <br />e attacca gli eroi in battaglia
+                        sfruttando dei Glitch.<br />
                     </b>
                 </div>
 
@@ -217,27 +253,39 @@
 
 <script setup lang="ts">
 import InventoryComp from './Inventory.vue'
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useMainStore } from '../stores/mainStore'
 import { useStageStore } from '../stores/stageStore'
 import stories from '../assets/stories.json'
 import { Player } from '../classes/Player'
 import { Item, ItemType } from '../classes/Inventory'
 
+interface Story {
+    images: {
+        name: string,
+        position: string
+    }[]
+    text: string[]
+}
+
 const main = useMainStore()
 const stage = useStageStore()
 
 const openStory = ref(false), startText = ref("")
-const text1Shown = ref(""), text2Shown = ref(""), image1Shown = ref(""), image2Shown = ref("")
 const showSettings = ref(false), showSummary = ref(false)
 const invComp = ref<InstanceType<typeof InventoryComp> | null>(null)
 const volumeSlider = ref(main.currentVolume)
+const currentStory = ref<Story>({ images: [], text: [] })
 
 const setCurrentText = (node: number) => {
     if ([2, 4, 6, 10].includes(node)) startText.value = "Inizia<br/>la battaglia"
     else if ([1, 9].includes(node)) startText.value = "Leggi<br/>il tutorial"
     else startText.value = "Leggi<br/>la storia"
 }
+
+const getStory = computed(() => currentStory.value.text.map((text, i) => {
+    return { text, "image": currentStory.value.images[i] }
+}))
 
 setCurrentText(stage.selectedNode)
 
@@ -254,18 +302,15 @@ fetch(`http://localhost:8080/api/v1/party`).then(res => res.json()).then(json =>
     main.inventory = resJson.bag
 })
 
-watch([openStory, showSummary, showSettings], () => 
+watch([openStory, showSummary, showSettings], () =>
     stage.enableNodes = !openStory.value && !showSummary.value && !showSettings.value)
 
 const startBattle = () => {
     if ([2, 4, 6, 10].includes(stage.selectedNode)) main.changeScene('CombatScene')
-    else {
+    else if (stories[stage.selectedNode].text.length != 0) {
         openStory.value = true
-        image1Shown.value = stories[stage.selectedNode].images[0]
-        text1Shown.value = stories[stage.selectedNode].text[0]
-        image2Shown.value = stories[stage.selectedNode].images[1] ?? ""
-        text2Shown.value = stories[stage.selectedNode].text[1] ?? ""
-        if (stage.selectedNode == 7 && main.inventory.find(i => i.name == "Lira") == undefined) 
+        currentStory.value = stories[stage.selectedNode] as Story
+        if (stage.selectedNode == 7 && main.inventory.find(i => i.name == "Lira") == undefined)
             main.inventory.push(new Item("Lira", ItemType.Lyre, 1, 1))
     }
 }
