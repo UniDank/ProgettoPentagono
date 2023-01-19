@@ -16,8 +16,20 @@
     ]
   },
   {
-    "images": [],
-    "text": []
+    "images": [
+      {
+        "name": "",
+        "position": ""
+      },
+      {
+        "name": "",
+        "position": ""
+      }
+    ],
+    "text": [
+      "Sconfiggi i nemici avversari all’attacco!",
+      "Durante la battaglia, alleati e nemici combatteranno in una griglia di dimensione 8x8, e si ritroveranno nella mappa tutti in posizioni casuali. Sarà tuo compito dare indicazioni ai cinque avventurieri per portarli alla vittoria! Il combattimento è composto dal susseguirsi di turni di alleati ed avversari, che possono attaccare, muoversi o usare oggetti."
+    ]
   },
   {
     "images": [],
@@ -66,12 +78,17 @@
   {
     "images": [
       {
+        "name": "",
+        "position": ""
+      },
+      {
         "name": "story5.png",
-        "position": "left"
+        "position": "center"
       }
     ],
     "text": [
-      "Allora le voci sul bosco erano vere! Sconfitto il fantasma di Regitare, gli eroi trovano una radura all’interno del bosco, e non riescono a credere ai loro occhi: la \"Lira Oscura Dell’Edera\" era proprio davanti a loro. Ancora increduli, raccolgono l’oggetto magico e ne comprendono subito l’utilizzo, come se qualcosa o qualcuno avesse spiegato loro il suo funzionamento. Forse lo spirito di Regitare, il Re Coraggioso? O forse è il bosco Àlsos stesso ad avergli comunicato come utilizzarla?<br/><br/>- La Lira Oscura Dell’Edera è stata aggiunta all’inventario!<br/>Utilizza la Lira dall’inventario per portare in vita gli alleati sconfitti in battaglia!"
+      "Allora le voci sul bosco erano vere! Sconfitto il fantasma di Regitare, gli eroi trovano una radura all’interno del bosco, e non riescono a credere ai loro occhi: la \"Lira Oscura Dell’Edera\" era proprio davanti a loro. Ancora increduli, raccolgono l’oggetto magico e ne comprendono subito l’utilizzo, come se qualcosa o qualcuno avesse spiegato loro il suo funzionamento. Forse lo spirito di Regitare, il Re Coraggioso? O forse è il bosco Àlsos stesso ad avergli comunicato come utilizzarla?<br/>",
+      "La Lira Oscura Dell’Edera è stata aggiunta all’inventario!<br/>Utilizza la Lira dall’inventario per portare in vita gli alleati sconfitti in battaglia!"
     ]
   },
   {

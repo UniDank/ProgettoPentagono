@@ -79,10 +79,10 @@
         <div v-if="openStory" class="top-0 left-0 w-full h-full rpgui-container">
             <div class="w-[70%] h-5/6 top-16 left-1/4 rpgui-container !overflow-y-auto framed !p-4">
                 <template v-for="{text, image} in getStory" :key="story">
-                    <img class="rounded-lg"
+                    <img v-if="image.name != ''" class="rounded-lg"
                         :class="{ 'float-left mr-4 clear-right': image.position == 'left', 
                             'float-right ml-4 clear-left': image.position == 'right', 
-                            'text-center clear-both': image.position == 'center' }"
+                            'mx-auto clear-both': image.position == 'center' }"
                         :src="`/stories/${image.name}`" />
                     <h3 class="whitespace-pre-wrap" :class="{ 'text-center': [1, 7, 9].includes(stage.selectedNode) }" v-html="text"></h3>
                 </template>
@@ -307,7 +307,7 @@ watch([openStory, showSummary, showSettings], () =>
 
 const startBattle = () => {
     if ([2, 4, 6, 10].includes(stage.selectedNode)) main.changeScene('CombatScene')
-    else if (stories[stage.selectedNode].text.length != 0) {
+    else if (stories[stage.selectedNode].text.length > 0) {
         openStory.value = true
         currentStory.value = stories[stage.selectedNode] as Story
         if (stage.selectedNode == 7 && main.inventory.find(i => i.name == "Lira") == undefined)

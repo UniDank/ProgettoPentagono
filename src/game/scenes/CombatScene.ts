@@ -1,6 +1,7 @@
 import { Scene, Cameras } from 'phaser'
 import { useMainStore } from '../../stores/mainStore'
 import { useCombatStore } from '../../stores/combatStore'
+import { useStageStore } from '../../stores/stageStore'
 import { Entity } from "../../classes/Entity"
 import { Player } from "../../classes/Player"
 import { Enemy } from "../../classes/Enemy"
@@ -10,6 +11,7 @@ export default class CombatScene extends Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
   private sceneStore = useMainStore()
   private combatStore = useCombatStore()
+  private stageStore = useStageStore()
   private players: Map<Entity, Player> = new Map()
   private enemies: Map<Entity, Enemy> = new Map()
   private map!: Phaser.Tilemaps.Tilemap
@@ -20,14 +22,12 @@ export default class CombatScene extends Scene {
   private initialPos!: Vector2
   private newPos!: Vector2
   private timer = 0
-  private passedData: any
 
   constructor() {
     super({ key: 'CombatScene' })
   }
 
-  init(data: any) {
-    this.passedData = data
+  init() {
     this.cursors = this.input.keyboard.createCursorKeys()
   }
 
@@ -79,7 +79,7 @@ export default class CombatScene extends Scene {
         }
       }
       const player = new Entity(this, p.name, new Vector2(randomX, randomY))
-      player.sprite.anims.play({ key: "Idle", repeat: -1 })
+      player.sprite.anims.play({ key: "Idle", repeat: -1, frameRate: 10 })
       this.players.set(player, p)
     })
 
@@ -94,7 +94,7 @@ export default class CombatScene extends Scene {
         }
       }
       const enemy = new Entity(this, e.name, new Vector2(randomX, randomY))
-      enemy.sprite.anims.play({ key: "Idle", repeat: -1 })
+      enemy.sprite.anims.play({ key: "Idle", repeat: -1, frameRate: 10 })
       this.enemies.set(enemy, e)
     })
 
@@ -107,8 +107,9 @@ export default class CombatScene extends Scene {
 
     this.gridEngine.create(this.map, gridEngineConfig)
     this.gridEngine.movementStarted().subscribe(({ direction }) => {
-      this.getCurrentEntity().sprite.flipX = direction.includes("left")
-      this.getCurrentEntity().sprite.anims.play({ key: "Run right", repeat: 1 , frameRate: 10 })
+      const currentEntity = this.getCurrentEntity()
+      currentEntity.sprite.flipX = direction.includes("left")
+      currentEntity.sprite.anims.play({ key: "Run right", repeat: 1, frameRate: 10 })
     })
     this.gridEngine.movementStopped().subscribe(({ direction }) => {
       this.getCurrentEntity().sprite.anims.play({ key: "Idle", repeat: -1 })
@@ -132,8 +133,8 @@ export default class CombatScene extends Scene {
     this.input.keyboard.on("keydown-THREE", this.startMovement)
 
     this.sound.stopByKey("stageSong")
-    if (this.passedData.node == 10) this.sound.play('adminSong', { loop: true })
-    else if (this.passedData.node == 6) this.sound.play('regitareSong', { loop: true })
+    if (this.stageStore.selectedNode == 10) this.sound.play('adminSong', { loop: true })
+    else if (this.stageStore.selectedNode == 6) this.sound.play('regitareSong', { loop: true })
     else this.sound.play('combatSong', { loop: true })
   }
 
