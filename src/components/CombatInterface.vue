@@ -88,7 +88,7 @@
         <div v-for="(enemy, index) in combat.enemies" class="!flex rpgui-container gap-1 right-1"
             :style="`top: ${index == 0 ? 0.25 : (index * 4.25) + 0.25}rem;`">
             <div class="flex flex-col w-32 gap-1">
-                <p class="h-4 ml-auto leading-none">{{ isNaN(Number(enemy.name[enemy.name.length - 1])) ? enemy.name : `${enemy.name.slice(0, -1)} ${enemy.name[enemy.name.length - 1]}` }}</p>
+                <p class="h-4 ml-auto leading-none">{{ enemy.name }}</p>
                 <div class="rpgui-progress !h-[1rem] -scale-x-100">
                     <div class="rpgui-progress-track !h-[1rem] !left-4 !right-4">
                         <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] red"
@@ -107,7 +107,7 @@
                 </div>
             </div>
             <div class="!static rpgui-container thin !p-0 h-16 w-16">
-                <img :src="`/boxes/${isNaN(Number(enemy.name[enemy.name.length - 1])) ? enemy.name.toLowerCase() : enemy.name.slice(0, -1).toLowerCase()}_box.png`" />
+                <img :src="`/boxes/${enemy.name.slice(0, enemy.name.lastIndexOf(' ') != -1 ? enemy.name.lastIndexOf(' ') : undefined).toLowerCase()}_box.png`" />
             </div>
         </div>
     </div>
@@ -201,7 +201,6 @@ const moveRight = () => combat.moveDirection = "right"
 
 const confirmMove = () => {
     combat.isConfirmed = true
-    combat.combatLog += `${combat.currentEntity?.name} si è spostato!\n`
     showMove.value = false
 }
 

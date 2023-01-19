@@ -1,14 +1,18 @@
 import Vector2 = Phaser.Math.Vector2
-import { Direction, Position } from "grid-engine"
+import { useCombatStore } from '../stores/combatStore'
+import { Direction, Position, MoveToResult } from "grid-engine"
 
 export class Entity {
-    public sprite: Phaser.GameObjects.Sprite
     private movRange: number
+    private combatStore = useCombatStore()
+    public sprite: Phaser.GameObjects.Sprite
+    public spriteName = ""
     public animations: Phaser.Animations.Animation[] = []
 
-    constructor(private scene: Phaser.Scene, public spriteName: string, private tilePos = new Vector2(0, 0)) {
-        this.sprite = scene.add.sprite(0, 0, spriteName).setInteractive().setScale(1.6)
-        this.animations = this.sprite.anims.createFromAseprite(this.scene.game, spriteName)
+    constructor(private scene: Phaser.Scene, public entityName: string, private tilePos = new Vector2(0, 0)) {
+        this.spriteName = entityName.slice(0, entityName.lastIndexOf(' ') != -1 ? entityName.lastIndexOf(' ') : undefined).toLowerCase()
+        this.sprite = scene.add.sprite(0, 0, this.spriteName).setInteractive().setScale(1.6)
+        this.animations = this.sprite.anims.createFromAseprite(this.scene.game, this.spriteName)
         this.movRange = 1
     }
 
@@ -26,7 +30,13 @@ export class Entity {
     }
 
     public movePlayerTo(position: Vector2): void {
-        this.scene.gridEngine.moveTo(this.spriteName, { x: position.x, y: position.y })
+        const moveObv = this.scene.gridEngine.moveTo(this.spriteName, { x: position.x, y: position.y })
+        moveObv.subscribe({
+            next: (rep) => {
+                if (rep.result == MoveToResult.SUCCESS) this.combatStore.updateCombatLog(`${this.entityName} si è spostato!\n`)
+                else this.combatStore.updateCombatLog(`${this.entityName} non può andare lì!\n`)
+            }
+        })
     }
 
     private movePlayer(direction: Direction): void {

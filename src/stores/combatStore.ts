@@ -11,7 +11,8 @@ export const useCombatStore = defineStore('combat', () => {
     const enemies = ref<Enemy[]>([
         new Enemy("Bidoof", 4, 10, 10, 5, 10, 5, EnemyType.Tank),
         new Enemy("Ekans", 5, 10, 10, 8, 10, 8, EnemyType.Thief),
-        new Enemy("Starly", 6, 10, 10, 3, 10, 25, EnemyType.Mage)
+        new Enemy("Starly", 6, 10, 10, 3, 10, 25, EnemyType.Mage),
+        new Enemy("Starly 1", 6, 10, 10, 3, 10, 25, EnemyType.Mage)
     ])
     const combatLog = ref("")
     const selectedEntity = ref(0)
@@ -34,6 +35,8 @@ export const useCombatStore = defineStore('combat', () => {
 
     const updateEnemies = (list: Enemy[]) => enemies.value = list
 
+    const updateCombatLog = (value: string) => combatLog.value += value
+
     return { 
         moveMode, 
         changeMoveToMouse, 
@@ -50,6 +53,7 @@ export const useCombatStore = defineStore('combat', () => {
         isMoving,
         orderTurn,
         currentTurn,
-        updateEnemies
+        updateEnemies,
+        updateCombatLog
     }
 })

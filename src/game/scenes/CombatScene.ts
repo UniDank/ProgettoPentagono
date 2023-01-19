@@ -78,7 +78,7 @@ export default class CombatScene extends Scene {
           randomY = this.randomNumber(3, 10)
         }
       }
-      const player = new Entity(this, p.name.toLowerCase(), new Vector2(randomX, randomY))
+      const player = new Entity(this, p.name, new Vector2(randomX, randomY))
       player.sprite.anims.play({ key: "Idle", repeat: -1 })
       this.players.set(player, p)
     })
@@ -88,12 +88,12 @@ export default class CombatScene extends Scene {
       let randomY = this.randomNumber(3, 10)
       if (this.enemies.size > 0) {
         while ([...this.enemies.keys(), ...this.players.keys()]
-          .find(v => v.getInitPosition().x == randomX && v.getInitPosition().y == randomY ) != undefined) {
+          .findIndex(v => v.getInitPosition().x == randomX && v.getInitPosition().y == randomY ) != -1) {
           randomX = this.randomNumber(3, 10)
           randomY = this.randomNumber(3, 10)
         }
       }
-      const enemy = new Entity(this, e.name.toLowerCase(), new Vector2(randomX, randomY))
+      const enemy = new Entity(this, e.name, new Vector2(randomX, randomY))
       enemy.sprite.anims.play({ key: "Idle", repeat: -1 })
       this.enemies.set(enemy, e)
     })
@@ -138,7 +138,7 @@ export default class CombatScene extends Scene {
   }
 
   getCurrentEntity() {
-    const currentEntity = Array.from(this.players.keys()).find(v => v.spriteName == this.combatStore.currentEntity?.name.toLowerCase())
+    const currentEntity = Array.from(this.players.keys()).find(v => v.entityName == this.combatStore.currentEntity?.name)
     return currentEntity!
   }
 
