@@ -27,8 +27,17 @@
         </div>
         <div class="flex w-[99%] gap-2 bottom-1 left-1 rpgui-container">
             <div class="flex flex-col">
-                <button class="rpgui-button" type="button" @click="actionAttack" :disabled="(combat.currentEntity instanceof Enemy)">
+                <button class="relative !overflow-visible rpgui-button" type="button" @click="actionAttack" :disabled="(combat.currentEntity instanceof Enemy)">
                     <h3>Attacca</h3>
+                    <div v-show="showAttack" @click.stop
+                        class="rpgui-container framed !left-[calc(100%+0.5rem)] !absolute !bottom-0 !z-30 flex flex-col !h-auto w-52 justify-between !p-0">
+                        <div v-for="enemy in combat.enemies"
+                            @click="attackEnemy(enemy)"
+                            class="flex items-center gap-2 px-1 py-1 hover:bg-black/75">
+                            <img :src="`/boxes/${enemy.name.slice(0, enemy.name.lastIndexOf(' ') != -1 ? enemy.name.lastIndexOf(' ') : undefined).toLowerCase()}_box.png`" class="w-8 h-8" />
+                            <h5>{{ enemy.name }}</h5>
+                        </div>
+                    </div>
                 </button>
                 <button class="relative !overflow-visible rpgui-button" type="button" @click="actionMove" :disabled="(combat.currentEntity instanceof Enemy)">
                     <h3>Muoviti</h3>
@@ -75,9 +84,9 @@
                 <div class="rpgui-container !static framed grow flex flex-col items-center">
                     <h4 class="whitespace-nowrap">Prossimo turno:</h4>
                     <div class="flex items-center self-center justify-between">
-                        <img :src="`/boxes/${orderTurn[currentTurn].name.toLowerCase()}_box.png`" />
+                        <img :src="`/boxes/${orderTurn[currentTurn].name.slice(0, orderTurn[currentTurn].name.lastIndexOf(' ') != -1 ? orderTurn[currentTurn].name.lastIndexOf(' ') : undefined).toLowerCase()}_box.png`" />
                         <Icon :icon="arrowRightAlt" width="64" height="64" />
-                        <img :src="`/boxes/${orderTurn[currentTurn + 1].name.toLowerCase()}_box.png`" />
+                        <img :src="`/boxes/${orderTurn[currentTurn + 1].name.slice(0, orderTurn[currentTurn + 1].name.lastIndexOf(' ') != -1 ? orderTurn[currentTurn + 1].name.lastIndexOf(' ') : undefined).toLowerCase()}_box.png`" />
                     </div>
                 </div>
                 <button class="rpgui-button" type="button" @click="actionRun" :disabled="(combat.currentEntity instanceof Enemy)">
@@ -123,7 +132,7 @@ import mouseIcon from '@iconify-icons/ic/round-mouse'
 import arrowsIcon from '@iconify-icons/ic/round-compare-arrows'
 import arrowRightAlt from '@iconify-icons/ic/round-arrow-right-alt'
 import Inventory from './Inventory.vue'
-import { ref, reactive, watch, onMounted, onUnmounted } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { Enemy } from '../classes/Enemy'
 import { Player } from '../classes/Player'
 import { useMainStore } from '../stores/mainStore'
@@ -135,29 +144,30 @@ const combat = useCombatStore()
 const stage = useStageStore()
 
 const invComp = ref<InstanceType<typeof Inventory> | null>(null)
-const showMove = ref(false)
+const showMove = ref(false), showAttack = ref(false)
 const logElement = ref<HTMLDivElement>(), textElement = ref<HTMLHeadingElement>()
 
 combat.combatLog = ""
 
 const currentTurn = ref(0)
-const orderTurn = reactive<(Player | Enemy)[]>([...main.party, ...combat.enemies])
-orderTurn.sort((p1, p2) => (p1.agility < p2.agility) ? 1 : (p1.agility > p2.agility) ? -1 : 0)
+const orderTurn = ref<(Player | Enemy)[]>([...main.party, ...combat.enemies])
+orderTurn.value.sort((p1, p2) => (p1.agility < p2.agility) ? 1 : (p1.agility > p2.agility) ? -1 : 0)
 combat.currentTurn = currentTurn.value
-combat.orderTurn = orderTurn
-combat.currentEntity = orderTurn[currentTurn.value]
+combat.orderTurn = orderTurn.value
+combat.currentEntity = orderTurn.value[currentTurn.value]
 combat.combatLog += `Ora è il turno di ${combat.currentEntity.name}!\n`
 
-watch([orderTurn, currentTurn], async () => {
-    if (currentTurn.value == orderTurn.length) currentTurn.value = 0
-    combat.currentEntity = orderTurn[currentTurn.value]
+watch(currentTurn, async () => {
+    if (currentTurn.value == orderTurn.value.length) currentTurn.value = 0
+    combat.currentEntity = orderTurn.value[currentTurn.value]
     combat.combatLog += `Ora è il turno di ${combat.currentEntity.name}!\n`
     if (combat.enemies.length == 0 || main.party.length == 0) {
         const totalExp = combat.enemies.map(v => v.expReward).reduce((c, p) => c + p)
         main.party.forEach(v => v.addExp(totalExp / 5))
     }
+    orderTurn.value = orderTurn.value.filter(v => v.health > 0)
     combat.currentTurn = currentTurn.value
-    combat.orderTurn = orderTurn
+    combat.orderTurn = orderTurn.value
 })
 
 combat.$subscribe((store, vars) => currentTurn.value = vars.currentTurn)
@@ -182,13 +192,22 @@ onUnmounted(() => {
 })
 
 const actionAttack = () => {
-    if((orderTurn[currentTurn.value] as Player).APs <= 0) {
+    showMove.value = false
+    showAttack.value = !showAttack.value
+    invComp.value!.showInv = false
+    combat.actionMove(showMove.value)
+}
+
+const attackEnemy = (selectedEnemy: Enemy) => {
+    const whoIs = orderTurn.value[currentTurn.value]
+    if ((whoIs as Player).APs <= 0) {
         currentTurn.value++
         return
     }
-    orderTurn[currentTurn.value].setDamage(orderTurn[currentTurn.value].attack, orderTurn[combat.selectedEntity])
-    combat.combatLog += `${orderTurn[currentTurn.value].name} ha inflitto ${orderTurn[currentTurn.value].attack} danni a ${orderTurn[combat.selectedEntity].name}!\n`
+    whoIs.setDamage(whoIs.attack, selectedEnemy)
+    combat.combatLog += `${whoIs.name} ha inflitto ${whoIs.attack} danni a ${selectedEnemy.name}!\n`
     combat.actionAttack(currentTurn.value)
+    showAttack.value = false
 }
 
 const moveUp = () => combat.moveDirection = "up"
@@ -213,13 +232,16 @@ const actionRun = () => main.changeScene('StageScene')
 
 const actionMove = () => {
     showMove.value = !showMove.value
+    showAttack.value = false
     combat.actionMove(showMove.value)
     invComp.value!.showInv = false
 }
 
 const actionInv = () => {
     invComp.value?.toggleInv()
+    showAttack.value = false
     showMove.value = false
+    combat.actionMove(showMove.value)
 }
 </script>
 

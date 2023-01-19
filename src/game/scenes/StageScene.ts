@@ -68,7 +68,7 @@ export default class StageScene extends Scene {
     { type: StepType.dotMark, coords: { x: 1170, y: 502 } },
     { type: StepType.dotMark, coords: { x: 1174, y: 474 } },
 
-    { type: StepType.nodeRed, coords: { x: 1154, y: 412 }, step: 7 },
+    { type: StepType.nodeGreen, coords: { x: 1154, y: 412 }, step: 7 },
 
     // Dall'albero a sinistra, fino al node giallo
     { type: StepType.dotMark, coords: { x: 814, y: 326 } },

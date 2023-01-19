@@ -18,11 +18,11 @@
             </button>
         </div>
         <div v-show="addList.some(v => v)"
-            class="rpgui-container framed !absolute !left-[calc(100%+0.75rem)] !-bottom-4 !z-30 flex flex-col gap-1 !h-auto w-52 !p-0">
+            class="rpgui-container framed !absolute !left-[calc(100%+0.75rem)] !-bottom-4 !z-30 flex flex-col gap-1 !h-auto w-44 !p-0">
             <div v-for="player in main.party"
                 @click="addToPlayer(main.inventory[addList.findIndex(v => v)], player)"
                 class="relative flex items-center gap-2 px-1 py-1 hover:bg-black/75">
-                <img :src="`/boxes/${player.name.toLowerCase()}_box.png`" class="w-8 h-8" />
+                <img :src="`/boxes/${player.name.slice(0, player.name.lastIndexOf(' ') != -1 ? player.name.lastIndexOf(' ') : undefined).toLowerCase()}_box.png`" class="w-8 h-8" />
                 <h5>{{ player.name }}</h5>
             </div>
         </div>
