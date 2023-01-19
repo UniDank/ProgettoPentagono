@@ -30,6 +30,10 @@ export class Entity {
     }
 
     public movePlayerTo(position: Vector2): void {
+        if ((position.x <= 2 || position.x >= 11) || (position.y <= 2 || position.y >= 11) ){
+            this.combatStore.updateCombatLog(`${this.entityName} non può andare lì!\n`)
+            return
+        }
         const moveObv = this.scene.gridEngine.moveTo(this.spriteName, { x: position.x, y: position.y })
         moveObv.subscribe({
             next: (rep) => {

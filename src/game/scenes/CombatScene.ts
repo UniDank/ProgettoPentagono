@@ -184,16 +184,24 @@ export default class CombatScene extends Scene {
     for (let i = 0; i < tilemap.layers.length; i++) {
       for (let x = 0; x <= radius; x++) {
         for (let y = 0; y <= radius; y++) {
-          if (manhattanDist(posX, posY, posX + x, posY + y) <= radius) {
+          if (manhattanDist(posX, posY, posX + x, posY + y) <= radius &&
+              (posX + x > 2 && posX + x < 11) && (posY + y > 2 && posY + y < 11)
+          ) {
             tilemap.layers[i].tilemapLayer.layer.data[posX + x][posY + y].tint = color;
           }
-          if (manhattanDist(posX, posY, posX - x, posY + y) <= radius) {
+          if (manhattanDist(posX, posY, posX - x, posY + y) <= radius &&
+              (posX - x > 2  && posX - x < 11) && (posY + y > 2 && posY + y < 11)
+          ) {
             tilemap.layers[i].tilemapLayer.layer.data[posX - x][posY + y].tint = color;
           }
-          if (manhattanDist(posX, posY, posX + x, posY - y) <= radius) {
+          if (manhattanDist(posX, posY, posX + x, posY - y) <= radius &&
+              (posX + x > 2 && posX + x < 11) && (posY - y > 2 && posY - y < 11)
+          ) {
             tilemap.layers[i].tilemapLayer.layer.data[posX + x][posY - y].tint = color;
           }
-          if (manhattanDist(posX, posY, posX - x, posY - y) <= radius) {
+          if (manhattanDist(posX, posY, posX - x, posY - y) <= radius &&
+              (posX - x > 2 && posX - x < 11) && (posY - y > 2 && posY - y < 11)
+          ) {
             tilemap.layers[i].tilemapLayer.layer.data[posX - x][posY - y].tint = color;
           }
         }
