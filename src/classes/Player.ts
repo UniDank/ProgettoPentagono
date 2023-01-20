@@ -1,4 +1,5 @@
 import { Enemy } from './Enemy'
+import { ClassType } from './Entity'
 
 enum Characters {
     Agoraco,
@@ -16,7 +17,7 @@ class Player {
     public level: number
 
     constructor(public name: string, public attack: number, public defense: number, public health: number, 
-        public mana: number, public agility: number, public APs: number) {
+        public mana: number, public agility: number, public APs: number, public category: ClassType) {
         this.maxHealth = health
         this.maxMana = mana
         this.maxAPs = APs

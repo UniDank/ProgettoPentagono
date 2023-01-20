@@ -112,7 +112,7 @@ export default class CombatScene extends Scene {
       currentEntity.sprite.anims.play({ key: "Run right", repeat: 1, frameRate: 10 })
     })
     this.gridEngine.movementStopped().subscribe(({ direction }) => {
-      this.getCurrentEntity().sprite.anims.play({ key: "Idle", repeat: -1 })
+      this.getCurrentEntity().sprite.anims.play({ key: "Idle", repeat: -1, frameRate: 10 })
       this.combatStore.currentTurn += 1
     })
 

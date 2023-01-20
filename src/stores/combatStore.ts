@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
-import { Enemy, EnemyType } from '../classes/Enemy'
+import { Enemy } from '../classes/Enemy'
+import { ClassType } from '../classes/Entity'
 import { Player } from '../classes/Player'
 import { ref } from 'vue'
 
@@ -9,10 +10,10 @@ export const useCombatStore = defineStore('combat', () => {
     const isConfirmed = ref(false)
     const currentEntity = ref<Enemy | Player>()
     const enemies = ref<Enemy[]>([
-        new Enemy("Bidoof", 4, 10, 10, 5, 10, 5, EnemyType.Tank),
-        new Enemy("Ekans", 5, 10, 10, 8, 10, 8, EnemyType.Thief),
-        new Enemy("Starly", 6, 10, 10, 3, 10, 25, EnemyType.Mage),
-        new Enemy("Starly 1", 6, 10, 10, 3, 10, 25, EnemyType.Mage)
+        new Enemy("Bidoof", 4, 10, 10, 5, 10, 5, ClassType.Tank),
+        new Enemy("Ekans", 5, 10, 10, 8, 10, 8, ClassType.Thief),
+        new Enemy("Starly", 6, 10, 10, 3, 10, 25, ClassType.Mage),
+        new Enemy("Starly 1", 6, 10, 10, 3, 10, 25, ClassType.Mage)
     ])
     const combatLog = ref("")
     const selectedEntity = ref(0)

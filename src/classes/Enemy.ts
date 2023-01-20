@@ -1,18 +1,12 @@
 import { Player } from './Player'
-
-enum EnemyType {
-    Archer,
-    Tank,
-    Thief,
-    Mage
-}
+import { ClassType } from './Entity'
 
 class Enemy {
     public maxHealth: number
     public maxMana: number
 
     constructor(public name: string, public health: number, public mana: number, public attack: number, public defense: number, 
-        public agility: number, public expReward: number, public category: EnemyType) {
+        public agility: number, public expReward: number, public category: ClassType) {
         this.maxHealth = health
         this.maxMana = mana
     }
@@ -27,6 +21,6 @@ class Enemy {
 }
 
 export {
-    Enemy, EnemyType
+    Enemy
 }
 

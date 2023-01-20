@@ -1,8 +1,17 @@
-import Vector2 = Phaser.Math.Vector2
 import { useCombatStore } from '../stores/combatStore'
-import { Direction, Position, MoveToResult } from "grid-engine"
+import { Position, MoveToResult } from "grid-engine"
+import Vector2 = Phaser.Math.Vector2
 
-export class Entity {
+enum ClassType {
+    Archer,
+    Tank,
+    Thief,
+    Mage,
+    Unknown,
+    Melee
+}
+
+class Entity {
     private movRange: number
     private combatStore = useCombatStore()
     public sprite: Phaser.GameObjects.Sprite
@@ -43,10 +52,6 @@ export class Entity {
         })
     }
 
-    private movePlayer(direction: Direction): void {
-        this.scene.gridEngine.move(this.spriteName, direction)
-    }
-
     public setEvent(event: string, fn: Function): void {
         this.sprite.on(event, fn)
     }
@@ -66,4 +71,8 @@ export class Entity {
     public getRangeMov(): number {
         return this.movRange
     }
+}
+
+export {
+    ClassType, Entity
 }
