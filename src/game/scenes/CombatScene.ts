@@ -6,6 +6,8 @@ import { Entity } from "../../classes/Entity"
 import { Player } from "../../classes/Player"
 import { Enemy } from "../../classes/Enemy"
 import Vector2 = Phaser.Math.Vector2
+import _ from "lodash";
+
 
 export default class CombatScene extends Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
@@ -64,7 +66,9 @@ export default class CombatScene extends Scene {
       if (name === 'changeScene') {
         mainCamera.fadeOut(300, 0, 0, 0)
         this.sceneStore.closeInterface()
-        mainCamera.on('camerafadeoutcomplete', () => this.scene.stop().wake(args[0]))
+        mainCamera.on('camerafadeoutcomplete', () => {
+          this.scene.stop().wake(args[0])
+        })
       }
     })
 
@@ -95,7 +99,9 @@ export default class CombatScene extends Scene {
       }
       const enemy = new Entity(this, e.name, new Vector2(randomX, randomY))
       enemy.sprite.anims.play({ key: "Idle", repeat: -1, frameRate: 10 })
-      this.enemies.set(enemy, e)
+      console.warn(enemy, e)
+      this.enemies.set(enemy,e);
+      (window as any).enemies = this.enemies
     })
 
     const gridEngineConfig = {
@@ -125,6 +131,8 @@ export default class CombatScene extends Scene {
           })
       }
       if (name === 'actionMove') {
+        console.log(this.checkEnemyInRange(3))
+        console.log(this.getCurrentEntity().getPosition())
         if (args[0]) this.startMovement()
         else this.stopMovement()
       }
@@ -179,6 +187,8 @@ export default class CombatScene extends Scene {
       this.time.paused = false
     }
   }
+  
+  
 
   tintRadius(tilemap: Phaser.Tilemaps.Tilemap, posX: number, posY: number, radius: number, color: number) {
     const manhattanDist = (x1: number, y1: number, x2: number, y2: number) => Math.abs(x1 - x2) + Math.abs(y1 - y2)
@@ -261,4 +271,39 @@ export default class CombatScene extends Scene {
     const manhattanDist = (x1: number, y1: number, x2: number, y2: number) => Math.abs(x1 - x2) + Math.abs(y1 - y2)
     return manhattanDist(initpos.x, initpos.y, newPos.x, newPos.y) < radius
   }
+
+
+  checkEnemyInRange(radiusEntity: number) {
+    const manhattanDist = (x1: number, y1: number, x2: number, y2: number) => Math.abs(x1 - x2) + Math.abs(y1 - y2)
+    //entity che ha il turno corrente
+    const entity = this.getCurrentEntity();
+    const posX = entity.getPosition().x;
+    const posY = entity.getPosition().y;
+    const isPlayer = this.players.has(entity);
+    const entities: (Player | Enemy)[] = [];
+    
+
+    /**
+     * 1. controllo se è un player o mob
+     * 2. rispettivamente prendo dalla mappa tutti i nemici se sono in range
+     * 3. rispettivamente restituisco un array di nemici
+     * */
+          if (isPlayer){
+            this.enemies.forEach((value,key)=>{
+              console.log({enemy: value.name, pos: key.getPosition()})
+              if (manhattanDist(posX, posY, key.getPosition().x ,key.getPosition().y) < radiusEntity) {
+                entities.push(value)
+              }
+            })
+          }
+          else{
+            this.players.forEach((value,key)=>{
+              if (manhattanDist(posX, posY, key.getPosition().x, key.getPosition().y) < radiusEntity) {
+                entities.push(value)
+              }
+            })
+          }
+    return entities;
+  }
+    
 }
