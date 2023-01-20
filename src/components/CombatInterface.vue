@@ -31,47 +31,51 @@
                     <h3>Attacca</h3>
                     <div v-show="showAttack" @click.stop
                         class="rpgui-container framed !left-[calc(100%+0.5rem)] !absolute !bottom-0 !z-30 flex flex-col !h-auto w-52 justify-between !p-0">
-                        <div v-for="enemy in combat.enemies"
+                        <div v-for="enemy in combat.inRangeEntities"
                             @click="attackEnemy(enemy)"
                             class="flex items-center gap-2 px-1 py-1 hover:bg-black/75">
                             <img :src="`/boxes/${enemy.name.slice(0, enemy.name.lastIndexOf(' ') != -1 ? enemy.name.lastIndexOf(' ') : undefined).toLowerCase()}_box.png`" class="w-8 h-8" />
                             <h5>{{ enemy.name }}</h5>
                         </div>
+                        <h4 v-if="combat.inRangeEntities.length == 0" class="text-center">Nessun nemico nelle vicinanze!</h4>
                     </div>
                 </button>
                 <button class="relative !overflow-visible rpgui-button" type="button" @click="actionMove" :disabled="(combat.currentEntity instanceof Enemy)">
                     <h3>Muoviti</h3>
                     <div v-show="showMove" @click.stop
                         class="rpgui-container framed !left-[calc(100%+0.5rem)] !absolute !bottom-0 !z-30 flex flex-col justify-between !h-56 w-52 !p-0">
-                        <button class="self-center rpgui-button !p-0" type="button" @click="moveUp">
+                        <button class="self-center rpgui-button !p-0" type="button" @click="combat.moveDirection = 'up'">
                             <Icon :icon="arrowUp" width="48" height="48" />
                         </button>
                         <div class="flex justify-around">
-                            <button class="rpgui-button !p-0" type="button" @click="moveLeft">
+                            <button class="rpgui-button !p-0" type="button" @click="combat.moveDirection = 'left'">
                                 <Icon :icon="arrowLeft" width="48" height="48" />
                             </button>
-                            <button class="rpgui-button !p-0" type="button" @click="moveRight">
+                            <button class="rpgui-button !p-0" type="button" @click="combat.moveDirection = 'right'">
                                 <Icon :icon="arrowRight" width="48" height="48" />
                             </button>
                         </div>
-                        <button class="self-center rpgui-button !p-0" type="button" @click="moveDown">
+                        <button class="self-center rpgui-button !p-0" type="button" @click="combat.moveDirection = 'down'">
                             <Icon :icon="arrowDown" width="48" height="48" />
                         </button>
-                        <div class="flex justify-between">
+                        <button class="self-center rpgui-button" type="button" @click="confirmMove">
+                            <h5>Conferma</h5>
+                        </button>
+                        <!--<div class="flex justify-between">
                             <button class="rpgui-button" type="button" @click="confirmMove">
                                 <h5>Conferma</h5>
                             </button>
                             <button class="rpgui-button !px-2" type="button" @click="combat.toggleMoveMode()">
                                 <Icon :icon="combat.moveMode ? arrowsIcon : mouseIcon" width="32" height="32" />
                             </button>
-                        </div>
+                        </div>-->
                     </div>
                 </button>
                 <button class="relative !overflow-visible rpgui-button" type="button" @click="actionInv" :disabled="(combat.currentEntity instanceof Enemy)">
                     <h3>Inventario</h3>
                     <Inventory ref="invComp" />
                 </button>
-                <button class="rpgui-button" type="button" @click="actionSkip" :disabled="(combat.currentEntity instanceof Enemy)">
+                <button class="rpgui-button" type="button" @click="actionSkip">
                     <h3>Passa</h3>
                 </button>
             </div>
@@ -84,9 +88,9 @@
                 <div class="rpgui-container !static framed grow flex flex-col items-center">
                     <h4 class="whitespace-nowrap">Prossimo turno:</h4>
                     <div class="flex items-center self-center justify-between">
-                        <img :src="`/boxes/${orderTurn[currentTurn].name.slice(0, orderTurn[currentTurn].name.lastIndexOf(' ') != -1 ? orderTurn[currentTurn].name.lastIndexOf(' ') : undefined).toLowerCase()}_box.png`" />
+                        <img :src="`/boxes/${currentBox}_box.png`" />
                         <Icon :icon="arrowRightAlt" width="64" height="64" />
-                        <img :src="`/boxes/${orderTurn[currentTurn + 1].name.slice(0, orderTurn[currentTurn + 1].name.lastIndexOf(' ') != -1 ? orderTurn[currentTurn + 1].name.lastIndexOf(' ') : undefined).toLowerCase()}_box.png`" />
+                        <img :src="`/boxes/${nextBox}_box.png`" />
                     </div>
                 </div>
                 <button class="rpgui-button" type="button" @click="actionRun" :disabled="(combat.currentEntity instanceof Enemy)">
@@ -128,11 +132,11 @@ import arrowLeft from '@iconify-icons/ic/round-arrow-left'
 import arrowRight from '@iconify-icons/ic/round-arrow-right'
 import arrowUp from '@iconify-icons/ic/round-arrow-drop-up'
 import arrowDown from '@iconify-icons/ic/round-arrow-drop-down'
-import mouseIcon from '@iconify-icons/ic/round-mouse'
-import arrowsIcon from '@iconify-icons/ic/round-compare-arrows'
+/*import mouseIcon from '@iconify-icons/ic/round-mouse'
+import arrowsIcon from '@iconify-icons/ic/round-compare-arrows'*/
 import arrowRightAlt from '@iconify-icons/ic/round-arrow-right-alt'
 import Inventory from './Inventory.vue'
-import { ref, watch, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { Enemy } from '../classes/Enemy'
 import { Player } from '../classes/Player'
 import { useMainStore } from '../stores/mainStore'
@@ -145,32 +149,37 @@ const stage = useStageStore()
 
 const invComp = ref<InstanceType<typeof Inventory> | null>(null)
 const showMove = ref(false), showAttack = ref(false)
+const currentBox = ref(""), nextBox = ref("")
 const logElement = ref<HTMLDivElement>(), textElement = ref<HTMLHeadingElement>()
 
 combat.combatLog = ""
+combat.currentTurn = 0
+combat.orderTurn = [...main.party, ...combat.enemies]
+combat.orderTurn.sort((p1, p2) => (p1.agility < p2.agility) ? 1 : (p1.agility > p2.agility) ? -1 : 0)
 
-const currentTurn = ref(0)
-const orderTurn = ref<(Player | Enemy)[]>([...main.party, ...combat.enemies])
-orderTurn.value.sort((p1, p2) => (p1.agility < p2.agility) ? 1 : (p1.agility > p2.agility) ? -1 : 0)
-combat.currentTurn = currentTurn.value
-combat.orderTurn = orderTurn.value
-combat.currentEntity = orderTurn.value[currentTurn.value]
-combat.combatLog += `Ora è il turno di ${combat.currentEntity.name}!\n`
+const getImageBox = (turn: number) => {
+    const getSpace = combat.orderTurn[turn].name.lastIndexOf(' ')
+    return combat.orderTurn[turn].name.slice(0, getSpace != -1 ? getSpace : undefined).toLowerCase()
+}
 
-watch(currentTurn, async () => {
-    if (currentTurn.value == orderTurn.value.length) currentTurn.value = 0
-    combat.currentEntity = orderTurn.value[currentTurn.value]
-    combat.combatLog += `Ora è il turno di ${combat.currentEntity.name}!\n`
-    if (combat.enemies.length == 0 || main.party.length == 0) {
-        const totalExp = combat.enemies.map(v => v.expReward).reduce((c, p) => c + p)
-        main.party.forEach(v => v.addExp(totalExp / 5))
+combat.$onAction(({ name, args }) => {
+    if (name == "passTurn") {
+        combat.orderTurn = combat.orderTurn.filter(v => v.health > 0)
+        if (combat.currentTurn == combat.orderTurn.length) combat.currentTurn = 0
+        combat.currentEntity = combat.orderTurn[combat.currentTurn]
+        combat.combatLog += `Ora è il turno di ${combat.currentEntity.name}!\n`
+        currentBox.value = getImageBox(combat.currentTurn)
+        nextBox.value = getImageBox(combat.currentTurn + 1 == combat.orderTurn.length ? 0 : combat.currentTurn + 1)
+        if (combat.orderTurn.findIndex(v => (v instanceof Enemy)) == -1) combat.actionWin(false)
+        else if (combat.orderTurn.findIndex(v => (v instanceof Player)) == -1) {
+            const totalExp = combat.enemies.map(v => v.expReward).reduce((c, p) => c + p)
+            main.party.forEach(v => v.addExp(totalExp / 5))
+            combat.actionWin(true)
+        }
     }
-    orderTurn.value = orderTurn.value.filter(v => v.health > 0)
-    combat.currentTurn = currentTurn.value
-    combat.orderTurn = orderTurn.value
 })
 
-combat.$subscribe((store, vars) => currentTurn.value = vars.currentTurn)
+combat.passTurn()
 
 onMounted(() => {
     new ResizeObserver(() => logElement.value!.scrollTop = logElement.value!.scrollHeight).observe(textElement.value!)
@@ -188,35 +197,30 @@ onUnmounted(() => {
             "members": main.party,
             "bag": main.inventory
         })
-    }).then(() => main.changeScene('StageScene'))
+    })
 })
 
 const actionAttack = () => {
-    showMove.value = false
-    showAttack.value = !showAttack.value
     invComp.value!.showInv = false
-    combat.actionMove(showMove.value)
+    combat.actionMove(showMove.value = false)
+    combat.actionInRange(showAttack.value = !showAttack.value)
 }
 
-const attackEnemy = (selectedEnemy: Enemy) => {
-    const whoIs = orderTurn.value[currentTurn.value]
-    if ((whoIs as Player).APs <= 0) {
-        currentTurn.value++
-        return
+const attackEnemy = (selectedEnemy: Enemy | Player) => {
+    if (combat.currentEntity instanceof Player) {
+        if ((combat.currentEntity as Player).APs <= 0) {
+            combat.passTurn()
+            return
+        }
     }
-    whoIs.setDamage(whoIs.attack, selectedEnemy)
-    combat.combatLog += `${whoIs.name} ha inflitto ${whoIs.attack} danni a ${selectedEnemy.name}!\n`
-    combat.actionAttack(currentTurn.value)
     showAttack.value = false
+    combat.currentEntity!.setDamage(combat.currentEntity!.attack, selectedEnemy)
+    combat.combatLog += `${combat.currentEntity!.name} ha inflitto ${combat.currentEntity!.attack} danni a ${selectedEnemy.name}!\n`
+    combat.actionAttack(selectedEnemy)
+    if (selectedEnemy.isKo) combat.combatLog += `${selectedEnemy.name}! è stato sconfitto!\n`
+    else if (selectedEnemy.isLowHP) combat.combatLog += `${selectedEnemy.name}! è in fin di vita!\n`
+    combat.actionInRange(showAttack.value = false)
 }
-
-const moveUp = () => combat.moveDirection = "up"
-
-const moveDown = () => combat.moveDirection = "down"
-
-const moveLeft = () => combat.moveDirection = "left"
-
-const moveRight = () => combat.moveDirection = "right"
 
 const confirmMove = () => {
     combat.isConfirmed = true
@@ -225,23 +229,21 @@ const confirmMove = () => {
 
 const actionSkip = () => {
     combat.combatLog += `${combat.currentEntity?.name} ha saltato il turno!\n`
-    currentTurn.value++
+    combat.passTurn()
 }
 
 const actionRun = () => main.changeScene('StageScene')
 
 const actionMove = () => {
-    showMove.value = !showMove.value
     showAttack.value = false
-    combat.actionMove(showMove.value)
+    combat.actionMove(showMove.value = !showMove.value)
     invComp.value!.showInv = false
 }
 
 const actionInv = () => {
     invComp.value?.toggleInv()
     showAttack.value = false
-    showMove.value = false
-    combat.actionMove(showMove.value)
+    combat.actionMove(showMove.value = false)
 }
 </script>
 

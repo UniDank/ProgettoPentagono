@@ -86,7 +86,7 @@ const isFullScreen = ref(false)
 
 const textButtons = ['Nuova Partita', 'Continua', 'Impostazioni', 'Crediti', 'Esci']
 const selectedBtn = ref(-1)
-const disabledBtn = ref(-1)
+const disabledBtn = ref(1)
 const currentMenu = ref(0)
 const volumeSlider = ref(main.currentVolume)
 
@@ -129,7 +129,6 @@ function clickText(index: number) {
             main.changeScene('SelectScene')
             break
         case 1:
-            currentMenu.value = 2
             main.changeScene('StageScene')
             break
         case 2:
@@ -177,9 +176,12 @@ onUnmounted(() => {
 })
 
 onMounted(async () => {
-    if (true) { //TODO: Se non c'è alcun salvataggio, disabilitare il bottone 'Continue'
-        disabledBtn.value = 1
-    }
+    fetch(`http://localhost:8080/api/v1/select`).then(res => res.json()).then(json => {
+        if (json.status == "200") {
+            disabledBtn.value = -1
+            main.mainPlayer = json.data.mainPlayer
+        }
+    })
     window.addEventListener('keydown', menuSelect)
 })
 </script>

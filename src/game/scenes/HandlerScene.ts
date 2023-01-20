@@ -18,6 +18,7 @@ import dotMark from '../assets/stages/dotmark.png'
 import nodeBlue from '../assets/stages/node_story.png'
 import nodeRed from '../assets/stages/node_tutorial.png'
 import nodeYellow from '../assets/stages/node_main.png'
+import nodeWhite from '../assets/stages/node_white.png'
 import nodeGreen from '../assets/stages/node_lire.png'
 import pointAdmin from '../assets/stages/point_admin.png'
 import pointRegitare from '../assets/stages/point_regitare.png'
@@ -113,6 +114,7 @@ export default class HandlerScene extends Scene {
         this.load.image('nodeBlue', nodeBlue)
         this.load.image('nodeRed', nodeRed)
         this.load.image('nodeYellow', nodeYellow)
+        this.load.image('nodeWhite', nodeWhite)
         this.load.image('nodeGreen', nodeGreen)
         this.load.image('pointAdmin', pointAdmin)
         this.load.image('pointRegitare', pointRegitare)

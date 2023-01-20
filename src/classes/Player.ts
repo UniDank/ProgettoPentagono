@@ -1,48 +1,30 @@
-import { Enemy } from './Enemy'
-import { ClassType } from './Entity'
+import { ClassType, Entity } from './Entity'
 
-enum Characters {
-    Agoraco,
-    Danblos,
-    Marcurion,
-    Gioxon,
-    Claphos
-}
-
-class Player {
-    public maxHealth: number
-    public maxMana: number
+class Player extends Entity {
     public maxAPs: number
     public currentExp: number
     public level: number
+    public isLowHP = false
+    public isKo = false
 
-    constructor(public name: string, public attack: number, public defense: number, public health: number, 
-        public mana: number, public agility: number, public APs: number, public category: ClassType) {
-        this.maxHealth = health
-        this.maxMana = mana
+    constructor(
+        public name: string, 
+        public attack: number, public defense: number, 
+        public health: number, public mana: number, 
+        public agility: number, 
+        public APs: number, public category: ClassType) {
+        super(name, attack, defense, health, mana, agility, category)
         this.maxAPs = APs
         this.level = 1
         this.currentExp = 0
     }
 
-    public setDamage(amount: number, target: Enemy | Player): void {
-        target.health = Math.max(target.health -= amount, 0)
-    }
-
-    public addHealth(amount: number) {
-        this.health = Math.min(this.health += amount, this.maxHealth)
-    }
-    
-    public addMana(amount: number) {
-        this.mana = Math.min(this.mana += amount, this.maxMana)
-    }
-
-    public addAP(amount: number) {
+    public addAPs(amount: number) {
         this.APs = Math.min(this.APs += amount, this.maxAPs)
     }
 
-    public useMana(amount: number): void {
-        this.mana = Math.max(this.mana -= amount, 0)
+    public useAPs(amount: number): void {
+        this.APs = Math.max(this.APs -= amount, 0)
     }
 
     public addExp(amount: number): void {
@@ -59,6 +41,6 @@ class Player {
 }
 
 export {
-    Player, Characters
+    Player
 }
 

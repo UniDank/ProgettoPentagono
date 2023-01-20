@@ -6,7 +6,7 @@ import { useStageStore } from '../../stores/stageStore'
 import { useCombatStore } from '../../stores/combatStore'
 
 enum StepType {
-  dotMark, nodeBlue, nodeRed, nodeYellow, nodeGreen, pointAdmin, pointRegitare, pointBattle, pointHome
+  dotMark, nodeBlue, nodeRed, nodeYellow, nodeGreen, pointAdmin, pointRegitare, pointBattle, pointHome, nodeWhite
 }
 
 type Step = {
@@ -94,6 +94,8 @@ export default class StageScene extends Scene {
     { type: StepType.dotMark, coords: { x: 320, y: 114 } },
 
     { type: StepType.nodeYellow, coords: { x: 284, y: 60 }, step: 11 },
+
+    { type: StepType.nodeWhite, coords: { x: 1146 , y: 140 }, step: 12 }
   ]
   private clickableNodes: Phaser.GameObjects.Image[] = []
 
@@ -113,8 +115,8 @@ export default class StageScene extends Scene {
 
     this.add.image(0, 0, 'worldMap').setOrigin(0)
 
-    this.anims.createFromAseprite(this.sceneStore.mainPlayer)
-    const playerSprite = this.add.sprite(0, 0, this.sceneStore.mainPlayer).setScale(2)
+    const playerSprite = this.add.sprite(0, 0, this.sceneStore.mainPlayer.toLowerCase()).setScale(2)
+    playerSprite.anims.createFromAseprite(this.game, this.sceneStore.mainPlayer.toLowerCase())
     playerSprite.anims.play({ key: "Idle", repeat: -1 })
 
     this.nodes.forEach((node, index) => {
@@ -123,14 +125,16 @@ export default class StageScene extends Scene {
       if (node.step != undefined) {
         if (node.step == this.stageStore.selectedNode) {
           if (node.type == StepType.nodeBlue || node.type == StepType.nodeGreen || node.type == StepType.nodeRed ||
-            node.type == StepType.nodeYellow) playerSprite.setPosition(node.coords.x + image.width, node.coords.y - (image.height / 2))
+            node.type == StepType.nodeYellow || node.type == StepType.nodeWhite) 
+            playerSprite.setPosition(node.coords.x + image.width, node.coords.y - (image.height / 2))
           else playerSprite.setPosition(node.coords.x + image.width, node.coords.y + image.height)
           playerSprite.setDepth(1)
         }
         this.clickableNodes.push(image)
         image.setInteractive({ cursor: `url(${cursorPng}), pointer` }).on('pointerup', () => {
           if (node.type == StepType.nodeBlue || node.type == StepType.nodeGreen || node.type == StepType.nodeRed ||
-            node.type == StepType.nodeYellow) playerSprite.setPosition(node.coords.x + image.width, node.coords.y - (image.height / 2))
+            node.type == StepType.nodeYellow || node.type == StepType.nodeWhite) 
+            playerSprite.setPosition(node.coords.x + image.width, node.coords.y - (image.height / 2))
           else playerSprite.setPosition(node.coords.x + image.width, node.coords.y + image.height)
           playerSprite.setDepth(1)
           this.stageStore.selectNode(node.step ?? 0)

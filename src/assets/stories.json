@@ -22,13 +22,38 @@
         "position": ""
       },
       {
-        "name": "",
-        "position": ""
+        "name": "t0.png",
+        "position": "center"
+      },
+      {
+        "name": "t1.png",
+        "position": "center"
+      },
+      {
+        "name": "t2.png",
+        "position": "center"
+      },
+      {
+        "name": "t3.png",
+        "position": "center"
+      },
+      {
+        "name": "t4.png",
+        "position": "center"
+      },
+      {
+        "name": "t5.png",
+        "position": "center"
       }
     ],
     "text": [
-      "Sconfiggi i nemici avversari all’attacco!",
-      "Durante la battaglia, alleati e nemici combatteranno in una griglia di dimensione 8x8, e si ritroveranno nella mappa tutti in posizioni casuali. Sarà tuo compito dare indicazioni ai cinque avventurieri per portarli alla vittoria! Il combattimento è composto dal susseguirsi di turni di alleati ed avversari, che possono attaccare, muoversi o usare oggetti."
+      "Tutorial: Sconfiggi i nemici avversari all’attacco!<br/><br/>Durante la battaglia, alleati e nemici combatteranno in una griglia di dimensione 8x8, e si ritroveranno nella mappa tutti in posizioni casuali. Sarà tuo compito dare indicazioni ai cinque avventurieri per portarli alla vittoria! Il combattimento è composto dal susseguirsi di turni di eroi ed avversari che possono attaccare, muoversi o usare oggetti.",
+      "Cosa puoi far fare agli eroi durante il loro turno?<br/>Durante il turno di ogni eroe puoi attaccare un nemico, cliccando pulsante “Attacca”. Puoi scegliere quale nemico attaccare solo se si trova all’interno del raggio d’azione del personaggio giocante. Ogni eroe ha un raggio d'azione diverso, in base alle proprie statistiche e alla propria classe. Selezionando il nemico dal menu, infliggerai danni in base alla statistica di “Attacco” del personaggio che sferra l’azione.",
+      "Durante il turno puoi anche scegliere se utilizzare degli strumenti. Visualizza gli oggetti che possiedi cliccando il tasto “Inventario” e scegli l’oggetto che vuoi usare. Puoi ottenere Pozioni e altri strumenti sconfiggendo i nemici. Ma gli oggetti dell’inventario non sono infiniti, per cui utilizzali con parsimonia!",
+      "Infine, puoi muovere il personaggio giocante nella mappa, cliccando il pulsante “Muoviti”. Tutti i personaggi possono muoversi di massimo due caselle. Seleziona dal menu la casella in cui vuoi far spostare il personaggio, tra quelle gialle, e clicca su “Conferma” per farlo muovere. Puoi scegliere di far muovere un personaggio per farlo avvicinare ad un nemico al fine di sferrare un attacco nel turno successivo, o al contrario farlo allontanare da un potente avversario che al prossimo turno manderebbe l’eroe K.O.<br/>Le possibilità sono infinite, sei tu lo stratega!",
+      "Appena l'eroe effettuerà il movimento, il turno sarà passato al personaggio successivo. L’ordine dei turni dei personaggi è calcolato rispetto alla statistica di “Velocità” di alleati e nemici. In basso a destra puoi vedere a quale personaggio toccherà nel turno successivo.",
+      "Puoi scegliere anche di non compiere nessuna azione durante il turno cliccando il pulsante “Passa”. Oppure puoi rinunciare alla battaglia e tornare alla selezione del livello con il pulsante “Fuggi”.",
+      "Fai attenzione però, se la barra della vita di tutti e cinque gli eroi scenderà a zero, avrai perso la battaglia e dovrari rigiocare il livello da capo.<br/>[Al momento la barra e le pozioni del “Mana”, non hanno alcun utilizzo, in futuro saranno implementate anche magie e azioni speciali!]<br/><br/>Il combattimento sarà concluso quando gli eroi faranno scendere a zero le barre della vita di tutti gli avversari! Scegli le mosse con strategia e porta la squadra alla vittoria!"
     ]
   },
   {
@@ -130,5 +155,9 @@
       "Gli eroi hanno trionfato sul falso Amministratore e sono usciti vittoriosi dalla battaglia. Dopo aver confessato la verità sulla loro identità alla Maga Rombòs, gli avventurieri si avvicinano alla carcassa di \"The Administrator\" alla ricerca del Terminale. Avendo accesso alla Console dei Comandi, sono in grado di poter tornare al mondo reale, e si rivolgono a Rombòs per un ultimo saluto. Se non fosse stato per il suo aiuto, starebbero ancora vagando per Didascalèion in cerca di chissà cosa. Grazie a lei hanno imparato il lavoro di squadra, che spesso non può mettere d’accordo tutti ma è essenziale per un fine comune. Hanno imparato a sfruttare le proprie potenzialità in modo da collaborare e ottenere il risultato migliore tutti insieme. Lei li ha aiutati nel momento del bisogno e supportati nella loro avventura.",
       "Dopo un saluto commovente con dei tratti più di un addio che di un arrivederci, gli eroi salutano la Maga sapendo che qualora avessero voluto tornare in quelle terre, lei sarebbe stata lì ad aspettarli. I cinque programmatori fanno quindi partire il comando sul Terminale per uscire dal gioco e si dissolvono nel cielo lasciando, solo per il momento, il Regno di Empaizo.<br/><br/>L’avventura dei cinque eroi, la Penta Quest, è conclusa."
     ]
+  },
+  {
+    "images": [],
+    "text": []
   }
 ]

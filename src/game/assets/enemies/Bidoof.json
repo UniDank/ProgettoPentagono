@@ -229,7 +229,7 @@
    { "name": "Attack", "from": 10, "to": 13, "direction": "forward" },
    { "name": "Attack back", "from": 14, "to": 17, "direction": "forward" },
    { "name": "Defeat", "from": 18, "to": 22, "direction": "forward" },
-   { "name": "Damge taken", "from": 18, "to": 21, "direction": "forward" },
+   { "name": "Damage taken", "from": 18, "to": 21, "direction": "forward" },
    { "name": "KO", "from": 22, "to": 22, "direction": "forward" },
    { "name": "Damage taken back", "from": 23, "to": 26, "direction": "forward" }
   ],

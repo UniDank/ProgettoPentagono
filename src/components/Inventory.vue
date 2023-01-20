@@ -76,10 +76,10 @@ const addToPlayer = (item: Item, player: Player) => {
     } else if (item.type == ItemType.Lyre && player.health <= 0) {
         player.addHealth(player.maxHealth)
         player.addMana(player.maxMana)
-        player.addAP(player.maxAPs)
+        player.addAPs(player.maxAPs)
         combat.combatLog += `${player.name} ha usato la Lira!\n`
     } else if (item.type == ItemType.Energy && player.APs > 0 && player.APs != player.maxAPs) {
-        player.APs += item.value
+        player.addAPs(item.value)
         item.quantity -= 1
         combat.combatLog += `${player.name} ha usato una pozione di energia!\n`
     }

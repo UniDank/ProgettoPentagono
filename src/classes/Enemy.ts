@@ -1,22 +1,13 @@
-import { Player } from './Player'
-import { ClassType } from './Entity'
+import { ClassType, Entity } from './Entity'
 
-class Enemy {
-    public maxHealth: number
-    public maxMana: number
-
-    constructor(public name: string, public health: number, public mana: number, public attack: number, public defense: number, 
-        public agility: number, public expReward: number, public category: ClassType) {
-        this.maxHealth = health
-        this.maxMana = mana
-    }
-
-    public setDamage(amount: number, target: Player | Enemy): void {
-        target.health = Math.max(target.health -= amount, 0)
-    }
-
-    public useMana(amount: number): void {
-        this.mana = Math.max(this.mana -= amount, 0)
+class Enemy extends Entity {
+    constructor(
+        public name: string, 
+        public attack: number, public defense: number, 
+        public health: number, public mana: number, 
+        public agility: number, 
+        public expReward: number, public category: ClassType) {
+        super(name, attack, defense, health, mana, agility, category)
     }
 }
 

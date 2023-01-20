@@ -10,15 +10,16 @@ export const useCombatStore = defineStore('combat', () => {
     const isConfirmed = ref(false)
     const currentEntity = ref<Enemy | Player>()
     const enemies = ref<Enemy[]>([
-        new Enemy("Bidoof", 4, 10, 10, 5, 10, 5, ClassType.Tank),
-        new Enemy("Ekans", 5, 10, 10, 8, 10, 8, ClassType.Thief),
-        new Enemy("Starly", 6, 10, 10, 3, 10, 25, ClassType.Mage),
-        new Enemy("Starly 1", 6, 10, 10, 3, 10, 25, ClassType.Mage)
+        new Enemy("Bidoof", 20, 10, 5, 5, 3, 20, ClassType.Tank),
+        new Enemy("Ekans", 25, 10, 10, 7, 6, 20, ClassType.Thief),
+        new Enemy("Starly", 23, 10, 7, 6, 2, 20, ClassType.Mage),
+        new Enemy("Starly 1", 23, 10, 7, 6, 2, 20, ClassType.Mage)
     ])
     const combatLog = ref("")
-    const selectedEntity = ref(0)
     const isMoving = ref(false)
+    const isCheckingRange = ref(false)
     const currentTurn = ref(0)
+    const inRangeEntities = ref<(Enemy | Player)[]>([])
     const orderTurn = ref<(Enemy | Player)[]>([])
 
     const changeMoveToMouse = () => {
@@ -30,13 +31,19 @@ export const useCombatStore = defineStore('combat', () => {
 
     const toggleMoveMode = () => moveMode.value = !moveMode.value
 
-    const actionAttack = (turnIndex: number) => selectedEntity.value = turnIndex
-
     const actionMove = (move: boolean) => isMoving.value = move
+
+    const actionInRange = (checkingRange : boolean) => isCheckingRange.value = checkingRange
 
     const updateEnemies = (list: Enemy[]) => enemies.value = list
 
     const updateCombatLog = (value: string) => combatLog.value += value
+
+    const passTurn = () => currentTurn.value += 1
+
+    const actionAttack = (targetName: Player | Enemy) => {}
+
+    const actionWin = (winners: boolean) => {}
 
     return { 
         moveMode, 
@@ -48,13 +55,17 @@ export const useCombatStore = defineStore('combat', () => {
         actionAttack, 
         currentEntity, 
         enemies,
-        selectedEntity,
         combatLog,
         actionMove,
         isMoving,
         orderTurn,
         currentTurn,
         updateEnemies,
-        updateCombatLog
+        updateCombatLog,
+        inRangeEntities,
+        actionInRange,
+        isCheckingRange,
+        passTurn,
+        actionWin
     }
 })

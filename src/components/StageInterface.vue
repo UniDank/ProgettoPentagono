@@ -279,7 +279,7 @@ const currentStory = ref<Story>({ images: [], text: [] })
 
 const setCurrentText = (node: number) => {
     if ([2, 4, 6, 10].includes(node)) startText.value = "Inizia<br/>la battaglia"
-    else if ([1, 9].includes(node)) startText.value = "Leggi<br/>il tutorial"
+    else if ([1, 9, 12].includes(node)) startText.value = "Leggi<br/>il tutorial"
     else startText.value = "Leggi<br/>la storia"
 }
 
@@ -325,5 +325,5 @@ const openSettings = () => {
     invComp.value!.showInv = false
 }
 
-const saveExit = () => window.require('electron').ipcRenderer.invoke('close-window') //main.changeScene('BootScene')
+const saveExit = () => main.changeScene('BootScene') //window.require('electron').ipcRenderer.invoke('close-window')
 </script>

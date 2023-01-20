@@ -9,7 +9,7 @@ export default class SelectScene extends Scene {
   private switchAudio!: Phaser.Sound.BaseSound
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
   private sceneStore = useMainStore()
-  private selectablePlayers = ["gioxon", "danblos", "marcurion", "agoraco", "claphos"]
+  private selectablePlayers = ["Gioxon", "Danblos", "Marcurion", "Agoraco", "Claphos"]
 
   constructor() {
     super({ key: 'SelectScene' })
@@ -88,6 +88,15 @@ export default class SelectScene extends Scene {
 
   confirmSelection() {
     this.sceneStore.mainPlayer = this.selectablePlayers[this.selectedButtonIndex]
+    fetch(`http://localhost:8080/api/v1/select`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "mainPlayer": this.sceneStore.mainPlayer,
+        })
+    })
     this.selectAudio.play()
     this.sceneStore.changeScene('StageScene')
   }
