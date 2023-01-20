@@ -44,31 +44,23 @@
                     <h3>Muoviti</h3>
                     <div v-show="showMove" @click.stop
                         class="rpgui-container framed !left-[calc(100%+0.5rem)] !absolute !bottom-0 !z-30 flex flex-col justify-between !h-56 w-52 !p-0">
-                        <button class="self-center rpgui-button !p-0" type="button" @click="combat.moveDirection = 'up'">
+                        <button class="self-center rpgui-button !p-0" type="button" @click="combat.changeDirection('up')">
                             <Icon :icon="arrowUp" width="48" height="48" />
                         </button>
                         <div class="flex justify-around">
-                            <button class="rpgui-button !p-0" type="button" @click="combat.moveDirection = 'left'">
+                            <button class="rpgui-button !p-0" type="button" @click="combat.changeDirection('left')">
                                 <Icon :icon="arrowLeft" width="48" height="48" />
                             </button>
-                            <button class="rpgui-button !p-0" type="button" @click="combat.moveDirection = 'right'">
+                            <button class="rpgui-button !p-0" type="button" @click="combat.changeDirection('right')">
                                 <Icon :icon="arrowRight" width="48" height="48" />
                             </button>
                         </div>
-                        <button class="self-center rpgui-button !p-0" type="button" @click="combat.moveDirection = 'down'">
+                        <button class="self-center rpgui-button !p-0" type="button" @click="combat.changeDirection('down')">
                             <Icon :icon="arrowDown" width="48" height="48" />
                         </button>
                         <button class="self-center rpgui-button" type="button" @click="confirmMove">
                             <h5>Conferma</h5>
                         </button>
-                        <!--<div class="flex justify-between">
-                            <button class="rpgui-button" type="button" @click="confirmMove">
-                                <h5>Conferma</h5>
-                            </button>
-                            <button class="rpgui-button !px-2" type="button" @click="combat.toggleMoveMode()">
-                                <Icon :icon="combat.moveMode ? arrowsIcon : mouseIcon" width="32" height="32" />
-                            </button>
-                        </div>-->
                     </div>
                 </button>
                 <button class="relative !overflow-visible rpgui-button" type="button" @click="actionInv" :disabled="(combat.currentEntity instanceof Enemy)">
@@ -132,8 +124,6 @@ import arrowLeft from '@iconify-icons/ic/round-arrow-left'
 import arrowRight from '@iconify-icons/ic/round-arrow-right'
 import arrowUp from '@iconify-icons/ic/round-arrow-drop-up'
 import arrowDown from '@iconify-icons/ic/round-arrow-drop-down'
-/*import mouseIcon from '@iconify-icons/ic/round-mouse'
-import arrowsIcon from '@iconify-icons/ic/round-compare-arrows'*/
 import arrowRightAlt from '@iconify-icons/ic/round-arrow-right-alt'
 import Inventory from './Inventory.vue'
 import { ref, onMounted, onUnmounted } from 'vue'
@@ -164,7 +154,11 @@ const getImageBox = (turn: number) => {
 
 combat.$onAction(({ name, args }) => {
     if (name == "passTurn") {
+        if (invComp.value) invComp.value.showInv = false
+        combat.actionInRange(showAttack.value = false)
+        combat.actionMove(showMove.value = false)
         combat.orderTurn = combat.orderTurn.filter(v => v.health > 0)
+        if (combat.currentEntity instanceof Player) combat.currentEntity.addAPs(2)
         if (combat.currentTurn == combat.orderTurn.length) combat.currentTurn = 0
         combat.currentEntity = combat.orderTurn[combat.currentTurn]
         combat.combatLog += `Ora è il turno di ${combat.currentEntity.name}!\n`
@@ -208,10 +202,11 @@ const actionAttack = () => {
 
 const attackEnemy = (selectedEnemy: Enemy | Player) => {
     if (combat.currentEntity instanceof Player) {
-        if ((combat.currentEntity as Player).APs <= 0) {
+        if (combat.currentEntity.APs <= 0) {
             combat.passTurn()
             return
         }
+        combat.currentEntity.useAPs(4)
     }
     showAttack.value = false
     combat.currentEntity!.setDamage(combat.currentEntity!.attack, selectedEnemy)
@@ -223,7 +218,7 @@ const attackEnemy = (selectedEnemy: Enemy | Player) => {
 }
 
 const confirmMove = () => {
-    combat.isConfirmed = true
+    combat.confirmMove()
     showMove.value = false
 }
 

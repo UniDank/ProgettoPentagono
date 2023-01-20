@@ -10,7 +10,6 @@ import Vector2 = Phaser.Math.Vector2
 import { GridEngineConfig } from 'grid-engine'
 
 export default class CombatScene extends Scene {
-  private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
   private sceneStore = useMainStore()
   private combatStore = useCombatStore()
   private stageStore = useStageStore()
@@ -22,17 +21,14 @@ export default class CombatScene extends Scene {
   private rangeColor: number = 0xFF9900
   private cleanColor: number = 0xFFFFFF
   private selectionColor: number = 0x23CCAA
-  private turn: boolean = false
-  private initialPos = new Vector2(0, 0)
   private newPos = new Vector2(0, 0)
-  private timer = 0
 
   constructor() {
     super({ key: 'CombatScene' })
   }
 
   init() {
-    this.cursors = this.input.keyboard.createCursorKeys()
+
   }
 
   preload() {
@@ -92,7 +88,7 @@ export default class CombatScene extends Scene {
       let randomY = this.randomNumber(3, 10)
       if (this.players.size > 0) {
         while ([...this.enemies.keys(), ...this.players.keys()]
-          .find(v => v.getInitPosition().x == randomX && v.getInitPosition().y == randomY) != undefined) {
+          .findIndex(v => v.getInitPosition().x == randomX && v.getInitPosition().y == randomY) != -1) {
           randomX = this.randomNumber(3, 10)
           randomY = this.randomNumber(3, 10)
         }
@@ -109,7 +105,7 @@ export default class CombatScene extends Scene {
       let randomY = this.randomNumber(3, 10)
       if (this.enemies.size > 0) {
         while ([...this.enemies.keys(), ...this.players.keys()]
-          .find(v => v.getInitPosition().x == randomX && v.getInitPosition().y == randomY) != undefined) {
+          .findIndex(v => v.getInitPosition().x == randomX && v.getInitPosition().y == randomY) != -1) {
           randomX = this.randomNumber(3, 10)
           randomY = this.randomNumber(3, 10)
         }
@@ -163,8 +159,23 @@ export default class CombatScene extends Scene {
       }
       if (name === 'actionMove') {
         this.cleanAllTiles()
-        if (args[0]) this.startMovement()
-        else this.turn = false
+        if (args[0]) {
+          const entityPos = this.getCurrentEntity().getPosition()
+          this.newPos = new Vector2(entityPos.x, entityPos.y)
+          this.tintRadius(entityPos.x, entityPos.y, 2, this.radiusColor)
+          this.tintTile(entityPos.x, entityPos.y, this.selectionColor)
+        }
+      }
+      if (name === "changeDirection") {
+        this.newPos = this.moveTile(this.newPos.x, this.newPos.y, args[0])
+      }
+      if (name === "confirmMove") {
+        const currentEntity = this.getCurrentEntity()
+        const entityPos = currentEntity.getPosition()
+        if (this.checkTile(this.newPos, new Vector2(entityPos.x, entityPos.y), 3)) {
+          this.cleanAllTiles()
+          currentEntity.movePlayerTo(this.newPos)
+        }
       }
       if (name === "actionWin") {
         if (args[0]) Array.from(this.players.keys()).forEach(w => w.sprite.anims.play({ key: "Victory", repeat: -1, frameRate: 10 }))
@@ -172,8 +183,6 @@ export default class CombatScene extends Scene {
         setTimeout(() => this.sceneStore.changeScene('StageScene'), 3000)
       }
     })
-
-    //this.input.keyboard.on("keydown-THREE", this.startMovement)
 
     this.sound.stopByKey("stageSong")
     if (this.stageStore.selectedNode == 10) this.sound.play('adminSong', { loop: true })
@@ -183,21 +192,16 @@ export default class CombatScene extends Scene {
 
   playOnHealth(gameEntity: GameEntity, frontEntity: Entity) {
     if (frontEntity.isKo) {
-      if (frontEntity instanceof Enemy) {
-        gameEntity.sprite.destroy(true)
-        this.enemies.delete(gameEntity)
-        this.gridEngine.removeCharacter(gameEntity.entityName)
-      } else gameEntity.sprite.anims.play({ key: "KO", repeat: -1, frameRate: 10 })
+      gameEntity.sprite.anims.play({ key: "Defeat", repeat: 1, frameRate: 10 }).on('animationcomplete', () => {
+        gameEntity.sprite.anims.play({ key: "KO", repeat: -1, frameRate: 10 })
+        if (frontEntity instanceof Enemy && this.gridEngine.hasCharacter(gameEntity.entityName)
+          && !["Admin", "Regitare"].includes(gameEntity.entityName)) {
+          this.enemies.delete(gameEntity)
+          this.gridEngine.removeCharacter(gameEntity.entityName)
+        }
+      })
     } else if (frontEntity.isLowHP) gameEntity.sprite.anims.play({ key: "Low HP", repeat: -1, frameRate: 10 })
     else gameEntity.sprite.anims.play({ key: "Idle", repeat: -1, frameRate: 10 })
-  }
-
-  startMovement() {
-    this.initialPos = new Vector2(this.getCurrentEntity().getPosition().x, this.getCurrentEntity().getPosition().y)
-    this.tintRadius(this.initialPos.x, this.initialPos.y, 2, this.radiusColor)
-    this.tintTile(this.initialPos.x, this.initialPos.y, this.selectionColor)
-    this.newPos = this.initialPos
-    this.turn = true
   }
 
   cleanAllTiles() {
@@ -209,24 +213,7 @@ export default class CombatScene extends Scene {
   }
 
   update() {
-    this.timer++
-    if (this.timer % 3 === 0) {
-      this.time.paused = true
-      if (this.turn) {
-        if (!this.combatStore.moveMode && this.combatStore.moveDirection != "") 
-          this.newPos = this.moveTile(this.newPos.x, this.newPos.y, this.combatStore.moveDirection)
-        else this.newPos = this.moveTile(this.newPos.x, this.newPos.y)
-        if ((this.combatStore.moveMode && this.cursors.space.isDown) || (!this.combatStore.moveMode && this.combatStore.isConfirmed)) {
-          this.combatStore.isConfirmed = false
-          if (this.checkTile(this.newPos, this.initialPos, 3)) {
-            this.cleanAllTiles()
-            this.turn = false
-            this.getCurrentEntity().movePlayerTo(this.newPos)
-          } else console.warn("Movimento impossibile, riprova")
-        }
-      }
-      this.time.paused = false
-    }
+    
   }
   
   tintRadius(posX: number, posY: number, radius: number, color: number) {
@@ -257,27 +244,27 @@ export default class CombatScene extends Scene {
     this.walkLayer.layer.data[posY][posX].tint = color
   }
 
-  moveTile(x: number, y: number, direction?: string): Vector2 {
+  moveTile(x: number, y: number, direction: string): Vector2 {
     const entityPos = this.getCurrentEntity().getPosition()
-    this.combatStore.moveDirection = ""
-    switch (true) {
-      case direction != "" ? direction == "left" : this.cursors.left.isDown:
-        if (this.checkTile(new Vector2(x - 1, y), new Vector2(entityPos.x, entityPos.y), 2)) this.tintTile(x, y, this.radiusColor)
+    const entityVet = new Vector2(entityPos.x, entityPos.y)
+    switch (direction) {
+      case "left":
+        if (this.checkTile(new Vector2(x - 1, y), entityVet, 3)) this.tintTile(x, y, this.radiusColor)
         else this.tintTile(x, y, this.cleanColor)
         this.tintTile(x - 1, y, this.selectionColor)
         return new Vector2(x - 1, y)
-      case direction != "" ? direction == "right" : this.cursors.right.isDown:
-        if (this.checkTile(new Vector2(x + 1, y), new Vector2(entityPos.x, entityPos.y), 3)) this.tintTile(x, y, this.radiusColor)
+      case "right":
+        if (this.checkTile(new Vector2(x + 1, y), entityVet, 3)) this.tintTile(x, y, this.radiusColor)
         else this.tintTile(x, y, this.cleanColor)
         this.tintTile(x + 1, y, this.selectionColor)
         return new Vector2(x + 1, y)
-      case direction != "" ? direction == "up" : this.cursors.up.isDown:
-        if (this.checkTile(new Vector2(x, y - 1), new Vector2(entityPos.x, entityPos.y), 3)) this.tintTile(x, y, this.radiusColor)
+      case "up":
+        if (this.checkTile(new Vector2(x, y - 1), entityVet, 3)) this.tintTile(x, y, this.radiusColor)
         else this.tintTile(x, y, this.cleanColor)
         this.tintTile(x, y - 1, this.selectionColor)
         return new Vector2(x, y - 1)
-      case direction != "" ? direction == "down" : this.cursors.down.isDown:
-        if (this.checkTile(new Vector2(x, y + 1), new Vector2(entityPos.x, entityPos.y), 3)) this.tintTile(x, y, this.radiusColor)
+      case "down":
+        if (this.checkTile(new Vector2(x, y + 1), entityVet, 3)) this.tintTile(x, y, this.radiusColor)
         else this.tintTile(x, y, this.cleanColor)
         this.tintTile(x, y + 1, this.selectionColor)
         return new Vector2(x, y + 1)

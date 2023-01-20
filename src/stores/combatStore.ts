@@ -7,13 +7,12 @@ import { ref } from 'vue'
 export const useCombatStore = defineStore('combat', () => {
     const moveMode = ref(false)
     const moveDirection = ref("")
-    const isConfirmed = ref(false)
     const currentEntity = ref<Enemy | Player>()
     const enemies = ref<Enemy[]>([
-        new Enemy("Bidoof", 20, 10, 5, 5, 3, 20, ClassType.Tank),
-        new Enemy("Ekans", 25, 10, 10, 7, 6, 20, ClassType.Thief),
-        new Enemy("Starly", 23, 10, 7, 6, 2, 20, ClassType.Mage),
-        new Enemy("Starly 1", 23, 10, 7, 6, 2, 20, ClassType.Mage)
+        new Enemy("Bidoof", 5, 5, 20, 10, 3, 20, ClassType.Tank),
+        new Enemy("Ekans", 10, 7, 25, 10, 6, 20, ClassType.Thief),
+        new Enemy("Starly", 7, 6, 23, 10, 9, 30, ClassType.Mage),
+        new Enemy("Carnivine", 8, 4, 18, 8, 7, 25, ClassType.Archer)
     ])
     const combatLog = ref("")
     const isMoving = ref(false)
@@ -21,13 +20,6 @@ export const useCombatStore = defineStore('combat', () => {
     const currentTurn = ref(0)
     const inRangeEntities = ref<(Enemy | Player)[]>([])
     const orderTurn = ref<(Enemy | Player)[]>([])
-
-    const changeMoveToMouse = () => {
-        moveMode.value = true
-        moveDirection.value = ""
-    }
-
-    const changeMoveToKeys = () => moveMode.value = false
 
     const toggleMoveMode = () => moveMode.value = !moveMode.value
 
@@ -45,13 +37,14 @@ export const useCombatStore = defineStore('combat', () => {
 
     const actionWin = (winners: boolean) => {}
 
+    const changeDirection = (direction: string) => moveDirection.value = direction
+
+    const confirmMove = () => {}
+
     return { 
-        moveMode, 
-        changeMoveToMouse, 
-        changeMoveToKeys, 
+        moveMode,
         toggleMoveMode, 
-        moveDirection, 
-        isConfirmed, 
+        moveDirection,
         actionAttack, 
         currentEntity, 
         enemies,
@@ -66,6 +59,8 @@ export const useCombatStore = defineStore('combat', () => {
         actionInRange,
         isCheckingRange,
         passTurn,
-        actionWin
+        actionWin,
+        changeDirection,
+        confirmMove
     }
 })
