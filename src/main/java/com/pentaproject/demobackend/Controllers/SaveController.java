@@ -34,7 +34,8 @@ public class SaveController {
     }
     
     public ApiResponse<?> setSave(Save save){
-        if(save == null) return new ApiResponse<>(HttpStatus.BAD_REQUEST,"Body non valido");  
+        if(save == null) return new ApiResponse<>(HttpStatus.BAD_REQUEST,"Body non valido");
+        saveService.removeSave();
         saveService.insertSave(save);
         return new ApiResponse<>(HttpStatus.OK,"");
     }

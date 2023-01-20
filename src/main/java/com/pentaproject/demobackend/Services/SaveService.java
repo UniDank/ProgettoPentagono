@@ -30,4 +30,8 @@ public class SaveService {
     public void insertSave(@NonNull Save save){
         repository.save(save);
     }
+    
+    public void removeSave(){
+        repository.deleteAll();
+    }
 }

@@ -53,7 +53,10 @@ public class PartyService {
     public Party generateParty(int id_stage,List<Hero> heroList, List<Item> bag) {
         return new Party(id_stage, heroList, bag);
     }
-    
+
+    public void deleteParty() {
+        rep.deleteAll();
+    }
 }
 
 

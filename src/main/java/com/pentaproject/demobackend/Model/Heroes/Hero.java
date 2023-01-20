@@ -1,6 +1,7 @@
 package com.pentaproject.demobackend.Model.Heroes;
 
 
+import com.pentaproject.demobackend.Model.Enemies.EnemyType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,4 +23,5 @@ public class Hero {
     private Integer mana;
     private Integer agility;
     private Integer APs;
+    private EnemyType category;
 }

@@ -58,11 +58,19 @@ public class StageSelectorController{
     public ApiResponse<?> setCurrentParty(@RequestBody Party party){
         return partyController.setParty(party);
     }
-    
+
+    /**
+     * Metodo per ottenere il salvataggio dal db
+     * */
     @GetMapping("/select")
     public ApiResponse<?> getSave(){
         return saveController.getSave();
     }
+    
+    /**
+     * Metodo per inserire il salvataggio nel db
+     * @param save json rapresentante oggetto Save
+     * */
     @PostMapping("/select")
     public ApiResponse<?> setSave(@RequestBody Save save){
         return saveController.setSave(save);

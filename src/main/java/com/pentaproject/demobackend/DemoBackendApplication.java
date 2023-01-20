@@ -2,6 +2,8 @@ package com.pentaproject.demobackend;
 
 
 
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.internal.MongoClientImpl;
 import com.pentaproject.demobackend.Model.Abilities.Ability;
 import com.pentaproject.demobackend.Model.Enemies.Enemy;
 import com.pentaproject.demobackend.Model.Enemies.EnemyType;

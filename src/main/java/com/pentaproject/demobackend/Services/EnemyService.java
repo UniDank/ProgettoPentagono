@@ -99,7 +99,7 @@ public class EnemyService {
                                 Collections.shuffle(collected);
                                 for (int i = 0; i < clone; i++) {
                                     Enemy c = (Enemy) collected.get(i).clone();
-                                    c.setName(c.getName() + (i + 1));
+                                    c.setName(c.getName() + " " + (i + 1));
                                     c.setHealth(random.nextInt(Integer.parseInt(life[0]), Integer.parseInt(life[1])));
                                     c.setDefense(random.nextInt(Integer.parseInt(defence[0]), Integer.parseInt(defence[1])));
                                     c.setAttack(random.nextInt(Integer.parseInt(attack[0]), Integer.parseInt(attack[1])));
@@ -138,7 +138,7 @@ public class EnemyService {
                                 for (int i = 0; i < clone; i++,j++) {
                                     if(j > collected.size()) j = 0;
                                     Enemy c = (Enemy) collected.get(j).clone();
-                                    c.setName(c.getName() + (i + 1));
+                                    c.setName(c.getName() + " " + (i + 1));
                                     c.setHealth(random.nextInt(Integer.parseInt(life[0]), Integer.parseInt(life[1])));
                                     c.setDefense(random.nextInt(Integer.parseInt(defence[0]), Integer.parseInt(defence[1])));
                                     c.setAttack(random.nextInt(Integer.parseInt(attack[0]), Integer.parseInt(attack[1])));

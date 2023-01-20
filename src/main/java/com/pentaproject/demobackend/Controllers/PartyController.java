@@ -49,6 +49,7 @@ public class PartyController {
     public ApiResponse<?> setParty(Party party){
         if(party == null) 
             return new ApiResponse<>(HttpStatus.BAD_REQUEST,"Body invalido");
+        partyService.deleteParty();
         partyService.insertParty(party);
         return new ApiResponse<>(HttpStatus.OK,"");
     }
