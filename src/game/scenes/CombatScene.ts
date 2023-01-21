@@ -97,7 +97,7 @@ export default class CombatScene extends Scene {
       player.sprite.setActive(true)
       console.assert(player.sprite.anims, "Now it's undefined")
       player.sprite.anims.play({ key: "Idle", repeat: -1, frameRate: 10 })
-      this.players.set(player, p)
+      this.players.set(player, p as Player)
     })
 
     this.combatStore.enemies.forEach(e => {
@@ -113,7 +113,7 @@ export default class CombatScene extends Scene {
       const enemy = new GameEntity(this, e.name, new Vector2(randomX, randomY))
       enemy.sprite.setActive(true)
       enemy.sprite.anims.play({ key: "Idle", repeat: -1, frameRate: 10 })
-      this.enemies.set(enemy, e)
+      this.enemies.set(enemy, e as Enemy)
     })
 
     const gridEngineConfig: GridEngineConfig = {
@@ -181,6 +181,24 @@ export default class CombatScene extends Scene {
         if (args[0]) Array.from(this.players.keys()).forEach(w => w.sprite.anims.play({ key: "Victory", repeat: -1, frameRate: 10 }))
         else Array.from(this.enemies.keys()).forEach(w => w.sprite.anims.play({ key: "Victory", repeat: -1, frameRate: 10 }))
         setTimeout(() => this.sceneStore.changeScene('StageScene'), 3000)
+      }
+      if (name === "getEnemyInRange") {
+        this.combatStore.inRangeEntities = this.checkEnemyInRange(args[0])
+      }
+      if (name === "moveEnemy") {
+        const enemyPos = this.getCurrentEntity().getPosition()
+        this.newPos = new Vector2(enemyPos.x, enemyPos.y)
+        this.combatStore.changeDirection(args[0])
+        if (this.checkTile(this.newPos, new Vector2(enemyPos.x, enemyPos.y), 3)) {
+          this.cleanAllTiles()
+          this.getCurrentEntity().moveEnemyTo(this.newPos)
+        }
+        /*let tries = 0
+        while (tries < 10 && !this.checkTile(this.newPos, new Vector2(enemyPos.x, enemyPos.y), this.combatStore.currentEntity?.category ?? 0)) {
+          this.combatStore.changeDirection(args[0])
+          this.combatStore.confirmMove()
+        }
+        if (tries == 10) this.combatStore.passTurn()*/
       }
     })
 
@@ -273,8 +291,8 @@ export default class CombatScene extends Scene {
     }
   }
 
-  checkTile(newPos: Phaser.Math.Vector2, initpos: Phaser.Math.Vector2, radius: number): boolean {
-    return this.manhattanDist(initpos.x, initpos.y, newPos.x, newPos.y) < radius
+  checkTile(newPos: Phaser.Math.Vector2, initPos: Phaser.Math.Vector2, radius: number): boolean {
+    return this.manhattanDist(initPos.x, initPos.y, newPos.x, newPos.y) < radius
   }
 
   checkEnemyInRange(radiusEntity: number) {

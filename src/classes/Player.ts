@@ -4,8 +4,6 @@ class Player extends Entity {
     public maxAPs: number
     public currentExp: number
     public level: number
-    public isLowHP = false
-    public isKo = false
 
     constructor(
         public name: string, 

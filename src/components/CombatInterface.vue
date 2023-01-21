@@ -129,6 +129,7 @@ import Inventory from './Inventory.vue'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { Enemy } from '../classes/Enemy'
 import { Player } from '../classes/Player'
+import { Entity } from '../classes/Entity'
 import { useMainStore } from '../stores/mainStore'
 import { useCombatStore } from '../stores/combatStore'
 import { useStageStore } from '../stores/stageStore'
@@ -153,17 +154,23 @@ const getImageBox = (turn: number) => {
 }
 
 combat.$onAction(({ name, args }) => {
-    if (name == "passTurn") {
+    if (name === "passTurn") {        
         if (invComp.value) invComp.value.showInv = false
-        combat.actionInRange(showAttack.value = false)
-        combat.actionMove(showMove.value = false)
         combat.orderTurn = combat.orderTurn.filter(v => v.health > 0)
-        if (combat.currentEntity instanceof Player) combat.currentEntity.addAPs(2)
+
         if (combat.currentTurn == combat.orderTurn.length) combat.currentTurn = 0
         combat.currentEntity = combat.orderTurn[combat.currentTurn]
-        combat.combatLog += `Ora è il turno di ${combat.currentEntity.name}!\n`
         currentBox.value = getImageBox(combat.currentTurn)
         nextBox.value = getImageBox(combat.currentTurn + 1 == combat.orderTurn.length ? 0 : combat.currentTurn + 1)
+
+        combat.combatLog += `Ora è il turno di ${combat.currentEntity.name}!\n`
+
+        if (combat.currentEntity instanceof Player) combat.currentEntity.addAPs(2)
+        else if (combat.currentEntity instanceof Enemy) combat.currentEntity.doAction()
+
+        combat.actionInRange(showAttack.value = false)
+        combat.actionMove(showMove.value = false)
+
         if (combat.orderTurn.findIndex(v => (v instanceof Enemy)) == -1) combat.actionWin(false)
         else if (combat.orderTurn.findIndex(v => (v instanceof Player)) == -1) {
             const totalExp = combat.enemies.map(v => v.expReward).reduce((c, p) => c + p)
@@ -200,7 +207,7 @@ const actionAttack = () => {
     combat.actionInRange(showAttack.value = !showAttack.value)
 }
 
-const attackEnemy = (selectedEnemy: Enemy | Player) => {
+const attackEnemy = (selectedEnemy: Entity) => {
     if (combat.currentEntity instanceof Player) {
         if (combat.currentEntity.APs <= 0) {
             combat.passTurn()

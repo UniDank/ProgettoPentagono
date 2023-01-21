@@ -13,7 +13,7 @@ export const useMainStore = defineStore('main', () => {
     const party = ref<Player[]>([ 
         new Player("Agoraco", 15, 15, 30, 10, 3, 10, ClassType.Melee), 
         new Player("Danblos", 15, 15, 30, 10, 5, 10, ClassType.Mage), 
-        new Player("Marcurion", 15, 15, 30, 10, 8, 10, ClassType.Thief), 
+        new Player("Marcurion", 15, 15, 30, 10, 10, 10, ClassType.Thief), 
         new Player("Gioxon", 15, 15, 30, 10, 4, 10, ClassType.Archer), 
         new Player("Claphos", 15, 15, 30, 10, 2, 10, ClassType.Tank) 
     ])

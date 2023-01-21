@@ -1,13 +1,12 @@
 import { defineStore } from 'pinia'
 import { Enemy } from '../classes/Enemy'
-import { ClassType } from '../classes/Entity'
-import { Player } from '../classes/Player'
+import { ClassType, Entity } from '../classes/Entity'
 import { ref } from 'vue'
 
 export const useCombatStore = defineStore('combat', () => {
     const moveMode = ref(false)
     const moveDirection = ref("")
-    const currentEntity = ref<Enemy | Player>()
+    const currentEntity = ref<Entity>()
     const enemies = ref<Enemy[]>([
         new Enemy("Bidoof", 5, 5, 20, 10, 3, 20, ClassType.Tank),
         new Enemy("Ekans", 10, 7, 25, 10, 6, 20, ClassType.Thief),
@@ -18,8 +17,8 @@ export const useCombatStore = defineStore('combat', () => {
     const isMoving = ref(false)
     const isCheckingRange = ref(false)
     const currentTurn = ref(0)
-    const inRangeEntities = ref<(Enemy | Player)[]>([])
-    const orderTurn = ref<(Enemy | Player)[]>([])
+    const inRangeEntities = ref<Entity[]>([])
+    const orderTurn = ref<Entity[]>([])
 
     const toggleMoveMode = () => moveMode.value = !moveMode.value
 
@@ -33,13 +32,17 @@ export const useCombatStore = defineStore('combat', () => {
 
     const passTurn = () => currentTurn.value += 1
 
-    const actionAttack = (targetName: Player | Enemy) => {}
+    const actionAttack = (targetName: Entity) => {}
 
     const actionWin = (winners: boolean) => {}
 
     const changeDirection = (direction: string) => moveDirection.value = direction
 
     const confirmMove = () => {}
+
+    const getEnemyInRange = (range: number) => inRangeEntities.value
+    
+    const moveEnemy = (direction: string) => {} 
 
     return { 
         moveMode,
@@ -61,6 +64,8 @@ export const useCombatStore = defineStore('combat', () => {
         passTurn,
         actionWin,
         changeDirection,
-        confirmMove
+        confirmMove,
+        getEnemyInRange,
+        moveEnemy
     }
 })

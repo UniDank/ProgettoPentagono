@@ -83,6 +83,7 @@ const addToPlayer = (item: Item, player: Player) => {
         item.quantity -= 1
         combat.combatLog += `${player.name} ha usato una pozione di energia!\n`
     }
+    combat.passTurn()
     main.inventory = main.inventory.filter(v => v.quantity > 0)
 }
 
