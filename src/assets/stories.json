@@ -2,6 +2,10 @@
   {
     "images": [
       {
+        "name": "",
+        "position": ""
+      },
+      {
         "name": "story1.png",
         "position": "left"
       },
@@ -11,8 +15,9 @@
       }
     ],
     "text": [
-      "Cinque studenti universitari impegnati con lo sviluppo del loro videogioco, notano che uno dei loro pc si comporta in modo strano quando viene avviata la demo del videogame durante uno degli Scrum Meeting settimanali. A causa di circostanze ignote, i cinque aspiranti programmatori si ritrovano catapultati all’interno del mondo virtuale da loro programmato, e iniziano la ricerca di un modo per tornare al mondo reale.<br/><br/>",
-      "Il primo incontro del gruppo presso il villaggio di Didascalèion è la Magnifica Maga Rombòs, una giovane chiaroveggente che vuole sapere di più sui cinque forestieri. Il gruppo racconta di provenire dal villaggio di Òntos a sud, e poiché non possono rivelare di essere coloro che hanno letteralmente creato sia la Maga che l’intero Regno di Empaizo, gli eroi raccontano a Rombòs di essere degli avventurieri senza meta alla ricerca di \"qualcosa che non provenga da questo mondo\", sperando che la Maga possa aiutarli in qualche modo. Sorpresa del loro obbiettivo, la chiaroveggente si offre di addestrare i cinque avventurieri per la loro impresa, proponendo loro di insegnargli le basi del combattimento per diventare dei Màtetai, degli eroi valorosi in grado di sconfiggere i mostri usando le arti magiche. Ma proprio quando stanno per accettare la proposta della Maga, ecco che vengono attaccati da un gruppo di nemici: meglio sperimentare con la pratica che con la teoria!<br/><br/>Questa prima parte della storia è disponibile in un <a href='https://youtu.be/nFIEBcLFbao' target='_blank'>Concept Video</a> realizzato per mostrare il sistema di dialogo!"
+      "<span class=\"!text-yellow-500\" style=\"margin-left:35%;\">Prologo</span>: L'Inizio del Viaggio<br/><br/>",
+      "<span class=\"!text-yellow-500\">Cinque studenti</span> universitari impegnati con lo sviluppo del loro <span class=\"!text-yellow-500\">videogioco</span>, notano che uno dei loro pc si comporta in modo strano quando viene avviata la <span class=\"!text-yellow-500\">demo</span> del videogame durante uno degli <span class=\"!text-yellow-500\">Scrum Meeting</span> settimanali. A causa di circostanze ignote, i cinque aspiranti programmatori si ritrovano catapultati all’interno del <span class=\"!text-yellow-500\">Mondo Virtuale</span> da loro programmato, e iniziano la ricerca di un modo per tornare al <span class=\"!text-yellow-500\">Mondo Reale</span>.<br/><br/>",
+      "Il primo incontro del gruppo presso il <span class=\"!text-[#EE7F2E]\">Villaggio di Didascalèion</span> è la Magnifica <span class=\"!text-red-500\">Maga Rombòs</span>, una giovane chiaroveggente che vuole sapere di più sui cinque forestieri. Il gruppo racconta di provenire dal <span class=\"!text-[#EE7F2E]\">Villaggio di Òntos</span> a sud, e poiché non possono rivelare di essere coloro che hanno letteralmente creato sia la Maga che l’intero <span class=\"!text-[#EE7F2E]\">Regno di Empaizo</span>, gli eroi raccontano a Rombòs di essere degli avventurieri senza meta alla ricerca di \"qualcosa che non provenga da questo mondo\", sperando che la Maga possa aiutarli in qualche modo. Sorpresa del loro obbiettivo, la chiaroveggente si offre di addestrare i cinque avventurieri per la loro impresa, proponendo loro di insegnargli le basi del combattimento per diventare dei <span class=\"!text-[#EE7F2E]\">Màtetai</span>, degli eroi valorosi in grado di sconfiggere i mostri usando le arti magiche. Ma proprio quando stanno per accettare la proposta della Maga, ecco che vengono attaccati da un gruppo di nemici: meglio sperimentare con la pratica che con la teoria!<br/><br/>[Questa prima parte della storia è disponibile in un <a href='https://youtu.be/nFIEBcLFbao' target='_blank'>Concept Video</a> realizzato per mostrare il sistema di dialogo!]"
     ]
   },
   {
@@ -38,6 +43,10 @@
         "position": "center"
       },
       {
+        "name": "t10.png",
+        "position": "center"
+      },
+      {
         "name": "t4.png",
         "position": "center"
       },
@@ -47,13 +56,14 @@
       }
     ],
     "text": [
-      "Tutorial: Sconfiggi i nemici avversari all’attacco!<br/><br/>Durante la battaglia, alleati e nemici combatteranno in una griglia di dimensione 8x8, e si ritroveranno nella mappa tutti in posizioni casuali. Sarà tuo compito dare indicazioni ai cinque avventurieri per portarli alla vittoria! Il combattimento è composto dal susseguirsi di turni di eroi ed avversari che possono attaccare, muoversi o usare oggetti.",
-      "Cosa puoi far fare agli eroi durante il loro turno?<br/>Durante il turno di ogni eroe puoi attaccare un nemico, cliccando pulsante “Attacca”. Puoi scegliere quale nemico attaccare solo se si trova all’interno del raggio d’azione del personaggio giocante. Ogni eroe ha un raggio d'azione diverso, in base alle proprie statistiche e alla propria classe. Selezionando il nemico dal menu, infliggerai danni in base alla statistica di “Attacco” del personaggio che sferra l’azione.",
-      "Durante il turno puoi anche scegliere se utilizzare degli strumenti. Visualizza gli oggetti che possiedi cliccando il tasto “Inventario” e scegli l’oggetto che vuoi usare. Puoi ottenere Pozioni e altri strumenti sconfiggendo i nemici. Ma gli oggetti dell’inventario non sono infiniti, per cui utilizzali con parsimonia!",
-      "Infine, puoi muovere il personaggio giocante nella mappa, cliccando il pulsante “Muoviti”. Tutti i personaggi possono muoversi di massimo due caselle. Seleziona dal menu la casella in cui vuoi far spostare il personaggio, tra quelle gialle, e clicca su “Conferma” per farlo muovere. Puoi scegliere di far muovere un personaggio per farlo avvicinare ad un nemico al fine di sferrare un attacco nel turno successivo, o al contrario farlo allontanare da un potente avversario che al prossimo turno manderebbe l’eroe K.O.<br/>Le possibilità sono infinite, sei tu lo stratega!",
-      "Appena l'eroe effettuerà il movimento, il turno sarà passato al personaggio successivo. L’ordine dei turni dei personaggi è calcolato rispetto alla statistica di “Velocità” di alleati e nemici. In basso a destra puoi vedere a quale personaggio toccherà nel turno successivo.",
-      "Puoi scegliere anche di non compiere nessuna azione durante il turno cliccando il pulsante “Passa”. Oppure puoi rinunciare alla battaglia e tornare alla selezione del livello con il pulsante “Fuggi”.",
-      "Fai attenzione però, se la barra della vita di tutti e cinque gli eroi scenderà a zero, avrai perso la battaglia e dovrari rigiocare il livello da capo.<br/>[Al momento la barra e le pozioni del “Mana”, non hanno alcun utilizzo, in futuro saranno implementate anche magie e azioni speciali!]<br/><br/>Il combattimento sarà concluso quando gli eroi faranno scendere a zero le barre della vita di tutti gli avversari! Scegli le mosse con strategia e porta la squadra alla vittoria!"
+      "<span class=\"!text-red-500\">Tutorial</span>: Sconfiggi i nemici avversari all’attacco!<br/><br/>Durante la battaglia, alleati e nemici combatteranno in una griglia di dimensione 8x8, e si ritroveranno nella mappa tutti in posizioni casuali. Sarà tuo compito dare indicazioni ai cinque avventurieri per portarli alla vittoria! Il combattimento è composto dal susseguirsi di turni di eroi ed avversari che possono attaccare, muoversi o usare oggetti.",
+      "<span class=\"!text-[#EE7F2E]\">Cosa puoi far fare agli eroi durante il loro turno?</span><br/>Durante il turno di ogni eroe puoi attaccare un nemico, cliccando il pulsante “<span class=\"!text-[#EE7F2E]\">Attacca</span>”. Puoi scegliere quale nemico attaccare solo se si trova all’interno del raggio d’azione del personaggio giocante. Ogni eroe ha un raggio d'azione diverso, in base alle proprie statistiche e alla propria classe. Selezionando il nemico dal menu, infliggerai danni in base alla <span class=\"!text-red-500\">statistica di attacco</span> del personaggio che sferra l’azione.",
+      "Durante il turno puoi anche scegliere se utilizzare degli strumenti. Visualizza gli oggetti che possiedi cliccando il tasto “<span class=\"!text-[#EE7F2E]\">Inventario</span>” e scegli l’oggetto che vuoi usare. Puoi ottenere <span class=\"!text-red-500\">Pozioni</span> e altri strumenti sconfiggendo i nemici. Ma gli oggetti dell’inventario non sono infiniti, per cui utilizzali con parsimonia!",
+      "Infine, puoi muovere il personaggio giocante nella mappa, cliccando il pulsante “<span class=\"!text-[#EE7F2E]\">Muoviti</span>”. Tutti i personaggi possono muoversi di massimo due caselle. Seleziona dal menu la casella in cui vuoi far spostare il personaggio, tra quelle gialle, e clicca su “Conferma” per farlo muovere. Puoi scegliere di far muovere un personaggio per farlo avvicinare ad un nemico al fine di sferrare un attacco nel turno successivo, o al contrario farlo allontanare da un potente avversario che al prossimo turno manderebbe l’eroe K.O.<br/>Le possibilità sono infinite, sei tu lo stratega!",
+      "Ogni azione (Attacco, Inventario o Muoviti) ha un costo diverso di <span class=\"!text-green-500\">Punti Energia</span>. In base al costo dell'azione, saranno consumati punti dalla barra dell'energia dell'utilizzatore. Ogni azione consuma energia diversa, assicurati di averne abbastanza prima di usare l'azione!",
+      "Appena l'eroe effettuerà un'azione, il turno sarà passato al personaggio successivo. L’ordine dei turni dei personaggi è calcolato rispetto alla <span class=\"!text-blue-500\">statistica di agilità</span> di alleati e nemici. In basso a destra puoi vedere a quale personaggio toccherà nel turno successivo.",
+      "Puoi scegliere anche di non compiere nessuna azione durante il turno cliccando il pulsante “<span class=\"!text-[#EE7F2E]\">Passa</span>”. Oppure puoi rinunciare alla battaglia e tornare alla selezione del livello con il pulsante “<span class=\"!text-[#EE7F2E]\">Fuggi</span>”.",
+      "Fai attenzione però, se la barra della vita di tutti e cinque gli eroi scenderà a zero, avrai perso la battaglia e dovrari rigiocare il livello da capo.<br/><br/><span class=\"!text-[#EE7F2E]\">Per vincere la battaglia, devi sconfiggere tutti i nemici.</span> Il combattimento sarà concluso quando gli eroi faranno scendere a zero le barre della vita di tutti gli avversari. Scegli le mosse con strategia e porta la squadra alla vittoria!"
     ]
   },
   {
@@ -72,8 +82,8 @@
       }
     ],
     "text": [
-      "Sconfitta la minaccia inaspettata, la Maga Rombòs riconosce il valore dei cinque eroi, e rivela loro che si tramanda da tempi antichi una Leggenda sui \"Confini del Mondo\", una zona da cui è bene tenersi lontani. Molti viaggiatori si sono avventurati nelle terre a Nord-Ovest del Regno, ma senza mai fare ritorno: per questo gli abitanti di Didascalèion hanno ribattezzato quella zona come \"Terra Ricolma di Effigi Nefaste e Tombe Antiche\", a causa dei numerosi viaggi senza ritorno degli avventurieri presso questa presunta \"Fine del Mondo\".",
-      "<br/>Gli eroi, nonostante gli avvertimenti della Maga, decidono così di mettersi in viaggio insieme a quest’ultima per Nord-Ovest al fine di trovare qualcosa che li possa aiutare nel loro scopo: uscire dal videogioco."
+      "Sconfitta la minaccia inaspettata, la <span class=\"!text-red-500\">Maga Rombòs</span> riconosce il valore dei cinque eroi, e rivela loro che si tramanda da tempi antichi una Leggenda sui \"<span class=\"!text-[#EE7F2E]\">Confini del Mondo</span>\", una zona da cui è bene tenersi lontani. Molti viaggiatori si sono avventurati nelle terre a Nord-Ovest del Regno, ma senza mai fare ritorno: per questo gli abitanti di Didascalèion hanno ribattezzato quella zona come \"<span class=\"!text-[#EE7F2E]\">T</span>erra <span class=\"!text-[#EE7F2E]\">R</span>icolma di <span class=\"!text-[#EE7F2E]\">E</span>ffigi<span class=\"!text-[#EE7F2E]\"> N</span>efaste e <span class=\"!text-[#EE7F2E]\">T</span>ombe<span class=\"!text-[#EE7F2E]\"> A</span>ntiche\", a causa dei numerosi viaggi senza ritorno degli avventurieri presso questa presunta \"<span class=\"!text-[#EE7F2E]\">Fine del Mondo</span>\".",
+      "<br/>Gli eroi, nonostante gli avvertimenti della Maga, decidono così di mettersi in viaggio insieme a quest’ultima per <span class=\"!text-[#EE7F2E]\">Nord-Ovest</span> al fine di trovare qualcosa che li possa aiutare nel loro scopo: uscire dal videogioco."
     ]
   },
   {
@@ -92,8 +102,8 @@
       }
     ],
     "text": [
-      "Arrivati in una radura vicino al bosco Àlsos, la Maga Rombòs racconta ai cinque avventurieri di una antica favola tramandata dalla sua famiglia, per tenere lontani i bambini dal bosco. La favola narra di Regitare, il Re Coraggioso, un antico sovrano che durante una delle sue esplorazioni si avventurò presso il bosco Àlsos alla ricerca della \"Lira Oscura Dell’Edera\".",
-      "Si diceva che questa Lira godesse di poteri magici curativi benefici per chi la possedesse, ma proprio a causa della sua potenza sia stata nascosta nelle profondità più recondite del bosco. Regitare però, durante la ricerca della Lira Oscura si perse nel bosco e rimase a vagare per giorni e giorni. Alcuni raccontano che ancora oggi, la notte, scorgano il fantasma del Re mentre cerca la Lira nascosta, vagando tra gli alberi. Che sia solo una favola, o ci sia un fondo di verità in questa storiella raccontata ai bambini per non farli andare nel bosco?"
+      "Arrivati in una radura vicino al <span class=\"!text-green-500\">Bosco Àlsos</span>, la <span class=\"!text-red-500\">Maga Rombòs</span> racconta ai cinque avventurieri di una antica <span class=\"!text-[#EE7F2E]\">favola</span> tramandata dalla sua famiglia, per tenere lontani i bambini dal bosco. La favola narra di <span class=\"!text-green-500\">Regitare</span>, il Re Coraggioso, un antico sovrano che durante una delle sue esplorazioni si avventurò presso il <span class=\"!text-green-500\">Bosco Àlsos</span> alla ricerca della \"<span class=\"!text-[#EE7F2E]\">L</span>ira <span class=\"!text-[#EE7F2E]\">O</span>scura <span class=\"!text-[#EE7F2E]\">D</span>ell’<span class=\"!text-[#EE7F2E]\">E</span>dera\".",
+      "Si diceva che questa Lira godesse di poteri magici curativi benefici per chi la possedesse, ma proprio a causa della sua potenza sia stata nascosta nelle profondità più recondite del bosco. <span class=\"!text-green-500\">Regitare</span> però, durante la ricerca della <span class=\"!text-[#EE7F2E]\">L.O.D.E.</span> si perse nel bosco e rimase a vagare per giorni e giorni. Alcuni raccontano che ancora oggi, la notte, scorgano il fantasma del Re mentre cerca la Lira nascosta, vagando tra gli alberi. Che sia solo una <span class=\"!text-[#EE7F2E]\">favola</span>, o ci sia un fondo di verità in questa storiella raccontata ai bambini per non farli andare nel bosco?"
     ]
   },
   {
@@ -107,13 +117,23 @@
         "position": ""
       },
       {
+        "name": "b2.png",
+        "position": "center"
+      },
+      {
         "name": "story5.png",
+        "position": "center"
+      },
+      {
+        "name": "t6.png",
         "position": "center"
       }
     ],
     "text": [
-      "Allora le voci sul bosco erano vere! Sconfitto il fantasma di Regitare, gli eroi trovano una radura all’interno del bosco, e non riescono a credere ai loro occhi: la \"Lira Oscura Dell’Edera\" era proprio davanti a loro. Ancora increduli, raccolgono l’oggetto magico e ne comprendono subito l’utilizzo, come se qualcosa o qualcuno avesse spiegato loro il suo funzionamento. Forse lo spirito di Regitare, il Re Coraggioso? O forse è il bosco Àlsos stesso ad avergli comunicato come utilizzarla?<br/>",
-      "La Lira Oscura Dell’Edera è stata aggiunta all’inventario!<br/>Utilizza la Lira dall’inventario per portare in vita gli alleati sconfitti in battaglia!"
+      "<span class=\"!text-green-500\">Segreto Sbloccato</span>: Allora le voci sul bosco erano vere!",
+      "<br/>Sconfitto il fantasma di <span class=\"!text-green-500\">Regitare</span>, gli eroi trovano una radura all’interno del bosco, e non riescono a credere ai loro occhi: la \"<span class=\"!text-[#EE7F2E]\">L</span>ira <span class=\"!text-[#EE7F2E]\">O</span>scura <span class=\"!text-[#EE7F2E]\">D</span>ell’<span class=\"!text-[#EE7F2E]\">E</span>dera\" era proprio davanti a loro. Ancora increduli, raccolgono l’oggetto magico e ne comprendono subito l’utilizzo, come se qualcosa o qualcuno avesse spiegato loro il suo funzionamento. Forse lo spirito di <span class=\"!text-green-500\">Regitare</span>, il Re Coraggioso? O forse è il <span class=\"!text-green-500\">Bosco Àlsos</span> stesso ad avergli comunicato come utilizzarla?<br/>",
+      "<span class=\"!text-[#EE7F2E]\">La Lira Oscura Dell’Edera è stata aggiunta all’inventario!</span><br/>Utilizza quante volte vuoi la Lira dall’inventario per portare in vita gli alleati sconfitti in battaglia!",
+      ""
     ]
   },
   {
@@ -128,8 +148,34 @@
       }
     ],
     "text": [
-      "Giunti presso la \"Terra Ricolma di Effigi Nefaste e Tombe Antiche\", ai Confini del Mondo, gli eroi trovano un’entità che si autodefinisce \"The Administrator\" e che sostiene di avere il controllo sul Regno di Empaizo. Gli studenti sono sicuri che oltre loro cinque, nessun altro dovrebbe aver accesso al gioco come Amministratore, e sono increduli nello scoprire che qualcuno si stia impersonando tale. Deducono che un Hacker sia riuscito ad accedere ai dati privati relativi al gioco, e che questo abbia impostato il suo Account come Amministratore sfruttando dei Bug.",
-      "Dopo un improvviso attacco da parte di \"The Administrator\" che poteva essere fatale se non fosse stato per la prontezza della Magnifica Maga, uno degli avventurieri nota che tutta la potenza del nemico deriva da una \"Console dei Comandi\" in suo possesso, dalla quale egli scaglia attacchi a tutta potenza, aiutato dai Glitch da lui generati. Appurato che con la sconfitta di \"The Administrator\" gli eroi avrebbero avuto accesso ad un Terminale, e quindi ad un punto di comunicazione con il mondo reale, decidono di attuare una strategia che gli permetta di sconfiggere il nemico.<br/>Inizia così l’ultima battaglia degli avventurieri nel Regno di Empaizo!"
+      "Giunti presso il <span class=\"!text-[#EE7F2E]\">T.R.E.N.T.A.</span>, la \"<span class=\"!text-[#EE7F2E]\">T</span>erra <span class=\"!text-[#EE7F2E]\">R</span>icolma di <span class=\"!text-[#EE7F2E]\">E</span>ffigi<span class=\"!text-[#EE7F2E]\"> N</span>efaste e <span class=\"!text-[#EE7F2E]\">T</span>ombe<span class=\"!text-[#EE7F2E]\"> A</span>ntiche\" ai Confini del Mondo, gli eroi trovano un’entità che si autodefinisce \"<span class=\"!text-blue-500\">The Administrator</span>\" e che sostiene di avere il controllo sul <span class=\"!text-[#EE7F2E]\">Regno di Empaizo</span>. Gli studenti sono sicuri che oltre loro cinque, nessun altro dovrebbe aver accesso al gioco come Amministratore, e sono increduli nello scoprire che qualcuno si stia impersonando tale. Deducono che un <span class=\"!text-blue-500\">Hacker</span> sia riuscito ad accedere ai dati privati relativi al gioco, e che questo abbia impostato il suo Account come Amministratore sfruttando dei <span class=\"!text-blue-500\">Bug</span> in modo malevolo, compromettendo il sistema e di conseguenza le Terre di Empaizo.",
+      "Dopo un improvviso attacco da parte di \"<span class=\"!text-blue-500\">The Administrator</span>\" che poteva essere fatale se non fosse stato per la prontezza della <span class=\"!text-red-500\">Magnifica Maga</span>, uno degli avventurieri nota che tutta la potenza del nemico deriva da una \"<span class=\"!text-[#EE7F2E]\">Console dei Comandi</span>\" in suo possesso, dalla quale egli scaglia attacchi a tutta potenza, aiutato dai <span class=\"!text-blue-500\">Glitch</span> da lui generati. Appurato che con la sconfitta di \"<span class=\"!text-blue-500\">The Administrator</span>\" gli eroi avrebbero avuto accesso ad un <span class=\"!text-[#EE7F2E]\">Terminale</span>, e quindi ad un punto di comunicazione con il mondo reale, decidono di attuare una strategia che gli permetta di sconfiggere il nemico.<br/><br/>Inizia così l’<span class=\"!text-[#EE7F2E]\">ultima battaglia</span> degli avventurieri nel <span class=\"!text-[#EE7F2E]\">Regno di Empaizo</span>!"
+    ]
+  },
+  {
+    "images": [
+      {
+        "name": "",
+        "position": ""
+      },
+      {
+        "name": "b1.png",
+        "position": "center"
+      },
+      {
+        "name": "t7.png",
+        "position": "center"
+      },
+      {
+        "name": "t8.png",
+        "position": "center"
+      }
+    ],
+    "text": [
+      "<span class=\"!text-red-500\">Tutorial</span>: Scontro Finale!",
+      "<br/>L’ultimo scontro degli eroi sta per cominciare, portali alla vittoria in modo strategico! In questa speciale battaglia contro “<span class=\"!text-blue-500\">The Administrator</span>” gli eroi si contreranno contro di lui e contro i “<span class=\"!text-blue-500\">Glitch</span>” che scaglierà in sua difesa.<br/>Fai attenzione ai <span class=\"!text-blue-500\">Glitch</span>, sono dei nemici che infliggono pochi danni ma sono veloci e hanno una gittata delle mosse molto alta!",
+      " “<span class=\"!text-blue-500\">The Administrator</span>” invece è un potente nemico che può attaccare qualsiasi avversario nella mappa, indipendentemente dalla sua posizione. Gli eroi non sono riusciti invece ad identificare la sua classe, poiché possiede delle statistiche fuori dal comune.",
+      "<br/>Riuscirai a guidare gli eroi nello sconfiggere “<span class=\"!text-blue-500\">The Administrator</span>” e tutti i suoi <span class=\"!text-blue-500\">Glitch</span>? Il destino del Regno di Empaizo è nelle tue mani!"
     ]
   },
   {
@@ -137,11 +183,11 @@
     "text": []
   },
   {
-    "images": [],
-    "text": []
-  },
-  {
     "images": [
+      {
+        "name": "",
+        "position": ""
+      },
       {
         "name": "story8.gif",
         "position": "left"
@@ -152,12 +198,25 @@
       }
     ],
     "text": [
-      "Gli eroi hanno trionfato sul falso Amministratore e sono usciti vittoriosi dalla battaglia. Dopo aver confessato la verità sulla loro identità alla Maga Rombòs, gli avventurieri si avvicinano alla carcassa di \"The Administrator\" alla ricerca del Terminale. Avendo accesso alla Console dei Comandi, sono in grado di poter tornare al mondo reale, e si rivolgono a Rombòs per un ultimo saluto. Se non fosse stato per il suo aiuto, starebbero ancora vagando per Didascalèion in cerca di chissà cosa. Grazie a lei hanno imparato il lavoro di squadra, che spesso non può mettere d’accordo tutti ma è essenziale per un fine comune. Hanno imparato a sfruttare le proprie potenzialità in modo da collaborare e ottenere il risultato migliore tutti insieme. Lei li ha aiutati nel momento del bisogno e supportati nella loro avventura.",
-      "Dopo un saluto commovente con dei tratti più di un addio che di un arrivederci, gli eroi salutano la Maga sapendo che qualora avessero voluto tornare in quelle terre, lei sarebbe stata lì ad aspettarli. I cinque programmatori fanno quindi partire il comando sul Terminale per uscire dal gioco e si dissolvono nel cielo lasciando, solo per il momento, il Regno di Empaizo.<br/><br/>L’avventura dei cinque eroi, la Penta Quest, è conclusa."
+      "<span class=\"!text-yellow-500\" style=\"margin-left:35%;\">Epilogo</span>: Arrivederci, Regno di Empaizo!<br/><br/>",
+      "Gli eroi hanno trionfato sul falso Amministratore e sono usciti vittoriosi dalla battaglia. Dopo aver confessato la verità sulla loro identità alla <span class=\"!text-red-500\">Maga Rombòs</span>, gli avventurieri si avvicinano alla carcassa di \"<span class=\"!text-blue-500\">The Administrator</span>\" alla ricerca del Terminale. Avendo accesso alla <span class=\"!text-[#EE7F2E]\">Console dei Comandi</span>, sono in grado di poter tornare al mondo reale, e si rivolgono a Rombòs per un ultimo saluto. Se non fosse stato per il suo aiuto, starebbero ancora vagando per Didascalèion in cerca di chissà cosa. Grazie a lei hanno imparato il <span class=\"!text-yellow-500\">lavoro di squadra</span>, che spesso non può mettere d’accordo tutti ma è essenziale per un <span class=\"!text-yellow-500\">fine comune</span>. Hanno imparato a sfruttare le proprie <span class=\"!text-yellow-500\">potenzialità</span> in modo da collaborare e ottenere il <span class=\"!text-yellow-500\">risultato migliore</span> tutti insieme. Lei li ha aiutati nel momento del bisogno e supportati nella loro avventura.",
+      "Dopo un saluto commovente con dei tratti più di un addio che di un arrivederci, gli eroi salutano la Maga sapendo che qualora avessero voluto tornare in quelle terre, lei sarebbe stata lì ad aspettarli. I cinque programmatori fanno quindi partire il comando sul <span class=\"!text-[#EE7F2E]\">Terminale</span> per uscire dal gioco e si dissolvono nel cielo lasciando, solo per il momento, il <span class=\"!text-[#EE7F2E]\">Regno di Empaizo</span>.<br/><br/>L’avventura dei cinque eroi, la <span class=\"!text-[#EE7F2E]\">Penta Quest</span>, è conclusa."
     ]
   },
   {
-    "images": [],
-    "text": []
+    "images": [
+      {
+        "name": "",
+        "position": ""
+      },
+      {
+        "name": "t9.gif",
+        "position": "center"
+      }
+    ],
+    "text": [
+      "<span class=\"!text-yellow-500\">Suggerimento</span>: ti consigliamo di giocare la storia in questo ordine!",
+      ""
+    ]
   }
 ]

@@ -98,13 +98,18 @@ export default class StageScene extends Scene {
     { type: StepType.nodeWhite, coords: { x: 1146 , y: 140 }, step: 12 }
   ]
   private clickableNodes: Phaser.GameObjects.Image[] = []
+  private selectedPlayer = ""
 
   constructor() {
     super({ key: 'StageScene' })
   }
 
-  preload() {
+  init(data: object | undefined) {
+    this.selectedPlayer = (data as any).selectedPlayer
+  }
 
+  preload() {
+    
   }
 
   create() {
@@ -115,8 +120,8 @@ export default class StageScene extends Scene {
 
     this.add.image(0, 0, 'worldMap').setOrigin(0)
 
-    const playerSprite = this.add.sprite(0, 0, this.sceneStore.mainPlayer.toLowerCase()).setScale(2)
-    playerSprite.anims.createFromAseprite(this.game, this.sceneStore.mainPlayer.toLowerCase())
+    const playerSprite = this.add.sprite(0, 0, this.selectedPlayer.toLowerCase()).setScale(2)
+    playerSprite.anims.createFromAseprite(this.game, this.selectedPlayer.toLowerCase())
     playerSprite.anims.play({ key: "Idle", repeat: -1 })
 
     this.nodes.forEach((node, index) => {
@@ -155,11 +160,11 @@ export default class StageScene extends Scene {
           mainCamera.on('camerafadeoutcomplete', async () => {
             fetch(`http://localhost:8080/api/v1/${this.stageStore.selectedNode}/enemies`).then(res => res.json()).then(json => {
               const resJson = json.data as Enemy[]
-              this.combatStore.updateEnemies(resJson)
+              this.combatStore.updateEnemies(resJson.reverse())
             }).then(() => this.scene.switch(args[0]))
             .catch(() => this.scene.switch(args[0]))
           })
-        } else mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0]))
+        } else mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0], args[1]))
       }
     })
 

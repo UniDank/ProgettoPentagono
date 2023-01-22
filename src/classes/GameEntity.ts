@@ -31,33 +31,31 @@ class GameEntity {
     public movePlayerTo(position: Phaser.Math.Vector2): void {
         if ((position.x <= 2 || position.x >= 11) || (position.y <= 2 || position.y >= 11) ) {
             this.combatStore.updateCombatLog(`${this.entityName} non può andare lì!\n`)
-            return
+        } else {
+            this.scene.gridEngine.moveTo(this.entityName, { x: position.x, y: position.y }).subscribe({
+                next: (rep) => {
+                    if (rep.result == MoveToResult.SUCCESS) this.combatStore.updateCombatLog(`${this.entityName} si è spostato!\n`)
+                    else this.combatStore.updateCombatLog(`${this.entityName} non può andare lì!\n`)
+                }
+            })
         }
-        const moveObv = this.scene.gridEngine.moveTo(this.entityName, { x: position.x, y: position.y })
-        moveObv.subscribe({
-            next: (rep) => {
-                if (rep.result == MoveToResult.SUCCESS) this.combatStore.updateCombatLog(`${this.entityName} si è spostato!\n`)
-                else this.combatStore.updateCombatLog(`${this.entityName} non può andare lì!\n`)
-            }
-        })
     }
 
     public moveEnemyTo(position: Phaser.Math.Vector2): void {
         if ((position.x <= 2 || position.x >= 11) || (position.y <= 2 || position.y >= 11) ) {
             this.combatStore.combatLog += `${this.entityName} ha saltato il turno!\n`
             this.combatStore.passTurn()
-            return
-        }
-        const moveObv = this.scene.gridEngine.moveTo(this.entityName, { x: position.x, y: position.y })
-        moveObv.subscribe({
-            next: (rep) => {
-                if (rep.result == MoveToResult.SUCCESS) this.combatStore.updateCombatLog(`${this.entityName} si è spostato!\n`)
-                else {
-                    this.combatStore.combatLog += `${this.entityName} ha saltato il turno!\n`
-                    this.combatStore.passTurn()
+        } else {
+            this.scene.gridEngine.moveTo(this.entityName, { x: position.x, y: position.y }).subscribe({
+                next: (rep) => {
+                    if (rep.result == MoveToResult.SUCCESS) this.combatStore.updateCombatLog(`${this.entityName} si è spostato!\n`)
+                    else {
+                        this.combatStore.combatLog += `${this.entityName} ha saltato il turno!\n`
+                        this.combatStore.passTurn()
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
     public setEvent(event: string, fn: Function): void {

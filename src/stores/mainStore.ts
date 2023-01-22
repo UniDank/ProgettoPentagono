@@ -8,8 +8,9 @@ export const useMainStore = defineStore('main', () => {
     const currentScene = ref("")
     const currentInterface = ref("")
     const showedDialogue = ref("")
-    const mainPlayer = ref("fede")
+    const mainPlayer = ref("")
     const currentVolume = ref(1)
+    const passedData = ref<object | undefined>(undefined)
     const party = ref<Player[]>([ 
         new Player("Agoraco", 15, 15, 30, 10, 3, 10, ClassType.Melee), 
         new Player("Danblos", 15, 15, 30, 10, 5, 10, ClassType.Mage), 
@@ -22,7 +23,10 @@ export const useMainStore = defineStore('main', () => {
         new Item("Energia", ItemType.Energy, 10, 10),
     ])
 
-    const changeScene = (scene: string) => currentScene.value = scene
+    const changeScene = (scene: string, data?: object) => {
+        currentScene.value = scene
+        passedData.value = data
+    }
 
     const changeInterface = (userInterface: string) => currentInterface.value = userInterface
 
@@ -32,6 +36,8 @@ export const useMainStore = defineStore('main', () => {
 
     const changeVolume = (perc: number) => currentVolume.value = perc
 
+    const selectPlayer = (player: string) => mainPlayer.value = player
+
     return { 
         changeScene, 
         showDialogue, 
@@ -39,10 +45,12 @@ export const useMainStore = defineStore('main', () => {
         party, 
         inventory, 
         mainPlayer, 
+        selectPlayer,
         currentInterface, 
         changeInterface, 
         closeInterface,
         changeVolume,
-        currentVolume
+        currentVolume,
+        passedData
     }
 })

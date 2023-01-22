@@ -19,10 +19,12 @@ class Entity {
         this.maxMana = mana
     }
 
-    public setDamage(amount: number, target: Entity): void {
-        target.health = Math.max(target.health -= amount, 0)
+    public setDamage(amount: number, target: Entity): number {
+        const damage = Math.ceil(Math.max(amount - (target.defense / 2), 0))
+        target.health = Math.max(target.health -= damage, 0)
         target.isLowHP = (target.health / target.maxHealth * 100) <= 20
         target.isKo = target.health == 0
+        return damage
     }
 
     public addHealth(amount: number) {

@@ -67,7 +67,7 @@ export default class SelectScene extends Scene {
       if (name === 'changeScene') {
         mainCamera.fadeOut(300, 0, 0, 0)
         this.sceneStore.closeInterface()
-        mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0]))
+        mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0], { selectedPlayer: this.selectablePlayers[this.selectedButtonIndex] }))
       }
     })
   }
@@ -87,7 +87,7 @@ export default class SelectScene extends Scene {
   }
 
   confirmSelection() {
-    this.sceneStore.mainPlayer = this.selectablePlayers[this.selectedButtonIndex]
+    this.sceneStore.selectPlayer(this.selectablePlayers[this.selectedButtonIndex])
     fetch(`http://localhost:8080/api/v1/select`, {
         method: 'POST',
         headers: {

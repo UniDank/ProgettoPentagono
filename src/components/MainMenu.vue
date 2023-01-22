@@ -60,11 +60,11 @@
                     <span class="!text-red-500">Linguaggi</span> e
                     <span class="!text-green-500">Librerie</span> usati per la realizzazione sono stati:
                     <span class="!text-blue-500">Draw.io, IntelliJ, VSCode, Spring, JUnit, GitHub, Git, NodeJS, Notion,
-                        Asana</span>,
+                        Asana, Aseprite</span>,
                     <span class="!text-red-500">Java, TypeScript, JavaScript, HTML, CSS, MongoDB</span>,
                     <span class="!text-green-500">Electron, Vue, Phaser, Tailwind, RPGUI, Vite, Pinia</span>.<br />
                     Per un'esperienza ottimale si consiglia di giocare con volume attivo e dimensione della finestra
-                    fissa a 1280x720.
+                    fissa a <span class="!text-yellow-500">1280x720</span>.
                 </h3>
             </div>
             <button class="self-start rpgui-button" type="button" @click="goBack">
@@ -129,7 +129,7 @@ function clickText(index: number) {
             main.changeScene('SelectScene')
             break
         case 1:
-            main.changeScene('StageScene')
+            main.changeScene('StageScene', { selectedPlayer: main.mainPlayer })
             break
         case 2:
             currentMenu.value = 3
@@ -179,7 +179,7 @@ onMounted(async () => {
     fetch(`http://localhost:8080/api/v1/select`).then(res => res.json()).then(json => {
         if (json.status == "200") {
             disabledBtn.value = -1
-            main.mainPlayer = json.data.mainPlayer
+            main.selectPlayer(json.data.mainPlayer)
         }
     })
     window.addEventListener('keydown', menuSelect)

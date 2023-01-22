@@ -6,7 +6,6 @@ import { ref } from 'vue'
 export const useCombatStore = defineStore('combat', () => {
     const moveMode = ref(false)
     const moveDirection = ref("")
-    const currentEntity = ref<Entity>()
     const enemies = ref<Enemy[]>([
         new Enemy("Bidoof", 5, 5, 20, 10, 3, 20, ClassType.Tank),
         new Enemy("Ekans", 10, 7, 25, 10, 6, 20, ClassType.Thief),
@@ -19,6 +18,7 @@ export const useCombatStore = defineStore('combat', () => {
     const currentTurn = ref(0)
     const inRangeEntities = ref<Entity[]>([])
     const orderTurn = ref<Entity[]>([])
+    const currentEntity = ref<Entity>()
 
     const toggleMoveMode = () => moveMode.value = !moveMode.value
 
@@ -30,7 +30,12 @@ export const useCombatStore = defineStore('combat', () => {
 
     const updateCombatLog = (value: string) => combatLog.value += value
 
-    const passTurn = () => currentTurn.value += 1
+    const passTurn = () => {
+        orderTurn.value = orderTurn.value.filter(v => v.health > 0)
+        currentTurn.value = (currentTurn.value + 1) >= orderTurn.value.length ? 0 : currentTurn.value + 1
+        currentEntity.value = orderTurn.value[currentTurn.value]
+        return currentTurn.value
+    }
 
     const actionAttack = (targetName: Entity) => {}
 

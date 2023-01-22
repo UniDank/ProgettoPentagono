@@ -17,10 +17,10 @@
                 </div>
                 <div class="rpgui-progress !h-[1rem]">
                     <div class="rpgui-progress-track !h-[1rem] !left-4 !right-4">
-                        <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] blue"
-                            :style="`width: ${player.mana / player.maxMana * 100}%;`"></div>
+                        <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] green"
+                            :style="`width: ${player.APs / player.maxAPs * 100}%;`"></div>
                     </div>
-                    <div class="!h-[1rem] !w-4 rpgui-progress-left3-edge"></div>
+                    <div class="!h-[1rem] !w-4 rpgui-progress-left2-edge"></div>
                     <div class="!h-[1rem] !w-4 rpgui-progress-right-edge"></div>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                     <h3>Inventario</h3>
                     <Inventory ref="invComp" />
                 </button>
-                <button class="rpgui-button" type="button" @click="actionSkip">
+                <button class="rpgui-button" type="button" @click="actionSkip" :disabled="(combat.currentEntity instanceof Enemy)">
                     <h3>Passa</h3>
                 </button>
             </div>
@@ -104,10 +104,10 @@
                 </div>
                 <div class="rpgui-progress !h-[1rem] -scale-x-100">
                     <div class="rpgui-progress-track !h-[1rem] !left-4 !right-4">
-                        <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] blue"
+                        <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] green"
                             :style="`width: ${enemy.mana / enemy.maxMana * 100}%;`"></div>
                     </div>
-                    <div class="!h-[1rem] !w-4 rpgui-progress-left3-edge"></div>
+                    <div class="!h-[1rem] !w-4 rpgui-progress-left2-edge"></div>
                     <div class="!h-[1rem] !w-4 rpgui-progress-right-edge"></div>
                 </div>
             </div>
@@ -144,39 +144,36 @@ const currentBox = ref(""), nextBox = ref("")
 const logElement = ref<HTMLDivElement>(), textElement = ref<HTMLHeadingElement>()
 
 combat.combatLog = ""
-combat.currentTurn = 0
+combat.currentTurn = -1
 combat.orderTurn = [...main.party, ...combat.enemies]
 combat.orderTurn.sort((p1, p2) => (p1.agility < p2.agility) ? 1 : (p1.agility > p2.agility) ? -1 : 0)
 
 const getImageBox = (turn: number) => {
+    if (combat.orderTurn[turn] == undefined) return "glitch"
     const getSpace = combat.orderTurn[turn].name.lastIndexOf(' ')
     return combat.orderTurn[turn].name.slice(0, getSpace != -1 ? getSpace : undefined).toLowerCase()
 }
 
-combat.$onAction(({ name, args }) => {
-    if (name === "passTurn") {        
-        if (invComp.value) invComp.value.showInv = false
-        combat.orderTurn = combat.orderTurn.filter(v => v.health > 0)
+combat.$onAction(({ name, args, after }) => {
+    if (name === "passTurn") {
+        after(newTurn => {
+            if (invComp.value) invComp.value.showInv = false
+            combat.actionInRange(showAttack.value = false)
+            combat.actionMove(showMove.value = false)
+            
+            currentBox.value = getImageBox(newTurn)
+            nextBox.value = getImageBox(newTurn + 1 == combat.orderTurn.length ? 0 : newTurn + 1)
 
-        if (combat.currentTurn == combat.orderTurn.length) combat.currentTurn = 0
-        combat.currentEntity = combat.orderTurn[combat.currentTurn]
-        currentBox.value = getImageBox(combat.currentTurn)
-        nextBox.value = getImageBox(combat.currentTurn + 1 == combat.orderTurn.length ? 0 : combat.currentTurn + 1)
+            combat.combatLog += `Ora è il turno di ${combat.currentEntity!.name}!\n`
 
-        combat.combatLog += `Ora è il turno di ${combat.currentEntity.name}!\n`
-
-        if (combat.currentEntity instanceof Player) combat.currentEntity.addAPs(2)
-        else if (combat.currentEntity instanceof Enemy) combat.currentEntity.doAction()
-
-        combat.actionInRange(showAttack.value = false)
-        combat.actionMove(showMove.value = false)
-
-        if (combat.orderTurn.findIndex(v => (v instanceof Enemy)) == -1) combat.actionWin(false)
-        else if (combat.orderTurn.findIndex(v => (v instanceof Player)) == -1) {
-            const totalExp = combat.enemies.map(v => v.expReward).reduce((c, p) => c + p)
-            main.party.forEach(v => v.addExp(totalExp / 5))
-            combat.actionWin(true)
-        }
+            if (combat.currentEntity instanceof Enemy) {
+                console.log(newTurn, "enemy action")
+                combat.currentEntity.doAction()
+            } else if (combat.currentEntity instanceof Player) {
+                console.log(newTurn, "hero action")
+                combat.currentEntity.addAPs(2)
+            }
+        })
     }
 })
 
@@ -210,22 +207,29 @@ const actionAttack = () => {
 const attackEnemy = (selectedEnemy: Entity) => {
     if (combat.currentEntity instanceof Player) {
         if (combat.currentEntity.APs <= 0) {
-            combat.passTurn()
+            combat.combatLog += `${combat.currentEntity!.name} non ha abbastanza energia!\n`
             return
         }
         combat.currentEntity.useAPs(4)
     }
     showAttack.value = false
-    combat.currentEntity!.setDamage(combat.currentEntity!.attack, selectedEnemy)
-    combat.combatLog += `${combat.currentEntity!.name} ha inflitto ${combat.currentEntity!.attack} danni a ${selectedEnemy.name}!\n`
+    const takenDmg = combat.currentEntity!.setDamage(combat.currentEntity!.attack, selectedEnemy)
+    combat.combatLog += `${combat.currentEntity!.name} ha inflitto ${takenDmg} danni a ${selectedEnemy.name}!\n`
     combat.actionAttack(selectedEnemy)
-    if (selectedEnemy.isKo) combat.combatLog += `${selectedEnemy.name}! è stato sconfitto!\n`
-    else if (selectedEnemy.isLowHP) combat.combatLog += `${selectedEnemy.name}! è in fin di vita!\n`
+    if (selectedEnemy.isKo) combat.combatLog += `${selectedEnemy.name} è stato sconfitto!\n`
+    else if (selectedEnemy.isLowHP) combat.combatLog += `${selectedEnemy.name} è in fin di vita!\n`
     combat.actionInRange(showAttack.value = false)
 }
 
 const confirmMove = () => {
     combat.confirmMove()
+    if (combat.currentEntity instanceof Player) {
+        if (combat.currentEntity.APs <= 0) {
+            combat.combatLog += `${combat.currentEntity!.name} non ha abbastanza energia!\n`
+            return
+        }
+        combat.currentEntity.useAPs(3)
+    }
     showMove.value = false
 }
 

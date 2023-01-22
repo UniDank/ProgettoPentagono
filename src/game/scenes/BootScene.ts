@@ -34,7 +34,7 @@ export default class BootScene extends Scene {
       if (name === 'changeScene') {
         mainCamera.fadeOut(300, 0, 0, 0)
         this.sceneStore.closeInterface()
-        mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0]))
+        mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0], args[1]))
       }
     })
 

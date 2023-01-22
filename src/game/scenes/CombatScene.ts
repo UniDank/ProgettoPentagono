@@ -75,6 +75,7 @@ export default class CombatScene extends Scene {
         this.sceneStore.closeInterface()
         mainCamera.on('camerafadeoutcomplete', () => {
           this.gridEngine.removeAllCharacters()
+          this.combatStore.$reset()
           this.scene.stop().wake(args[0])
         })
       }
@@ -95,7 +96,6 @@ export default class CombatScene extends Scene {
       }
       const player = new GameEntity(this, p.name, new Vector2(randomX, randomY))
       player.sprite.setActive(true)
-      console.assert(player.sprite.anims, "Now it's undefined")
       player.sprite.anims.play({ key: "Idle", repeat: -1, frameRate: 10 })
       this.players.set(player, p as Player)
     })
@@ -141,7 +141,12 @@ export default class CombatScene extends Scene {
         const currentEntity = this.getCurrentEntity()
         currentEntity.sprite.anims.play({ key: "Attack", repeat: 1, frameRate: 10 }).on('animationcomplete', () => {
           this.playOnHealth(this.getCurrentEntity(), this.combatStore.currentEntity!)
-          this.combatStore.passTurn()
+          if (this.combatStore.orderTurn.findIndex(v => (v instanceof Player)) == -1) this.combatStore.actionWin(false)
+          else if (this.combatStore.orderTurn.findIndex(v => (v instanceof Enemy)) == -1) {
+              const totalExp = this.combatStore.enemies.map(v => v.expReward).reduce((c, p) => c + p)
+              this.sceneStore.party.forEach(v => v.addExp(totalExp / 5))
+              this.combatStore.actionWin(true)
+          } else this.combatStore.passTurn()
         })
         const targetEntity = Array.from([...this.players.keys(), ...this.enemies.keys()]).find(v => v.entityName == args[0].name)!
         targetEntity.sprite.anims.play({ key: "Damage taken", repeat: 1, frameRate: 10 }).on('animationcomplete', () => {
@@ -178,8 +183,13 @@ export default class CombatScene extends Scene {
         }
       }
       if (name === "actionWin") {
-        if (args[0]) Array.from(this.players.keys()).forEach(w => w.sprite.anims.play({ key: "Victory", repeat: -1, frameRate: 10 }))
-        else Array.from(this.enemies.keys()).forEach(w => w.sprite.anims.play({ key: "Victory", repeat: -1, frameRate: 10 }))
+        if (args[0]) {
+          this.combatStore.combatLog += "Hai vinto!\n"
+          Array.from(this.players.keys()).forEach(w => w.sprite.anims.play({ key: "Victory", repeat: -1, frameRate: 10 }))
+        } else {
+          this.combatStore.combatLog += "Hai perso!\n"
+          Array.from(this.enemies.keys()).forEach(w => w.sprite.anims.play({ key: "Victory", repeat: -1, frameRate: 10 }))
+        }
         setTimeout(() => this.sceneStore.changeScene('StageScene'), 3000)
       }
       if (name === "getEnemyInRange") {
@@ -193,12 +203,6 @@ export default class CombatScene extends Scene {
           this.cleanAllTiles()
           this.getCurrentEntity().moveEnemyTo(this.newPos)
         }
-        /*let tries = 0
-        while (tries < 10 && !this.checkTile(this.newPos, new Vector2(enemyPos.x, enemyPos.y), this.combatStore.currentEntity?.category ?? 0)) {
-          this.combatStore.changeDirection(args[0])
-          this.combatStore.confirmMove()
-        }
-        if (tries == 10) this.combatStore.passTurn()*/
       }
     })
 
@@ -211,12 +215,16 @@ export default class CombatScene extends Scene {
   playOnHealth(gameEntity: GameEntity, frontEntity: Entity) {
     if (frontEntity.isKo) {
       gameEntity.sprite.anims.play({ key: "Defeat", repeat: 1, frameRate: 10 }).on('animationcomplete', () => {
-        gameEntity.sprite.anims.play({ key: "KO", repeat: -1, frameRate: 10 })
-        if (frontEntity instanceof Enemy && this.gridEngine.hasCharacter(gameEntity.entityName)
-          && !["Admin", "Regitare"].includes(gameEntity.entityName)) {
-          this.enemies.delete(gameEntity)
-          this.gridEngine.removeCharacter(gameEntity.entityName)
-        }
+        gameEntity.sprite.anims.play({ key: "KO", repeat: frontEntity instanceof Enemy ? 1 : -1, frameRate: 10 })
+          .on('animationcomplete', () => {
+          if (frontEntity instanceof Enemy && this.gridEngine.hasCharacter(gameEntity.entityName)
+            && !["Admin", "Regitare"].includes(gameEntity.entityName)) {
+            gameEntity.sprite.anims.stop()
+            gameEntity.sprite.destroy()
+            this.enemies.delete(gameEntity)
+            this.gridEngine.removeCharacter(gameEntity.entityName)
+          }
+        })
       })
     } else if (frontEntity.isLowHP) gameEntity.sprite.anims.play({ key: "Low HP", repeat: -1, frameRate: 10 })
     else gameEntity.sprite.anims.play({ key: "Idle", repeat: -1, frameRate: 10 })

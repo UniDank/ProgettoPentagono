@@ -769,6 +769,11 @@
   "scale": "1",
   "frameTags": [
    { "name": "Idle", "from": 0, "to": 19, "direction": "forward" },
+   { "name": "Low HP", "from": 0, "to": 19, "direction": "forward" },
+   { "name": "Victory", "from": 0, "to": 19, "direction": "forward" },
+   { "name": "Run up", "from": 0, "to": 19, "direction": "forward" },
+   { "name": "Run down", "from": 0, "to": 19, "direction": "forward" },
+   { "name": "Run right", "from": 0, "to": 19, "direction": "forward" },
    { "name": "Attack", "from": 20, "to": 57, "direction": "forward" },
    { "name": "Damage taken", "from": 58, "to": 68, "direction": "forward" },
    { "name": "Defeat", "from": 70, "to": 94, "direction": "forward" },

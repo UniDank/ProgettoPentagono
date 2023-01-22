@@ -65,6 +65,13 @@ const showPlayers = (index: number) => {
 }
 
 const addToPlayer = (item: Item, player: Player) => {
+    if (combat.currentEntity instanceof Player) {
+        if (combat.currentEntity.APs <= 0) {
+            combat.combatLog += `${combat.currentEntity!.name} non ha abbastanza energia!\n`
+            return
+        }
+        combat.currentEntity.useAPs(1)
+    }
     if (item.type == ItemType.Health && player.health > 0 && player.health != player.maxHealth) {
         player.addHealth(item.value)
         item.quantity -= 1

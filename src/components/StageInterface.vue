@@ -24,10 +24,10 @@
                         </div>
                         <div class="rpgui-progress !h-4">
                             <div class="rpgui-progress-track !h-4 !left-4 !right-4">
-                                <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] blue"
-                                    :style="`width: ${player.mana / player.maxMana * 100}%;`"></div>
+                                <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] green"
+                                    :style="`width: ${player.APs / player.maxAPs * 100}%;`"></div>
                             </div>
-                            <div class="!h-4 !w-4 rpgui-progress-left3-edge"></div>
+                            <div class="!h-4 !w-4 rpgui-progress-left2-edge"></div>
                             <div class="!h-4 !w-4 rpgui-progress-right-edge"></div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                             'float-right ml-4 clear-left': image.position == 'right', 
                             'mx-auto clear-both': image.position == 'center' }"
                         :src="`/stories/${image.name}`" />
-                    <h3 class="whitespace-pre-wrap" :class="{ 'text-center': [1, 7, 9].includes(stage.selectedNode) }" v-html="text"></h3>
+                    <h3 class="whitespace-pre-wrap" :class="{ 'text-center': [1, 7, 9, 12].includes(stage.selectedNode) }" v-html="text"></h3>
                 </template>
                 <button class="ml-[87%] rpgui-button" type="button" @click="openStory = false">
                     <h3>Chiudi</h3>
@@ -325,5 +325,10 @@ const openSettings = () => {
     invComp.value!.showInv = false
 }
 
-const saveExit = () => main.changeScene('BootScene') //window.require('electron').ipcRenderer.invoke('close-window')
+const saveExit = () => {
+    //main.$reset()
+    //stage.$reset()
+    //main.changeScene('BootScene') 
+    window.require('electron').ipcRenderer.invoke('close-window')
+}
 </script>
