@@ -192,7 +192,10 @@ export default class CombatScene extends Scene {
           this.combatStore.combatLog += "Hai perso!\n"
           Array.from(this.enemies.keys()).forEach(w => w.sprite.anims.play({ key: "Victory", repeat: -1, frameRate: 10 }))
         }
-        setTimeout(() => this.sceneStore.changeScene('StageScene'), 3000)
+        setTimeout(() => {
+          this.sceneStore.changeScene('StageScene')
+          if (!args[0]) this.sceneStore.party.forEach((p, i) => this.sceneStore.party[i].addHealth(p.maxHealth * 0.2))
+        }, 3000)
       }
       if (name === "getEnemyInRange") {
         this.combatStore.inRangeEntities = this.checkEnemyInRange(args[0])
