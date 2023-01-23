@@ -7,10 +7,10 @@ export const useCombatStore = defineStore('combat', () => {
     const moveMode = ref(false)
     const moveDirection = ref("")
     const enemies = ref<Enemy[]>([
-        new Enemy("Bidoof", 5, 5, 20, 10, 3, 20, ClassType.Tank),
-        new Enemy("Ekans", 10, 7, 25, 10, 6, 20, ClassType.Thief),
-        new Enemy("Starly", 7, 6, 23, 10, 9, 30, ClassType.Mage),
-        new Enemy("Carnivine", 8, 4, 18, 8, 7, 25, ClassType.Archer)
+        new Enemy("Bidoof", 5, 5, 20, 10, 3, 20, 1, ClassType.Tank),
+        new Enemy("Ekans", 10, 7, 25, 10, 6, 20, 2, ClassType.Thief),
+        new Enemy("Starly", 7, 6, 23, 10, 9, 30, 4, ClassType.Mage),
+        new Enemy("Carnivine", 8, 4, 18, 8, 7, 25, 3, ClassType.Archer)
     ])
     const combatLog = ref("")
     const isMoving = ref(false)

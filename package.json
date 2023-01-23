@@ -36,7 +36,9 @@
   "scripts": {
     "dev": "vite",
     "check": "vue-tsc --noEmit",
-    "build": "npm run check && vite build"
+    "build": "npm run check && vite build",
+    "db": "java -jar backendFile.jar",
+    "full": "run-p db dev"
   },
   "engines": {
     "node": "^14.18.0 || >=16.0.0"
@@ -76,6 +78,7 @@
     "grid-engine": "^2.24.0",
     "jquery": "^3.6.3",
     "lodash.clonedeep": "^4.5.0",
+    "npm-run-all": "^4.1.5",
     "phaser": "^3.55.2",
     "pinia": "^2.0.29",
     "rxjs": "^7.8.0",

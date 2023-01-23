@@ -12,11 +12,11 @@ export const useMainStore = defineStore('main', () => {
     const currentVolume = ref(1)
     const passedData = ref<object | undefined>(undefined)
     const party = ref<Player[]>([ 
-        new Player("Agoraco", 15, 15, 30, 10, 3, 10, ClassType.Melee), 
-        new Player("Danblos", 15, 15, 30, 10, 5, 10, ClassType.Mage), 
-        new Player("Marcurion", 15, 15, 30, 10, 10, 10, ClassType.Thief), 
-        new Player("Gioxon", 15, 15, 30, 10, 4, 10, ClassType.Archer), 
-        new Player("Claphos", 15, 15, 30, 10, 2, 10, ClassType.Tank) 
+        new Player("Agoraco", 15, 15, 30, 10, 3, 2, 10, ClassType.Melee), 
+        new Player("Danblos", 15, 15, 30, 10, 5, 4, 10, ClassType.Mage), 
+        new Player("Marcurion", 15, 15, 30, 10, 10, 2, 10, ClassType.Thief), 
+        new Player("Gioxon", 15, 15, 30, 10, 4, 3, 10, ClassType.Archer), 
+        new Player("Claphos", 15, 15, 30, 10, 2, 1, 10, ClassType.Tank) 
     ])
     const inventory = ref<Item[]>([
         new Item("Vita", ItemType.Health, 20, 10), new Item("Mana", ItemType.Mana, 15, 10), 
@@ -27,6 +27,10 @@ export const useMainStore = defineStore('main', () => {
         currentScene.value = scene
         passedData.value = data
     }
+
+    const updateParty = (list: Player[]) => party.value = list
+
+    const updateInventory = (list: Item[]) => inventory.value = list
 
     const changeInterface = (userInterface: string) => currentInterface.value = userInterface
 
@@ -51,6 +55,8 @@ export const useMainStore = defineStore('main', () => {
         closeInterface,
         changeVolume,
         currentVolume,
-        passedData
+        passedData,
+        updateInventory,
+        updateParty
     }
 })

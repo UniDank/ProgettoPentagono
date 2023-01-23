@@ -9,20 +9,20 @@ class Player extends Entity {
         public name: string, 
         public attack: number, public defense: number, 
         public health: number, public mana: number, 
-        public agility: number, 
-        public APs: number, public category: ClassType) {
-        super(name, attack, defense, health, mana, agility, category)
-        this.maxAPs = APs
+        public agility: number, public range: number, 
+        public aps: number, public category: ClassType) {
+        super(name, attack, defense, health, mana, agility, range, category)
+        this.maxAPs = aps
         this.level = 1
         this.currentExp = 0
     }
 
     public addAPs(amount: number) {
-        this.APs = Math.min(this.APs += amount, this.maxAPs)
+        this.aps = Math.min(this.aps += amount, this.maxAPs)
     }
 
     public useAPs(amount: number): void {
-        this.APs = Math.max(this.APs -= amount, 0)
+        this.aps = Math.max(this.aps -= amount, 0)
     }
 
     public addExp(amount: number): void {

@@ -22,6 +22,7 @@ export default class CombatScene extends Scene {
   private cleanColor: number = 0xFFFFFF
   private selectionColor: number = 0x23CCAA
   private newPos = new Vector2(0, 0)
+  private unsubscribeCombatActions!: Function
 
   constructor() {
     super({ key: 'CombatScene' })
@@ -75,6 +76,7 @@ export default class CombatScene extends Scene {
         this.sceneStore.closeInterface()
         mainCamera.on('camerafadeoutcomplete', () => {
           this.gridEngine.removeAllCharacters()
+          this.unsubscribeCombatActions()
           this.combatStore.$reset()
           this.scene.stop().wake(args[0])
         })
@@ -136,7 +138,7 @@ export default class CombatScene extends Scene {
       this.combatStore.passTurn()
     })
 
-    this.combatStore.$onAction(({ name, args }) => {
+    this.unsubscribeCombatActions = this.combatStore.$onAction(({ name, args }) => {
       if (name === 'actionAttack') {
         const currentEntity = this.getCurrentEntity()
         currentEntity.sprite.anims.play({ key: "Attack", repeat: 1, frameRate: 10 }).on('animationcomplete', () => {
@@ -156,7 +158,7 @@ export default class CombatScene extends Scene {
       if (name === "actionInRange") {
         this.cleanAllTiles()
         if (args[0]) {
-          const entityRange = this.combatStore.currentEntity?.category ?? 0
+          const entityRange = this.combatStore.currentEntity?.range ?? 0
           const entityPos = this.getCurrentEntity().getPosition()
           this.tintRadius(entityPos.x, entityPos.y, entityRange, this.rangeColor)
           this.combatStore.inRangeEntities = this.checkEnemyInRange(entityRange)

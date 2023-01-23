@@ -66,7 +66,7 @@ const showPlayers = (index: number) => {
 
 const addToPlayer = (item: Item, player: Player) => {
     if (combat.currentEntity instanceof Player) {
-        if (combat.currentEntity.APs <= 0) {
+        if (combat.currentEntity.aps <= 0) {
             combat.combatLog += `${combat.currentEntity!.name} non ha abbastanza energia!\n`
             return
         }
@@ -85,7 +85,7 @@ const addToPlayer = (item: Item, player: Player) => {
         player.addMana(player.maxMana)
         player.addAPs(player.maxAPs)
         combat.combatLog += `${player.name} ha usato la Lira!\n`
-    } else if (item.type == ItemType.Energy && player.APs > 0 && player.APs != player.maxAPs) {
+    } else if (item.type == ItemType.Energy && player.aps > 0 && player.aps != player.maxAPs) {
         player.addAPs(item.value)
         item.quantity -= 1
         combat.combatLog += `${player.name} ha usato una pozione di energia!\n`

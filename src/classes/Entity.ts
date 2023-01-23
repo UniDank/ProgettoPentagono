@@ -1,10 +1,10 @@
 enum ClassType {
-    Archer = 3,
-    Tank = 1,
-    Thief = 2,
-    Mage = 4,
-    Unknown = 10,
-    Melee = 2
+    Archer,
+    Tank,
+    Thief,
+    Mage,
+    Unknown,
+    Melee
 }
 
 class Entity {
@@ -14,7 +14,7 @@ class Entity {
     public isKo = false
 
     constructor(public name: string, public attack: number, public defense: number, public health: number, 
-        public mana: number, public agility: number, public category: ClassType) {
+        public mana: number, public agility: number, public range: number, public category: ClassType) {
         this.maxHealth = health
         this.maxMana = mana
     }

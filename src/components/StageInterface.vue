@@ -25,7 +25,7 @@
                         <div class="rpgui-progress !h-4">
                             <div class="rpgui-progress-track !h-4 !left-4 !right-4">
                                 <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] green"
-                                    :style="`width: ${player.APs / player.maxAPs * 100}%;`"></div>
+                                    :style="`width: ${player.aps / player.maxAPs * 100}%;`"></div>
                             </div>
                             <div class="!h-4 !w-4 rpgui-progress-left2-edge"></div>
                             <div class="!h-4 !w-4 rpgui-progress-right-edge"></div>
@@ -292,14 +292,19 @@ setCurrentText(stage.selectedNode)
 stage.$subscribe((store, vars) => setCurrentText(vars.selectedNode))
 
 fetch(`http://localhost:8080/api/v1/party`).then(res => res.json()).then(json => {
-    const resJson = json.data as {
-        "id_stage": number,
-        "members": Player[],
-        "bag": Item[]
-    }
-    stage.selectedNode = resJson.id_stage
-    main.party = resJson.members
-    main.inventory = resJson.bag
+    if (json.status == "404") return
+    let resultedPlayers: Player[] = [], resultedItems: Item[] = []
+    json.data.members.forEach((e: Player) => {
+        let player: Player = new Player(e.name, e.attack, e.defense, e.health, e.mana, e.agility, e.range, e.aps, e.category)
+        resultedPlayers.push(player)
+    })
+    json.data.bag.forEach((e: Item) => {
+        let item: Item = new Item(e.name, e.type, e.quantity, e.value)
+        resultedItems.push(item)
+    })
+    stage.selectedNode = json.data.id_stage ?? 0
+    main.updateParty(resultedPlayers)
+    main.updateInventory(resultedItems)
 })
 
 watch([openStory, showSummary, showSettings], () =>

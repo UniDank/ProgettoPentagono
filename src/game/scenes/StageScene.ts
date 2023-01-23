@@ -159,8 +159,13 @@ export default class StageScene extends Scene {
         if (args[0] == 'CombatScene') {
           mainCamera.on('camerafadeoutcomplete', async () => {
             fetch(`http://localhost:8080/api/v1/${this.stageStore.selectedNode}/enemies`).then(res => res.json()).then(json => {
-              const resJson = json.data as Enemy[]
-              this.combatStore.updateEnemies(resJson.reverse())
+              if (json.status == "404") return
+              let resultedEnemies: Enemy[] = []
+              json.data.forEach((e: Enemy) => {
+                let enemy: Enemy = new Enemy(e.name, e.attack, e.defense, e.health, e.mana, e.agility, e.range, e.expReward, e.category)
+                resultedEnemies.push(enemy)
+              })
+              this.combatStore.updateEnemies(resultedEnemies.reverse())
             }).then(() => this.scene.switch(args[0]))
             .catch(() => this.scene.switch(args[0]))
           })

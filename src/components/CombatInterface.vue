@@ -18,7 +18,7 @@
                 <div class="rpgui-progress !h-[1rem]">
                     <div class="rpgui-progress-track !h-[1rem] !left-4 !right-4">
                         <div class="rpgui-progress-fill !top-[3px] !bottom-[3px] green"
-                            :style="`width: ${player.APs / player.maxAPs * 100}%;`"></div>
+                            :style="`width: ${player.aps / player.maxAPs * 100}%;`"></div>
                     </div>
                     <div class="!h-[1rem] !w-4 rpgui-progress-left2-edge"></div>
                     <div class="!h-[1rem] !w-4 rpgui-progress-right-edge"></div>
@@ -206,7 +206,7 @@ const actionAttack = () => {
 
 const attackEnemy = (selectedEnemy: Entity) => {
     if (combat.currentEntity instanceof Player) {
-        if (combat.currentEntity.APs <= 0) {
+        if (combat.currentEntity.aps <= 0) {
             combat.combatLog += `${combat.currentEntity!.name} non ha abbastanza energia!\n`
             return
         }
@@ -224,7 +224,7 @@ const attackEnemy = (selectedEnemy: Entity) => {
 const confirmMove = () => {
     combat.confirmMove()
     if (combat.currentEntity instanceof Player) {
-        if (combat.currentEntity.APs <= 0) {
+        if (combat.currentEntity.aps <= 0) {
             combat.combatLog += `${combat.currentEntity!.name} non ha abbastanza energia!\n`
             return
         }

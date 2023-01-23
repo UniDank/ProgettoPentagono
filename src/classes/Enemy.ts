@@ -12,9 +12,9 @@ class Enemy extends Entity {
         public name: string, 
         public attack: number, public defense: number, 
         public health: number, public mana: number, 
-        public agility: number, 
+        public agility: number, public range: number, 
         public expReward: number, public category: ClassType) {
-        super(name, attack, defense, health, mana, agility, category)
+        super(name, attack, defense, health, mana, agility, range, category)
     }
 
     private move(): void {
@@ -27,7 +27,7 @@ class Enemy extends Entity {
         const randomAction = Math.floor(Math.random() * 2)
         switch (randomAction) {
             case EnemyAction.Attack:
-                const enemiesInRange = this.combatStore.getEnemyInRange(this.category)
+                const enemiesInRange = this.combatStore.getEnemyInRange(this.range)
                 if (enemiesInRange.length == 0) {
                     this.move()
                     break
