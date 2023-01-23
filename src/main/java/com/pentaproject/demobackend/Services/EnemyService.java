@@ -2,8 +2,8 @@ package com.pentaproject.demobackend.Services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.pentaproject.demobackend.Model.ClassType;
 import com.pentaproject.demobackend.Model.Enemies.Enemy;
-import com.pentaproject.demobackend.Model.Enemies.EnemyType;
 
 import com.pentaproject.demobackend.Model.Stage.Stage;
 import com.pentaproject.demobackend.Model.Stage.StageSelector;
@@ -46,8 +46,8 @@ public class EnemyService {
         return rep.findById(id).orElse(null);
     }
 
-    public Enemy generateEnemy(String name, Integer health, Integer mana, Integer attack, Integer defense, Integer agility, Integer APs ,EnemyType category) throws IllegalArgumentException{
-        Enemy pippo = new Enemy(name,health,mana,attack,defense,agility,APs,category);
+    public Enemy generateEnemy(String name, Integer health, Integer mana, Integer attack, Integer defense, Integer agility, Integer APs, Integer range, ClassType category) throws IllegalArgumentException{
+        Enemy pippo = new Enemy(name,health,mana,attack,defense,agility,APs,range,category);
         insertEnemy(pippo);
         return pippo;
     }
@@ -65,7 +65,7 @@ public class EnemyService {
      * */
     public List<Enemy> getEnemiesFromStage(int id) throws IOException {
             //de-serealizzazione del file json valuestage, contentente i parametri min-max dei nemici
-            File file = new File("C:\\Users\\Marco\\IdeaProjects\\ProgettoPentagono\\src\\main\\resources\\valuestage.json");
+            File file = new File("C:\\Users\\danyn\\Desktop\\ProgettoPentagono-BackEnd\\src\\main\\resources\\valuestage.json");
             StageSelector value = json.readValue(file, StageSelector.class);
             Stage stage = value.getStages().stream().filter(x-> x.getId() == id).findFirst().get();
             String[] attack = stage.getAttack().split("-");
