@@ -1,28 +1,17 @@
 package com.pentaproject.demobackend.Services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.pentaproject.demobackend.Model.ClassType;
 import com.pentaproject.demobackend.Model.Enemies.Enemy;
-
 import com.pentaproject.demobackend.Model.Stage.Stage;
 import com.pentaproject.demobackend.Model.Stage.StageSelector;
 import com.pentaproject.demobackend.Repositories.EnemyRepository;
-
 import lombok.AllArgsConstructor;
-
-
-
 import org.springframework.stereotype.Service;
-
-
 import java.io.File;
-
 import java.io.IOException;
 import java.util.*;
-
 import java.util.stream.Collectors;
-
 
 /**
  * Classe Service per la gestione della logica relativa agli oggetti di tipo Enemy
@@ -34,9 +23,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class EnemyService {
     private EnemyRepository rep;
-
     private ObjectMapper json;
- 
 
     public void insertEnemy(Enemy enemy){
         rep.insert(enemy);
@@ -64,7 +51,7 @@ public class EnemyService {
      * @throws IOException Nel caso non riesce a recuperare il file
      * */
     public List<Enemy> getEnemiesFromStage(int id) throws IOException {
-            //de-serealizzazione del file json valuestage, contentente i parametri min-max dei nemici
+            //de-serealizzazione del file json valuestage, contenente i parametri min-max dei nemici
             File file = new File("C:\\Users\\danyn\\Desktop\\ProgettoPentagono-BackEnd\\src\\main\\resources\\valuestage.json");
             StageSelector value = json.readValue(file, StageSelector.class);
             Stage stage = value.getStages().stream().filter(x-> x.getId() == id).findFirst().get();
