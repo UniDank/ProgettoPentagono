@@ -37,8 +37,10 @@
     "dev": "vite",
     "check": "vue-tsc --noEmit",
     "build": "npm run check && vite build",
-    "db": "java -jar backendFile.jar",
-    "full": "run-p db dev"
+    "local": "java -jar backendLocal.jar",
+    "server": "java -jar backendOnline.jar",
+    "full": "run-p local dev",
+    "online": "run-p server dev"
   },
   "engines": {
     "node": "^14.18.0 || >=16.0.0"
