@@ -9,17 +9,12 @@
 💪 Support using Node.js API in Electron-Renderer  
 🖥 It's easy to implement multiple windows  
 
-## Directory
+## Credits
 
-```diff
-  ├─┬ electron
-  │ ├─┬ main
-  │ │ └── index.ts    entry of Electron-Main
-  │ └─┬ preload
-  │   └── index.ts    entry of Preload-Scripts
-  ├─┬ src
-  │ └── main.ts       entry of Electron-Renderer
-  ├── index.html
-  ├── package.json
-  └── vite.config.ts
-```
+Created by:
+
+- Daniele Nicosia
+- Claudio Bellanti
+- Federico Agnello
+- Marco Valenti
+- Giorgio Zangara

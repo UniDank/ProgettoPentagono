@@ -1,10 +1,12 @@
-process.env.DIST_ELECTRON = join(__dirname, '..')
-process.env.DIST = join(process.env.DIST_ELECTRON, '../dist')
-process.env.PUBLIC = app.isPackaged ? process.env.DIST : join(process.env.DIST_ELECTRON, '../public')
-
 import { app, BrowserWindow, shell, ipcMain } from 'electron'
 import { release } from 'os'
 import { join } from 'path'
+import { kill } from 'cross-port-killer'
+import { exec } from 'child_process'
+
+process.env.DIST_ELECTRON = join(__dirname, '..')
+process.env.DIST = join(process.env.DIST_ELECTRON, '../dist')
+process.env.PUBLIC = process.env.VITE_DEV_SERVER_URL ? join(process.env.DIST_ELECTRON, '../public') : process.env.DIST
 
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith('6.1')) app.disableHardwareAcceleration()
@@ -20,6 +22,7 @@ if (!app.requestSingleInstanceLock()) {
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 
 let win: BrowserWindow | null = null
+let libPath = ""
 const url = process.env.VITE_DEV_SERVER_URL
 const indexHtml = join(process.env.DIST, 'index.html')
 
@@ -43,15 +46,26 @@ function createWindow() {
   win.removeMenu()
   win.setBackgroundColor("#353535")
 
-  if (app.isPackaged) {
-    win.loadFile(indexHtml)
-  } else {
+  kill(8080).then(console.log).catch(console.log)
+
+  if (process.env.VITE_DEV_SERVER_URL) {
+    libPath = join(process.cwd(), 'backendLocal.jar')
     win.loadURL(url)
     win.webContents.openDevTools({ mode: "undocked", activate: false })
+  } else {
+    if (process.platform === 'darwin') {
+      libPath = join(process.cwd(), 'Contents', 'Resources', 'backendOnline.jar')
+    } else {
+      libPath = join(process.cwd(), 'resources', 'backendOnline.jar')
+    }
+    win.loadFile(indexHtml)
+    win.webContents.openDevTools({ mode: "undocked", activate: false }) //TODO: DA TOGLIERE APPENA RISOLTO L'ERRORE
   }
 
+  exec(`java -jar ${libPath}`)
+
   win.webContents.on('did-finish-load', () => {
-    win?.webContents.send('main-process-message', new Date().toLocaleString())
+    win?.webContents.send('main-process-message', `Backend jar path : ${libPath}`)
   })
 
   win.webContents.setWindowOpenHandler(({ url }) => {
@@ -59,8 +73,8 @@ function createWindow() {
     return { action: 'deny' }
   })
 
-  ipcMain.handle('close-window',() => win!.close())
-  
+  ipcMain.handle('close-window', () => win!.close())
+
   ipcMain.handle('toggle-fullscreen', (event, arg) => win!.setFullScreen(arg))
 }
 
@@ -84,5 +98,22 @@ app.on('activate', () => {
     allWindows[0].focus()
   } else {
     createWindow()
+  }
+})
+
+ipcMain.handle('open-win', (event, arg) => {
+  const childWindow = new BrowserWindow({
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  })
+
+  if (process.env.VITE_DEV_SERVER_URL) {
+    childWindow.loadURL(`${url}#${arg}`)
+    //childWindow.webContents.openDevTools({ mode: "undocked", activate: true })
+  } else {
+    childWindow.loadFile(indexHtml, { hash: arg })
+
   }
 })
