@@ -64,7 +64,7 @@ export default class SelectScene extends Scene {
     this.buttons.forEach((btn, i) => btn.on('pointerup', () => this.confirmSelection()))
     
     this.sceneStore.$onAction(({ name, args }) => {
-      if (name === 'changeScene') {
+      if (name === 'changeScene' && this.sceneStore.currentScene == this.scene.key) {
         mainCamera.fadeOut(300, 0, 0, 0)
         this.sceneStore.closeInterface()
         mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0], { selectedPlayer: this.selectablePlayers[this.selectedButtonIndex] }))

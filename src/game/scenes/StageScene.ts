@@ -153,7 +153,7 @@ export default class StageScene extends Scene {
     })
     
     this.sceneStore.$onAction(({ name, args }) => {
-      if (name === 'changeScene') {
+      if (name === 'changeScene' && this.sceneStore.currentScene == this.scene.key) {
         mainCamera.fadeOut(300, 0, 0, 0)
         this.sceneStore.closeInterface()
         if (args[0] == 'CombatScene') {

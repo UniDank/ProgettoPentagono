@@ -71,7 +71,7 @@ export default class CombatScene extends Scene {
     this.cameras.main.setBounds(-this.scale.gameSize.width + this.map.widthInPixels + 25, 60, this.map.widthInPixels, this.map.heightInPixels)
 
     this.sceneStore.$onAction(({ name, args }) => {
-      if (name === 'changeScene') {
+      if (name === 'changeScene' && this.sceneStore.currentScene == this.scene.key) {
         mainCamera.fadeOut(300, 0, 0, 0)
         this.sceneStore.closeInterface()
         mainCamera.on('camerafadeoutcomplete', () => {
@@ -139,6 +139,7 @@ export default class CombatScene extends Scene {
     })
 
     this.unsubscribeCombatActions = this.combatStore.$onAction(({ name, args }) => {
+      if (this.sceneStore.currentScene != this.scene.key) return
       if (name === 'actionAttack') {
         const currentEntity = this.getCurrentEntity()
         currentEntity.sprite.anims.play({ key: "Attack", repeat: 1, frameRate: 10 }).on('animationcomplete', () => {

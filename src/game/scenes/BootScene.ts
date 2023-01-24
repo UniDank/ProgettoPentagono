@@ -31,7 +31,7 @@ export default class BootScene extends Scene {
     titleSprite.play({ key: 'Clean', repeat: -1, frameRate: 15, repeatDelay: 3000 })
 
     this.sceneStore.$onAction(({ name, args }) => {
-      if (name === 'changeScene') {
+      if (name === 'changeScene' && this.sceneStore.currentScene == this.scene.key) {
         mainCamera.fadeOut(300, 0, 0, 0)
         this.sceneStore.closeInterface()
         mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0], args[1]))
