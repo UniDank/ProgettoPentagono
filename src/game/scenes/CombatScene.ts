@@ -195,7 +195,11 @@ export default class CombatScene extends Scene {
         }
         setTimeout(() => {
           this.sceneStore.changeScene('StageScene')
-          if (!args[0]) this.sceneStore.party.forEach((p, i) => this.sceneStore.party[i].addHealth(p.maxHealth * 0.2))
+          if (args[0]) {
+            const totalExp = this.combatStore.enemies.map(v => v.expReward).reduce((c, p) => c + p)
+            console.log("Ogni giocatore ha ottenuto", totalExp / 5, "di exp")
+            this.sceneStore.party.forEach(v => v.addExp(totalExp / 5))
+          } else this.sceneStore.party.forEach((p, i) => this.sceneStore.party[i].addHealth(p.maxHealth * 0.2))
         }, 3000)
       }
       if (name === "getEnemyInRange") {
