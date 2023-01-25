@@ -62,7 +62,7 @@ function createWindow() {
     win.webContents.openDevTools({ mode: "undocked", activate: false }) //TODO: DA TOGLIERE APPENA RISOLTO L'ERRORE
   }
 
-  exec(`java -jar ${libPath}`)
+  exec(`java -jar ${libPath}`, console.log)
 
   win.webContents.on('did-finish-load', () => {
     win?.webContents.send('main-process-message', `Backend jar path : ${libPath}`)

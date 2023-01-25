@@ -105,7 +105,7 @@ export default class StageScene extends Scene {
   }
 
   init(data: object | undefined) {
-    this.selectedPlayer = (data as any).selectedPlayer
+    this.selectedPlayer = (data as any).selectedPlayer ?? ""
   }
 
   preload() {

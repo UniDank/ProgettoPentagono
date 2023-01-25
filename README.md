@@ -2,12 +2,14 @@
 
 🥳 RPG Game in TypeScript, Phaser and Vue with Java Spring Boot as back-end.
 
-## Features
+## Start-up instructions
 
-📦 Out of the box  
-🌱 Extensible, really simple directory structure  
-💪 Support using Node.js API in Electron-Renderer  
-🖥 It's easy to implement multiple windows  
+- Download Node.JS (at least v16.0.0) and accept to install also npm
+- Download Java SDK (at least v17)
+- Open a terminal inside the root folder of the project
+- Run `npm install`
+- Run `npm run online`
+- Have fun !
 
 ## Credits
 
