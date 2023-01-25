@@ -78,7 +78,7 @@ export default class CombatScene extends Scene {
           this.gridEngine.removeAllCharacters()
           this.unsubscribeCombatActions()
           this.combatStore.$reset()
-          this.scene.stop().wake(args[0])
+          this.scene.start(args[0])
         })
       }
     })

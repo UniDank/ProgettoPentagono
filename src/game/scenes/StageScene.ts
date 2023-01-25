@@ -125,8 +125,7 @@ export default class StageScene extends Scene {
     playerSprite.anims.play({ key: "Idle", repeat: -1 })
 
     this.nodes.forEach((node, index) => {
-      const image = this.add.image(node.coords.x, node.coords.y, `${this.stepKeys[node.type]}`)
-        .setScale(2).setOrigin(0)
+      const image = this.add.image(node.coords.x, node.coords.y, `${this.stepKeys[node.type]}`).setScale(2).setOrigin(0)
       if (node.step != undefined) {
         if (node.step == this.stageStore.selectedNode) {
           if (node.type == StepType.nodeBlue || node.type == StepType.nodeGreen || node.type == StepType.nodeRed ||
@@ -166,24 +165,16 @@ export default class StageScene extends Scene {
                 resultedEnemies.push(enemy)
               })
               this.combatStore.updateEnemies(resultedEnemies.reverse())
-            }).then(() => this.scene.switch(args[0]))
-            .catch(() => this.scene.switch(args[0]))
+            }).then(() => this.scene.start(args[0])).catch(() => this.scene.start(args[0]))
           })
         } else mainCamera.on('camerafadeoutcomplete', () => this.scene.start(args[0], args[1]))
       }
     })
 
-    this.events.on(Phaser.Scenes.Events.WAKE, () => {
-      mainCamera.fadeIn(300, 0, 0, 0, (camera: Cameras.Scene2D.Camera, progress: number) => {
-        if (progress >= 0.7) this.sceneStore.changeInterface("StageInterface")
-      })
-      this.sound.stopByKey("combatSong")
-      this.sound.stopByKey("adminSong")
-      this.sound.stopByKey("regitareSong")
-      this.sound.play("stageSong", { loop: true })
-    })
-
     this.sound.stopByKey("bgSong")
+    this.sound.stopByKey("combatSong")
+    this.sound.stopByKey("adminSong")
+    this.sound.stopByKey("regitareSong")
     this.sound.play("stageSong", { loop: true })
   }
 

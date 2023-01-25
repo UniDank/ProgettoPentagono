@@ -46,7 +46,7 @@ function createWindow() {
   win.removeMenu()
   win.setBackgroundColor("#353535")
 
-  kill(8080).then(console.log).catch(console.log)
+  //kill(8080).then(console.log).catch(console.log)
 
   if (process.env.VITE_DEV_SERVER_URL) {
     libPath = join(process.cwd(), 'backendLocal.jar')
@@ -62,7 +62,7 @@ function createWindow() {
     win.webContents.openDevTools({ mode: "undocked", activate: false }) //TODO: DA TOGLIERE APPENA RISOLTO L'ERRORE
   }
 
-  exec(`java -jar ${libPath}`, console.log)
+  //exec(`java -jar ${libPath}`, console.log)
 
   win.webContents.on('did-finish-load', () => {
     win?.webContents.send('main-process-message', `Backend jar path : ${libPath}`)
