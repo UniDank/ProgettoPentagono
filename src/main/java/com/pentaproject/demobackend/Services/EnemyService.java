@@ -52,7 +52,7 @@ public class EnemyService {
      * */
     public List<Enemy> getEnemiesFromStage(int id) throws IOException {
             //de-serealizzazione del file json valuestage, contenente i parametri min-max dei nemici
-            File file = new File("C:\\Users\\danyn\\Desktop\\ProgettoPentagono-BackEnd\\src\\main\\resources\\valuestage.json");
+            File file = new File(".\\valuestage.json"); // .\\valuestage.json
             StageSelector value = json.readValue(file, StageSelector.class);
             Stage stage = value.getStages().stream().filter(x-> x.getId() == id).findFirst().get();
             String[] attack = stage.getAttack().split("-");
@@ -84,9 +84,15 @@ public class EnemyService {
                             Collectors.toList(),
                             collected -> {
                                 Collections.shuffle(collected);
-                                for (int i = 0; i < clone; i++) {
-                                    Enemy c = (Enemy) collected.get(i).clone();
-                                    c.setName(c.getName() + " " + (i + 1));
+                                int j = 0, k = 1;
+                                for (int i = 0; i < clone; i++,j++,k++) {
+                                    if(j > collected.size()) j = 0;
+                                    Enemy c = (Enemy) collected.get(j).clone();
+                                    if(!c.getName().contains(" "))
+                                        c.setName(c.getName() + " " + k);
+                                    else{
+                                        c.setName(c.getName().substring(0, c.getName().length()-1)+ k);
+                                    }
                                     c.setHealth(random.nextInt(Integer.parseInt(life[0]), Integer.parseInt(life[1])));
                                     c.setDefense(random.nextInt(Integer.parseInt(defence[0]), Integer.parseInt(defence[1])));
                                     c.setAttack(random.nextInt(Integer.parseInt(attack[0]), Integer.parseInt(attack[1])));
@@ -121,11 +127,15 @@ public class EnemyService {
                             Collectors.toList(),
                             collected -> {
                                 Collections.shuffle(collected);
-                                int j = 0;
-                                for (int i = 0; i < clone; i++,j++) {
+                                int j = 0, k = 1;
+                                for (int i = 0; i < clone; i++,j++,k++) {
                                     if(j > collected.size()) j = 0;
                                     Enemy c = (Enemy) collected.get(j).clone();
-                                    c.setName(c.getName() + " " + (i + 1));
+                                    if(!c.getName().contains(" "))
+                                        c.setName(c.getName() + " " + k);
+                                    else{
+                                        c.setName(c.getName().substring(0, c.getName().length()-1)+ k);
+                                    }
                                     c.setHealth(random.nextInt(Integer.parseInt(life[0]), Integer.parseInt(life[1])));
                                     c.setDefense(random.nextInt(Integer.parseInt(defence[0]), Integer.parseInt(defence[1])));
                                     c.setAttack(random.nextInt(Integer.parseInt(attack[0]), Integer.parseInt(attack[1])));
