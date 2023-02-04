@@ -103,7 +103,14 @@ watch(volumeSlider, () => {
 main.$subscribe((store, vars) => volumeSlider.value = vars.currentVolume)
 
 function toggleFullscreen() {
-    window.require('electron').ipcRenderer.invoke('toggle-fullscreen', isFullScreen.value)
+    isFullScreen.value = !isFullScreen.value
+
+    const root = document.documentElement
+    if (!document.fullscreenEnabled) return
+
+    if (isFullScreen.value) root.requestFullscreen()
+    else document.exitFullscreen()
+    //window.require('electron').ipcRenderer.invoke('toggle-fullscreen', isFullScreen.value)
 }
 
 function overText(index: number) {
@@ -139,7 +146,8 @@ function clickText(index: number) {
             break
         case 4:
             boot.$reset()
-            window.require('electron').ipcRenderer.invoke('close-window')
+            window.close()
+            //window.require('electron').ipcRenderer.invoke('close-window')
             break
         default:
             break

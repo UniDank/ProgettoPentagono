@@ -334,6 +334,8 @@ const saveExit = () => {
     //main.$reset()
     //stage.$reset()
     //main.changeScene('BootScene') 
-    window.require('electron').ipcRenderer.invoke('close-window')
+    //window.close()
+    window.location.reload()
+    //window.require('electron').ipcRenderer.invoke('close-window')
 }
 </script>

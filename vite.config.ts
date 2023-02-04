@@ -3,6 +3,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import electron from 'vite-plugin-electron'
 import renderer from 'vite-plugin-electron-renderer'
+import tsconfigPaths from 'vite-tsconfig-paths'
 import pkg from './package.json'
 
 // https://vitejs.dev/config/
@@ -16,13 +17,13 @@ export default defineConfig(({ command }) => {
   return {
     plugins: [
       vue(),
-      electron([
+      tsconfigPaths(),
+      /*electron([
         {
-          // Main-Process entry file of the Electron App.
           entry: 'electron/main/index.ts',
           onstart(options) {
             if (process.env.VSCODE_DEBUG) {
-              console.log(/* For `.vscode/.debug.script.mjs` */'[startup] Electron App')
+              console.log('[startup] Electron App')
             } else {
               options.startup()
             }
@@ -39,16 +40,15 @@ export default defineConfig(({ command }) => {
           },
         }
       ]),
-      // Use Node.js API in the Renderer-process
       renderer({
         nodeIntegration: true,
-      }),
+      }),*/
     ],
     server: process.env.VSCODE_DEBUG && (() => {
       const url = new URL(pkg.debug.env.VITE_DEV_SERVER_URL)
       return {
         host: url.hostname,
-        port: +url.port,
+        port: +url.port
       }
     })(),
     clearScreen: false,
